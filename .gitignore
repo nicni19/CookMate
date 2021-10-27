@@ -3,7 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=webstorm,visualstudiocode,reactnative
 
 ### NPM ###
-MyTSProject/package-lock.json
+CookMate/package-lock.json
 
 ### ReactNative ###
 # React Native Stack Base
