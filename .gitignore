@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/webstorm,visualstudiocode,reactnative
 # Edit at https://www.toptal.com/developers/gitignore?templates=webstorm,visualstudiocode,reactnative
 
+### NPM ###
+MyTSProject/package-lock.json
+
 ### ReactNative ###
 # React Native Stack Base
 
