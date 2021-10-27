@@ -2,9 +2,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/webstorm,visualstudiocode,reactnative
 # Edit at https://www.toptal.com/developers/gitignore?templates=webstorm,visualstudiocode,reactnative
 
-### NPM ###
-CookMate/package-lock.json
-
 ### ReactNative ###
 # React Native Stack Base
 
@@ -436,3 +433,4 @@ fabric.properties
 .idea/codestream.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/webstorm,visualstudiocode,reactnative
+
