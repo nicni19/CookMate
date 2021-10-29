@@ -48,14 +48,14 @@ class RecipeFeed extends Component {
                 <SafeAreaView style={this.styles.horizontalContainer}>
                 <FlatList
                     data={cardComponents}
-                    renderItem={item => <Card cardStyle={this.styles.horizontalCard}/>}
+                    renderItem={item => <Card cardStyle={this.styles.horizontalCard} title="Lasagna" duration="2h" persons="4"/>}
                     horizontal={true}
                     />
                 </SafeAreaView>
                 <SafeAreaView style={this.styles.verticalContainer}>
                     <FlatList
                         data={cardComponents}
-                        renderItem={item => <Card cardStyle={this.styles.verticalCard}/>}
+                        renderItem={item => <Card cardStyle={this.styles.verticalCard} title="Lasagna 2" duration="4h" persons="8"/>}
                         numColumns={2}
                     />
                 </SafeAreaView>
