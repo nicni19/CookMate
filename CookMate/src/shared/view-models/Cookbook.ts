@@ -8,7 +8,7 @@ export class Cookbook extends CookbookSimple {
 
 
     constructor(id: string, name: string, owner: UserSimple, followers: UserSimple[], recipes: RecipeSimple[]) {
-        super(id, name, owner, followers, recipes);
+        super(id, name, owner);
         this.followers = followers;
         this.recipes = recipes;
     }
