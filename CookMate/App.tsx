@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import RecipeFeed from "./src/modules/RecipeFeed/RecipeFeed";
 
 export default function App() {
   return (
@@ -10,6 +11,7 @@ export default function App() {
       <Text>Open up App.tsx to start working on your app!</Text>
 
       <StatusBar style="auto" />
+      <RecipeFeed></RecipeFeed>
     </View>
   );
 }
