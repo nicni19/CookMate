@@ -1,4 +1,6 @@
-export default interface FormikCreateRecipeFormValues {
+import { FormikProps } from "formik";
+
+export interface FormikCreateRecipeFormValues {
     createRecipeOne: {
         image: HTMLImageElement | null;
     },
@@ -21,4 +23,8 @@ export default interface FormikCreateRecipeFormValues {
     createRecipeFive: {
         recipeInstructions: string[]
     }
+};
+
+export interface FormCreateRecipeProps {
+    formik: FormikProps<FormikCreateRecipeFormValues>;
 }

@@ -6,7 +6,7 @@ import CreateRecipeFour from "./CreateRecipeFour";
 import CreateRecipeOne from "./CreateRecipeOne";
 import CreateRecipeThree from "./CreateRecipeThree";
 import CreateRecipeTwo from "./CreateRecipeTwo";
-import FormikCreateRecipeFormValues from "./IFormikValues";
+import { FormikCreateRecipeFormValues } from "./IFormikValues";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeOne: {
@@ -21,6 +21,7 @@ const initialValues: FormikCreateRecipeFormValues = {
         recipeTime: "",
         recipePeople: ""
     },
+    // TODO: Change type of the Four and Five
     createRecipeFour: {
         recipeIngredients: {
             ingredient: "",
@@ -59,9 +60,9 @@ function CreateRecipeForm() {
         <div>
             <CreateRecipeOne />
             <CreateRecipeTwo />
-            <CreateRecipeThree />
+            <CreateRecipeThree formik={formik} />
             <CreateRecipeFour formik={formik} />
-            <CreateRecipeFive />
+            <CreateRecipeFive formik={formik} />
         </div>
     );
 }
