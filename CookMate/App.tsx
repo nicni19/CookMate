@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CreateRecipeForm from './src/shared/components/create-recipe/CreateRecipeForm';
+import CreateRecipeForm from './src/modules/create-recipe/CreateRecipeForm';
 
 export default function App() {
   return (
