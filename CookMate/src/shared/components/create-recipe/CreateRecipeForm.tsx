@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import CreateRecipeFive from "./CreateRecipeFive";
 import CreateRecipeFour from "./CreateRecipeFour";
@@ -35,6 +35,8 @@ const initialValues: FormikCreateRecipeFormValues = {
 };
 
 function CreateRecipeForm() {
+    const [step, setStep] = useState<number>(0);
+
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: Yup.object({
@@ -56,15 +58,15 @@ function CreateRecipeForm() {
         }
     });
 
-    return (
-        <div>
-            <CreateRecipeOne />
-            <CreateRecipeTwo />
-            <CreateRecipeThree formik={formik} />
-            <CreateRecipeFour formik={formik} />
-            <CreateRecipeFive formik={formik} />
-        </div>
-    );
+    const createRecipeForms: JSX.Element[] = [
+        <CreateRecipeOne />,
+        <CreateRecipeTwo />,
+        <CreateRecipeThree formik={formik} />,
+        <CreateRecipeFour formik={formik} />,
+        <CreateRecipeFive formik={formik} />
+    ];
+
+    return <div>{createRecipeForms[step]}</div>;
 }
 
 export default CreateRecipeForm;
