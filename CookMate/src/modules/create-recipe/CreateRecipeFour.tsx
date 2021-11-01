@@ -1,7 +1,7 @@
 import { Formik, FormikProps } from "formik";
 import * as yup from "yup";
 import React from "react";
-import { FormCreateRecipeProps } from "./IFormikValues";
+import { FormCreateRecipeProps } from "./CreateRecipeTypes";
 import { SafeAreaView, TextInput } from "react-native";
 
 const CreateRecipeFour: React.FC<FormCreateRecipeProps> = ({ formik }) => {

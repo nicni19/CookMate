@@ -6,7 +6,7 @@ import CreateRecipeFour from "./CreateRecipeFour";
 import CreateRecipeOne from "./CreateRecipeOne";
 import CreateRecipeThree from "./CreateRecipeThree";
 import CreateRecipeTwo from "./CreateRecipeTwo";
-import { FormikCreateRecipeFormValues } from "./IFormikValues";
+import { FormikCreateRecipeFormValues } from "./CreateRecipeTypes";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeOne: {
