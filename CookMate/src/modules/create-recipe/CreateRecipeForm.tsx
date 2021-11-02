@@ -63,9 +63,12 @@ function CreateRecipeForm() {
         <CreateRecipeFive formik={formik} />
     ];
 
+    const firstStep = 0;
+    const lastStep = createRecipeForms.length - 1;
+
     return (
         <div>
-            {step == createRecipeForms.length - 1 ? (
+            {step == lastStep ? (
                 <Button
                     title="Complete"
                     onPress={
@@ -77,7 +80,7 @@ function CreateRecipeForm() {
             ) : (
                 <Button title="Next" onPress={() => setStep(step + 1)} />
             )}
-            {step == 0 ? null : (
+            {step == firstStep ? null : (
                 <Button title="Previous" onPress={() => setStep(step - 1)} />
             )}
             {createRecipeForms[step]}
