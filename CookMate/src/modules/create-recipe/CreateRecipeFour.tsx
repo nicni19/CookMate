@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import { FormCreateRecipeProps, RecipeIngredient } from "./CreateRecipeTypes";
 import {
     Button,
+    FlatList,
     NativeSyntheticEvent,
     NativeTouchEvent,
     SafeAreaView,
-    TextInput
+    TextInput,
+    Text,
+    View
 } from "react-native";
 
 const initialValues: RecipeIngredient = {
@@ -21,48 +24,67 @@ const CreateRecipeFour: React.FC<FormCreateRecipeProps> = ({ formik }) => {
     >(formik.values.createRecipeFour.recipeIngredients);
 
     return (
-        <Formik
-            initialValues={initialValues}
-            onSubmit={(values) => {
-                const updatedRecipeIngredients = recipeIngredients.slice();
-                updatedRecipeIngredients.push(values);
-                formik.setFieldValue("createRecipeFour.recipeIngredients", updatedRecipeIngredients);
-                setRecipeIngredients(updatedRecipeIngredients);
-            }}
-        >
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
-                <SafeAreaView>
-                    <TextInput
-                        onChangeText={handleChange("ingredient")}
-                        onBlur={handleBlur("ingredient")}
-                        value={values.ingredient}
-                        placeholder={"Ingredient"}
-                    />
+        <>
+            <View>
+                <FlatList
+                    data={recipeIngredients}
+                    renderItem={({ item }) => (
+                        <Text>
+                            {item.ingredient +
+                                " " +
+                                item.quantity +
+                                " " +
+                                item.unit}
+                        </Text>
+                    )}
+                />
+            </View>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={(values) => {
+                    const updatedRecipeIngredients = recipeIngredients.slice();
+                    updatedRecipeIngredients.push(values);
+                    formik.setFieldValue(
+                        "createRecipeFour.recipeIngredients",
+                        updatedRecipeIngredients
+                    );
+                    setRecipeIngredients(updatedRecipeIngredients);
+                }}
+            >
+                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                    <SafeAreaView>
+                        <TextInput
+                            onChangeText={handleChange("ingredient")}
+                            onBlur={handleBlur("ingredient")}
+                            value={values.ingredient}
+                            placeholder={"Ingredient"}
+                        />
 
-                    <TextInput
-                        onChangeText={handleChange("quantity")}
-                        onBlur={handleBlur("quantity")}
-                        value={values.quantity}
-                        placeholder={"Quantity"}
-                    />
+                        <TextInput
+                            onChangeText={handleChange("quantity")}
+                            onBlur={handleBlur("quantity")}
+                            value={values.quantity}
+                            placeholder={"Quantity"}
+                        />
 
-                    <TextInput
-                        onChangeText={handleChange("unit")}
-                        onBlur={handleBlur("unit")}
-                        value={values.unit}
-                        placeholder={"Unit"}
-                    />
-                    <Button
-                        onPress={
-                            handleSubmit as unknown as (
-                                ev: NativeSyntheticEvent<NativeTouchEvent>
-                            ) => void
-                        }
-                        title="Add Ingredient"
-                    />
-                </SafeAreaView>
-            )}
-        </Formik>
+                        <TextInput
+                            onChangeText={handleChange("unit")}
+                            onBlur={handleBlur("unit")}
+                            value={values.unit}
+                            placeholder={"Unit"}
+                        />
+                        <Button
+                            onPress={
+                                handleSubmit as unknown as (
+                                    ev: NativeSyntheticEvent<NativeTouchEvent>
+                                ) => void
+                            }
+                            title="Add Ingredient"
+                        />
+                    </SafeAreaView>
+                )}
+            </Formik>
+        </>
     );
 };
 
