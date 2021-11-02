@@ -10,12 +10,7 @@ import CreateRecipeTwo from "./CreateRecipeTwo";
 import { FormikCreateRecipeFormValues } from "./CreateRecipeTypes";
 
 const initialValues: FormikCreateRecipeFormValues = {
-    createRecipeOne: {
-        image: null
-    },
-    createRecipeTwo: {
-        image: null
-    },
+    createRecipeImage: null,
     createRecipeThree: {
         recipeName: "",
         recipeDescription: "",
