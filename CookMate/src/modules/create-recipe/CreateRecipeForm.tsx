@@ -65,16 +65,21 @@ function CreateRecipeForm() {
 
     return (
         <div>
-            <Button title="Next" onPress={() => setStep(step + 1)} />
-            <Button title="Previous" onPress={() => setStep(step - 1)} />
-            <Button
-                title="Complete"
-                onPress={
-                    formik.handleSubmit as unknown as (
-                        ev: NativeSyntheticEvent<NativeTouchEvent>
-                    ) => void
-                }
-            />
+            {step == createRecipeForms.length - 1 ? (
+                <Button
+                    title="Complete"
+                    onPress={
+                        formik.handleSubmit as unknown as (
+                            ev: NativeSyntheticEvent<NativeTouchEvent>
+                        ) => void
+                    }
+                />
+            ) : (
+                <Button title="Next" onPress={() => setStep(step + 1)} />
+            )}
+            {step == 0 ? null : (
+                <Button title="Previous" onPress={() => setStep(step - 1)} />
+            )}
             {createRecipeForms[step]}
             {JSON.stringify(formik.values, null, 2)}
         </div>
