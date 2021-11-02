@@ -58,7 +58,7 @@ const CreateRecipeFour: React.FC<FormCreateRecipeProps> = ({ formik }) => {
                                 ev: NativeSyntheticEvent<NativeTouchEvent>
                             ) => void
                         }
-                        title="Add"
+                        title="Add Ingredient"
                     />
                 </SafeAreaView>
             )}
