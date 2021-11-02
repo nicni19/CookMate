@@ -14,17 +14,23 @@ export interface FormikCreateRecipeFormValues {
         recipePeople: string;
     },
     createRecipeFour: {
-        recipeIngredients: {
-            ingredient: string;
-            quantity: string;
-            unit: string;
-        }
+        recipeIngredients: RecipeIngredient[];
     },
     createRecipeFive: {
-        recipeInstructions: string[]
+        recipeInstructions: RecipeInstruction[];
     }
 };
 
 export interface FormCreateRecipeProps {
     formik: FormikProps<FormikCreateRecipeFormValues>;
+}
+
+export interface RecipeIngredient {
+    ingredient: string;
+    quantity: string;
+    unit: string;
+}
+
+export interface RecipeInstruction {
+    instruction: string;
 }

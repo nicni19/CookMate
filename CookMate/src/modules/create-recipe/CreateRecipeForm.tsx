@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import { Button, NativeSyntheticEvent, NativeTouchEvent } from "react-native";
 import * as Yup from "yup";
 import CreateRecipeFive from "./CreateRecipeFive";
 import CreateRecipeFour from "./CreateRecipeFour";
@@ -21,13 +22,8 @@ const initialValues: FormikCreateRecipeFormValues = {
         recipeTime: "",
         recipePeople: ""
     },
-    // TODO: Change type of the Four and Five
     createRecipeFour: {
-        recipeIngredients: {
-            ingredient: "",
-            quantity: "",
-            unit: ""
-        }
+        recipeIngredients: []
     },
     createRecipeFive: {
         recipeInstructions: []
@@ -55,6 +51,7 @@ function CreateRecipeForm() {
         }),
         onSubmit: (values) => {
             console.log(values);
+            console.log("test");
         }
     });
 
@@ -66,7 +63,22 @@ function CreateRecipeForm() {
         <CreateRecipeFive formik={formik} />
     ];
 
-    return <div>{createRecipeForms[step]}</div>;
+    return (
+        <div>
+            <Button title="Next" onPress={() => setStep(step + 1)} />
+            <Button title="Previous" onPress={() => setStep(step - 1)} />
+            <Button
+                title="Complete"
+                onPress={
+                    formik.handleSubmit as unknown as (
+                        ev: NativeSyntheticEvent<NativeTouchEvent>
+                    ) => void
+                }
+            />
+            {createRecipeForms[step]}
+            {JSON.stringify(formik.values, null, 2)}
+        </div>
+    );
 }
 
 export default CreateRecipeForm;
