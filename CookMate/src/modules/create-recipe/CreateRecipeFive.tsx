@@ -22,11 +22,13 @@ const CreateRecipeFive: React.FC<FormCreateRecipeProps> = ({ formik }) => {
     >(formik.values.createRecipeFive.recipeInstructions);
 
     return (
-        <>
+        <View>
             <View>
                 <FlatList
                     data={recipeInstructions}
-                    renderItem={({ item }) => <Text>{item.instruction}</Text>}
+                    renderItem={({ item }) =>
+                        item ? <Text>{item.instruction}</Text> : null
+                    }
                 />
             </View>
             <Formik
@@ -62,7 +64,7 @@ const CreateRecipeFive: React.FC<FormCreateRecipeProps> = ({ formik }) => {
                     </SafeAreaView>
                 )}
             </Formik>
-        </>
+        </View>
     );
 };
 

@@ -24,19 +24,21 @@ const CreateRecipeFour: React.FC<FormCreateRecipeProps> = ({ formik }) => {
     >(formik.values.createRecipeFour.recipeIngredients);
 
     return (
-        <>
+        <View>
             <View>
                 <FlatList
                     data={recipeIngredients}
-                    renderItem={({ item }) => (
-                        <Text>
-                            {item.ingredient +
-                                " " +
-                                item.quantity +
-                                " " +
-                                item.unit}
-                        </Text>
-                    )}
+                    renderItem={({ item }) =>
+                        item ? (
+                            <Text>
+                                {item.ingredient +
+                                    " " +
+                                    item.quantity +
+                                    " " +
+                                    item.unit}
+                            </Text>
+                        ) : null
+                    }
                 />
             </View>
             <Formik
@@ -84,7 +86,7 @@ const CreateRecipeFour: React.FC<FormCreateRecipeProps> = ({ formik }) => {
                     </SafeAreaView>
                 )}
             </Formik>
-        </>
+        </View>
     );
 };
 

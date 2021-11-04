@@ -1,13 +1,19 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Button, NativeSyntheticEvent, NativeTouchEvent } from "react-native";
+import {
+    StyleSheet,
+    NativeSyntheticEvent,
+    NativeTouchEvent,
+    View,
+    Text
+} from "react-native";
 import * as Yup from "yup";
 import CreateRecipeFive from "./CreateRecipeFive";
 import CreateRecipeFour from "./CreateRecipeFour";
 import CreateRecipeOne from "./CreateRecipeOne";
 import CreateRecipeThree from "./CreateRecipeThree";
-import CreateRecipeTwo from "./CreateRecipeTwo";
 import { FormikCreateRecipeFormValues } from "./CreateRecipeTypes";
+import Icon from "react-native-vector-icons/AntDesign";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImage: null,
@@ -52,20 +58,36 @@ function CreateRecipeForm() {
 
     const createRecipeForms: JSX.Element[] = [
         <CreateRecipeOne />,
-        <CreateRecipeTwo />,
         <CreateRecipeThree formik={formik} />,
         <CreateRecipeFour formik={formik} />,
         <CreateRecipeFive formik={formik} />
+    ];
+
+    const createRecipeFormsName: JSX.Element[] = [
+        <Text>"Select image of your dish"</Text>,
+        <Text>"Enter recipe details"</Text>,
+        <Text>"Enter recipe ingredients"</Text>,
+        <Text>"Enter recipe instructions"</Text>
     ];
 
     const firstStep = 0;
     const lastStep = createRecipeForms.length - 1;
 
     return (
-        <div>
+        <View style={styles.container}>
+            {step == firstStep ? null : (
+                <Icon.Button
+                    name="arrowleft"
+                    size={30}
+                    backgroundColor="transparent"
+                    onPress={() => setStep(step - 1)}
+                    iconStyle={{ color: "grey" }}
+                />
+            )}
             {step == lastStep ? (
-                <Button
-                    title="Complete"
+                <Icon.Button
+                    name="check"
+                    size={30}
                     onPress={
                         formik.handleSubmit as unknown as (
                             ev: NativeSyntheticEvent<NativeTouchEvent>
@@ -73,15 +95,25 @@ function CreateRecipeForm() {
                     }
                 />
             ) : (
-                <Button title="Next" onPress={() => setStep(step + 1)} />
+                <Icon.Button
+                    name="arrowright"
+                    size={30}
+                    onPress={() => setStep(step + 1)}
+                />
             )}
-            {step == firstStep ? null : (
-                <Button title="Previous" onPress={() => setStep(step - 1)} />
-            )}
+            {createRecipeFormsName[step]}
             {createRecipeForms[step]}
-            {JSON.stringify(formik.values, null, 2)}
-        </div>
+        </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center"
+    }
+});
 
 export default CreateRecipeForm;
