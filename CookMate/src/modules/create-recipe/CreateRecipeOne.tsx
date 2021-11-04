@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, View, Text, Platform } from "react-native";
+import { TouchableOpacity, View, Text, Platform, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
 function CreateRecipeOne() {
@@ -20,14 +20,12 @@ function CreateRecipeOne() {
     }, []);
 
     const pickRecipePhotoFromLibrary = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
+        const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1
         });
-
-        console.log(result);
 
         if (!result.cancelled) {
             setImage(result.uri);
@@ -39,6 +37,12 @@ function CreateRecipeOne() {
             <TouchableOpacity onPress={pickRecipePhotoFromLibrary}>
                 <Text>Pick Recipe Image</Text>
             </TouchableOpacity>
+            {image && (
+                <Image
+                    source={{ uri: image }}
+                    style={{ width: 200, height: 200 }}
+                />
+            )}
         </View>
     );
 }
