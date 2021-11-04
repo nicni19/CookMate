@@ -2,14 +2,14 @@ import { Formik } from "formik";
 import React, { useState } from "react";
 import { FormCreateRecipeProps, RecipeIngredient } from "./CreateRecipeTypes";
 import {
-    Button,
     FlatList,
     NativeSyntheticEvent,
     NativeTouchEvent,
     SafeAreaView,
     TextInput,
     Text,
-    View
+    View,
+    TouchableOpacity
 } from "react-native";
 
 const initialValues: RecipeIngredient = {
@@ -74,14 +74,15 @@ const CreateRecipeFour: React.FC<FormCreateRecipeProps> = ({ formik }) => {
                             value={values.unit}
                             placeholder={"Unit"}
                         />
-                        <Button
+                        <TouchableOpacity
                             onPress={
                                 handleSubmit as unknown as (
                                     ev: NativeSyntheticEvent<NativeTouchEvent>
                                 ) => void
                             }
-                            title="Add Ingredient"
-                        />
+                        >
+                            <Text>Add Ingredient</Text>
+                        </TouchableOpacity>
                     </SafeAreaView>
                 )}
             </Formik>

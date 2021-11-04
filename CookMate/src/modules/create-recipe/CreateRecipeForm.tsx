@@ -51,8 +51,8 @@ function CreateRecipeForm() {
             })
         }),
         onSubmit: (values) => {
-            console.log(values);
-            console.log("test");
+            console.warn(values);
+            console.warn("test");
         }
     });
 

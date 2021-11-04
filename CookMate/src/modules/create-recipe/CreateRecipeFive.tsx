@@ -1,14 +1,14 @@
-import { Formik, FormikProps } from "formik";
+import { Formik } from "formik";
 import React, { useState } from "react";
 import {
-    Button,
     FlatList,
     NativeSyntheticEvent,
     NativeTouchEvent,
     SafeAreaView,
     TextInput,
     View,
-    Text
+    Text,
+    TouchableOpacity
 } from "react-native";
 import { FormCreateRecipeProps, RecipeInstruction } from "./CreateRecipeTypes";
 
@@ -59,14 +59,15 @@ const CreateRecipeFive: React.FC<FormCreateRecipeProps> = ({ formik }) => {
                             placeholder={"Instruction"}
                         />
 
-                        <Button
+                        <TouchableOpacity
                             onPress={
                                 handleSubmit as unknown as (
                                     ev: NativeSyntheticEvent<NativeTouchEvent>
                                 ) => void
                             }
-                            title="Add Instruction"
-                        />
+                        >
+                            <Text>Add Instruction</Text>
+                        </TouchableOpacity>
                     </SafeAreaView>
                 )}
             </Formik>
