@@ -23,24 +23,23 @@ const CreateRecipeFour: React.FC<FormCreateRecipeProps> = ({ formik }) => {
         RecipeIngredient[]
     >(formik.values.createRecipeFour.recipeIngredients);
 
+    const renderRecipeIngredientItems = ({
+        item
+    }: {
+        item: RecipeIngredient;
+    }) => (
+        <Text>{item.ingredient + " " + item.quantity + " " + item.unit}</Text>
+    );
+
     return (
         <View>
-            <View>
-                <FlatList
-                    data={recipeIngredients}
-                    renderItem={({ item }) =>
-                        item ? (
-                            <Text>
-                                {item.ingredient +
-                                    " " +
-                                    item.quantity +
-                                    " " +
-                                    item.unit}
-                            </Text>
-                        ) : null
-                    }
-                />
-            </View>
+            <FlatList
+                data={recipeIngredients}
+                renderItem={renderRecipeIngredientItems}
+                initialNumToRender={5}
+                maxToRenderPerBatch={10}
+                windowSize={10}
+            />
             <Formik
                 initialValues={initialValues}
                 onSubmit={(values) => {
