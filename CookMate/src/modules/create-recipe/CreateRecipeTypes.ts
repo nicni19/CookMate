@@ -1,7 +1,7 @@
 import { FormikProps } from "formik";
 
 export interface FormikCreateRecipeFormValues {
-    createRecipeImagePick: HTMLImageElement | null;
+    createRecipeImagePick: string | null;
     createRecipeInformation: {
         recipeName: string;
         recipeDescription: string;

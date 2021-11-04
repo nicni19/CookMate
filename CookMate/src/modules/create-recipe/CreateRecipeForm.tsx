@@ -4,7 +4,7 @@ import {
     StyleSheet,
     NativeSyntheticEvent,
     NativeTouchEvent,
-    View,
+    SafeAreaView,
     Text
 } from "react-native";
 import * as Yup from "yup";
@@ -57,7 +57,7 @@ function CreateRecipeForm() {
     });
 
     const createRecipeForms: JSX.Element[] = [
-        <CreateRecipeImagePick />,
+        <CreateRecipeImagePick formik={formik} />,
         <CreateRecipeInformation formik={formik} />,
         <CreateRecipeIngredient formik={formik} />,
         <CreateRecipeInstruction formik={formik} />
@@ -74,7 +74,7 @@ function CreateRecipeForm() {
     const lastStep = createRecipeForms.length - 1;
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {step == firstStep ? null : (
                 <Icon.Button
                     name="arrowleft"
@@ -103,7 +103,7 @@ function CreateRecipeForm() {
             )}
             {createRecipeFormsName[step]}
             {createRecipeForms[step]}
-        </View>
+        </SafeAreaView>
     );
 }
 

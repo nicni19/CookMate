@@ -48,7 +48,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({ formik }) => 
                     const updatedRecipeIngredients = recipeIngredients.slice();
                     updatedRecipeIngredients.push(values);
                     formik.setFieldValue(
-                        "createRecipeFour.recipeIngredients",
+                        "createRecipeIngredient.recipeIngredients",
                         updatedRecipeIngredients
                     );
                     setRecipeIngredients(updatedRecipeIngredients);

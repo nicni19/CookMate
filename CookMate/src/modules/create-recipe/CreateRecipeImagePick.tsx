@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity, View, Text, Platform, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { CreateRecipeFormProps } from "./CreateRecipeTypes";
 
-function CreateRecipeImagePick() {
-    const [image, setImage] = useState<string | null>(null);
-
+const CreateRecipeImagePick: React.FC<CreateRecipeFormProps> = ({ formik }) => {
     useEffect(() => {
         (async () => {
             if (Platform.OS !== "web") {
@@ -20,31 +19,33 @@ function CreateRecipeImagePick() {
     }, []);
 
     const pickRecipePhotoFromLibrary = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
+        const pickedImage = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1
         });
 
-        if (!result.cancelled) {
-            setImage(result.uri);
+        if (!pickedImage.cancelled) {
+            formik.setFieldValue("createRecipeImagePick", pickedImage.uri);
         }
     };
+
+    const currentPickedRecipeImage = formik.values.createRecipeImagePick;
 
     return (
         <View>
             <TouchableOpacity onPress={pickRecipePhotoFromLibrary}>
                 <Text>Pick Recipe Image</Text>
             </TouchableOpacity>
-            {image && (
+            {currentPickedRecipeImage && (
                 <Image
-                    source={{ uri: image }}
+                    source={{ uri: currentPickedRecipeImage }}
                     style={{ width: 200, height: 200 }}
                 />
             )}
         </View>
     );
-}
+};
 
 export default CreateRecipeImagePick;

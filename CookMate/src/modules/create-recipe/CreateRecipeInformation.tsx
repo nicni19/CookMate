@@ -9,7 +9,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({ formik }) =>
         <SafeAreaView>
             <TextInput
                 onChangeText={(value) =>
-                    formik.setFieldValue("createRecipeThree.recipeName", value)
+                    formik.setFieldValue("createRecipeInformation.recipeName", value)
                 }
                 value={formik.values.createRecipeInformation.recipeName}
                 placeholder={"Name of the recipe"}
@@ -18,7 +18,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({ formik }) =>
             <TextInput
                 onChangeText={(value) =>
                     formik.setFieldValue(
-                        "createRecipeThree.recipeDescription",
+                        "createRecipeInformation.recipeDescription",
                         value
                     )
                 }
@@ -28,7 +28,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({ formik }) =>
 
             <TextInput
                 onChangeText={(value) =>
-                    formik.setFieldValue("createRecipeThree.recipeTime", value)
+                    formik.setFieldValue("createRecipeInformation.recipeTime", value)
                 }
                 value={formik.values.createRecipeInformation.recipeTime}
                 placeholder={"Estimated cooking time"}
@@ -36,7 +36,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({ formik }) =>
             <TextInput
                 onChangeText={(value) =>
                     formik.setFieldValue(
-                        "createRecipeThree.recipePeople",
+                        "createRecipeInformation.recipePeople",
                         value
                     )
                 }

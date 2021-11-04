@@ -43,7 +43,7 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({ formik }) =>
                         recipeInstructions.slice();
                     updatedRecipeInstructions.push(values);
                     formik.setFieldValue(
-                        "createRecipeFive.recipeInstructions",
+                        "createRecipeInstruction.recipeInstructions",
                         updatedRecipeInstructions
                     );
                     setRecipeInstructions(updatedRecipeInstructions);
