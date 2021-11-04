@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import React, { useState } from "react";
-import { FormCreateRecipeProps, RecipeIngredient } from "./CreateRecipeTypes";
+import { CreateRecipeFormProps, RecipeIngredient } from "./CreateRecipeTypes";
 import {
     FlatList,
     NativeSyntheticEvent,
@@ -8,8 +8,8 @@ import {
     SafeAreaView,
     TextInput,
     Text,
-    View,
-    TouchableOpacity
+    TouchableOpacity,
+    View
 } from "react-native";
 
 const initialValues: RecipeIngredient = {
@@ -18,10 +18,10 @@ const initialValues: RecipeIngredient = {
     unit: ""
 };
 
-const CreateRecipeFour: React.FC<FormCreateRecipeProps> = ({ formik }) => {
+const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({ formik }) => {
     const [recipeIngredients, setRecipeIngredients] = useState<
         RecipeIngredient[]
-    >(formik.values.createRecipeFour.recipeIngredients);
+    >(formik.values.createRecipeIngredient.recipeIngredients);
 
     const renderRecipeIngredientItems = ({
         item
@@ -32,14 +32,16 @@ const CreateRecipeFour: React.FC<FormCreateRecipeProps> = ({ formik }) => {
     );
 
     return (
-        <View>
-            <FlatList
-                data={recipeIngredients}
-                renderItem={renderRecipeIngredientItems}
-                initialNumToRender={5}
-                maxToRenderPerBatch={10}
-                windowSize={10}
-            />
+        <SafeAreaView>
+            <View>
+                <FlatList
+                    data={recipeIngredients}
+                    renderItem={renderRecipeIngredientItems}
+                    initialNumToRender={5}
+                    maxToRenderPerBatch={10}
+                    windowSize={10}
+                />
+            </View>
             <Formik
                 initialValues={initialValues}
                 onSubmit={(values) => {
@@ -86,8 +88,8 @@ const CreateRecipeFour: React.FC<FormCreateRecipeProps> = ({ formik }) => {
                     </SafeAreaView>
                 )}
             </Formik>
-        </View>
+        </SafeAreaView>
     );
 };
 
-export default CreateRecipeFour;
+export default CreateRecipeIngredient;

@@ -8,25 +8,25 @@ import {
     Text
 } from "react-native";
 import * as Yup from "yup";
-import CreateRecipeFive from "./CreateRecipeFive";
-import CreateRecipeFour from "./CreateRecipeFour";
-import CreateRecipeOne from "./CreateRecipeOne";
-import CreateRecipeThree from "./CreateRecipeThree";
+import CreateRecipeInstruction from "./CreateRecipeInstruction";
+import CreateRecipeIngredient from "./CreateRecipeIngredient";
+import CreateRecipeImagePick from "./CreateRecipeImagePick";
+import CreateRecipeInformation from "./CreateRecipeInformation";
 import { FormikCreateRecipeFormValues } from "./CreateRecipeTypes";
 import Icon from "react-native-vector-icons/AntDesign";
 
 const initialValues: FormikCreateRecipeFormValues = {
-    createRecipeImage: null,
-    createRecipeThree: {
+    createRecipeImagePick: null,
+    createRecipeInformation: {
         recipeName: "",
         recipeDescription: "",
         recipeTime: "",
         recipePeople: ""
     },
-    createRecipeFour: {
+    createRecipeIngredient: {
         recipeIngredients: []
     },
-    createRecipeFive: {
+    createRecipeInstruction: {
         recipeInstructions: []
     }
 };
@@ -37,16 +37,16 @@ function CreateRecipeForm() {
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: Yup.object({
-            createRecipeThree: Yup.object({
+            createRecipeInformation: Yup.object({
                 recipeName: Yup.string().required(),
                 recipeDescription: Yup.string().required(),
                 recipeTime: Yup.number().required(),
                 recipePeople: Yup.number().required()
             }),
-            createRecipeFour: Yup.object({
+            createRecipeIngredient: Yup.object({
                 recipeIngredients: Yup.array()
             }),
-            createRecipeFive: Yup.object({
+            createRecipeInstruction: Yup.object({
                 recipeInstructions: Yup.array()
             })
         }),
@@ -57,10 +57,10 @@ function CreateRecipeForm() {
     });
 
     const createRecipeForms: JSX.Element[] = [
-        <CreateRecipeOne />,
-        <CreateRecipeThree formik={formik} />,
-        <CreateRecipeFour formik={formik} />,
-        <CreateRecipeFive formik={formik} />
+        <CreateRecipeImagePick />,
+        <CreateRecipeInformation formik={formik} />,
+        <CreateRecipeIngredient formik={formik} />,
+        <CreateRecipeInstruction formik={formik} />
     ];
 
     const createRecipeFormsName: JSX.Element[] = [

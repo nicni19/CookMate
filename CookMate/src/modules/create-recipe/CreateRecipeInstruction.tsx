@@ -6,20 +6,19 @@ import {
     NativeTouchEvent,
     SafeAreaView,
     TextInput,
-    View,
     Text,
     TouchableOpacity
 } from "react-native";
-import { FormCreateRecipeProps, RecipeInstruction } from "./CreateRecipeTypes";
+import { CreateRecipeFormProps, RecipeInstruction } from "./CreateRecipeTypes";
 
 const initialValues: RecipeInstruction = {
     instruction: ""
 };
 
-const CreateRecipeFive: React.FC<FormCreateRecipeProps> = ({ formik }) => {
+const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({ formik }) => {
     const [recipeInstructions, setRecipeInstructions] = useState<
         RecipeInstruction[]
-    >(formik.values.createRecipeFive.recipeInstructions);
+    >(formik.values.createRecipeInstruction.recipeInstructions);
 
     const renderRecipeInstructionItems = ({
         item
@@ -28,7 +27,7 @@ const CreateRecipeFive: React.FC<FormCreateRecipeProps> = ({ formik }) => {
     }) => <Text>{item.instruction}</Text>;
 
     return (
-        <View>
+        <SafeAreaView>
             <FlatList
                 data={recipeInstructions}
                 renderItem={renderRecipeInstructionItems}
@@ -71,8 +70,8 @@ const CreateRecipeFive: React.FC<FormCreateRecipeProps> = ({ formik }) => {
                     </SafeAreaView>
                 )}
             </Formik>
-        </View>
+        </SafeAreaView>
     );
 };
 
-export default CreateRecipeFive;
+export default CreateRecipeInstruction;

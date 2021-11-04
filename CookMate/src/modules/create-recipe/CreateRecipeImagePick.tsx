@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TouchableOpacity, View, Text, Platform, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-function CreateRecipeOne() {
+function CreateRecipeImagePick() {
     const [image, setImage] = useState<string | null>(null);
 
     useEffect(() => {
@@ -47,4 +47,4 @@ function CreateRecipeOne() {
     );
 }
 
-export default CreateRecipeOne;
+export default CreateRecipeImagePick;
