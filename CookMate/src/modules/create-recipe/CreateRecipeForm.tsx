@@ -64,10 +64,10 @@ function CreateRecipeForm() {
     ];
 
     const createRecipeFormsName: JSX.Element[] = [
-        <Text>"Select image of your dish"</Text>,
-        <Text>"Enter recipe details"</Text>,
-        <Text>"Enter recipe ingredients"</Text>,
-        <Text>"Enter recipe instructions"</Text>
+        <Text>Select image of your dish</Text>,
+        <Text>Enter recipe details</Text>,
+        <Text>Enter recipe ingredients</Text>,
+        <Text>Enter recipe instructions</Text>
     ];
 
     const firstStep = 0;
