@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { SafeAreaView, StyleSheet, View, FlatList, Text } from 'react-native';
 import Card from './Card';
 
-const DATA = ['TestCard', 'TestCard2', '3', '4', '5', '6']
+const DATA = ['TestCard', 'TestCard2', '3', '4', '5', '6','7','8','9','10']
 const cardComponents = DATA.map(type => <Card></Card>)
 
 class RecipeFeed extends Component {
@@ -48,14 +48,14 @@ class RecipeFeed extends Component {
                 <SafeAreaView style={this.styles.horizontalContainer}>
                 <FlatList
                     data={cardComponents}
-                    renderItem={item => <Card cardStyle={this.styles.horizontalCard} title="Lasagna" duration="2h" persons="4"/>}
+                    renderItem={item => <Card cardStyle={this.styles.horizontalCard} title="Lasagna" duration="2h" persons="4" imageUrl="https://www.modernhoney.com/wp-content/uploads/2019/08/Classic-Lasagna-14-scaled.jpg"/>}
                     horizontal={true}
                     />
                 </SafeAreaView>
                 <SafeAreaView style={this.styles.verticalContainer}>
                     <FlatList
                         data={cardComponents}
-                        renderItem={item => <Card cardStyle={this.styles.verticalCard} title="Lasagna 2" duration="4h" persons="8"/>}
+                        renderItem={item => <Card cardStyle={this.styles.verticalCard} title="Lasagna 2" duration="4h" persons="8" imageUrl="https://www.365daysofbakingandmore.com/wp-content/uploads/2011/02/Lasagna-FEATURE-500x453.jpg"/>}
                         numColumns={2}
                     />
                 </SafeAreaView>
