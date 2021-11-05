@@ -25,7 +25,7 @@ class Card extends React.Component<any,ICard> {
             <View style={this.props.cardStyle}>
                 <Image style={this.styles.image} source={{uri: this.props.imageUrl}}/>
                 <Text>{this.props.title}</Text>
-                <Text>{this.props.duration}</Text>
+                <Text>{this.props.duration} h</Text>
                 <Text>{this.props.persons} Person(s)</Text>
             </View>
         )

@@ -1,0 +1,40 @@
+{
+  "recipes": [
+    {
+      "title": "Lasagna",
+      "duration": 2,
+      "persons": 4,
+      "imageUrl": "https://www.modernhoney.com/wp-content/uploads/2019/08/Classic-Lasagna-14-scaled.jpg"
+    },
+    {
+      "title": "Pizza",
+      "duration": 1,
+      "persons": 6,
+      "imageUrl": "https://madensverden.dk/wp-content/uploads/2021/06/hjemmelavet-pizza.jpg"
+    },
+    {
+      "title": "Lasagna",
+      "duration": 2,
+      "persons": 4,
+      "imageUrl": "https://www.modernhoney.com/wp-content/uploads/2019/08/Classic-Lasagna-14-scaled.jpg"
+    },
+    {
+      "title": "Pizza",
+      "duration": 1,
+      "persons": 6,
+      "imageUrl": "https://madensverden.dk/wp-content/uploads/2021/06/hjemmelavet-pizza.jpg"
+    },
+    {
+      "title": "Lasagna",
+      "duration": 2,
+      "persons": 4,
+      "imageUrl": "https://www.modernhoney.com/wp-content/uploads/2019/08/Classic-Lasagna-14-scaled.jpg"
+    },
+    {
+      "title": "Pizza",
+      "duration": 1,
+      "persons": 6,
+      "imageUrl": "https://madensverden.dk/wp-content/uploads/2021/06/hjemmelavet-pizza.jpg"
+    }
+  ]
+}
