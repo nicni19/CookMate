@@ -1,0 +1,23 @@
+[
+    {
+        "id": "0",
+        "firstname": "Bassemand",
+        "lastname": "Boogie",
+        "cookbookId": "0",
+        "profile_picture": "splash.png"
+    },
+    {
+        "id": "1",
+        "firstname": "Karen",
+        "lastname": "Volf",
+        "cookbookId": "1",
+        "profile_picture": "icon.png"
+    },
+    {
+        "id": "2",
+        "firstname": "Ron F.",
+        "lastname": "Stampler",
+        "cookbookId": "2",
+        "profile_picture": "favicon.png"
+    }
+]

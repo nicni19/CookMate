@@ -3,12 +3,16 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import QueryService from './src/shared/services/QueryService';
+import { User } from './src/shared/view-models/User';
 
 export default function App() {
+  let userinfo = QueryService.users.getUser("0");
+
   return (
     <View style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
-
+      <Text>Cookbook info on user 1: ({userinfo.id}) {userinfo.firstName} {userinfo.lastName} following({userinfo.following.length})</Text>
       <StatusBar style="auto" />
     </View>
   );

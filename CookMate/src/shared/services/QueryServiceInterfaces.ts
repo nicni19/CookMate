@@ -3,6 +3,7 @@ import {UserSimple} from "../view-models/UserSimple";
 import {Cookbook} from "../view-models/Cookbook";
 import {Recipe} from "../view-models/Recipe";
 import {RecipeSimple} from "../view-models/RecipeSimple";
+import { CookbookSimple } from "../view-models/CookbookSimple";
 
 export interface IUserQueryService {
     /**
@@ -15,7 +16,7 @@ export interface IUserQueryService {
      * Retrieves the users following the cookbook which matches the cookbookId
      * @param cookbookId
      */
-    getFollowersOfCookbook(cookbookId: string) : UserSimple[];
+    getFollowersOfCookbook(cookbookId: string) : CookbookSimple[];
 }
 
 export interface ICookbookQueryService {

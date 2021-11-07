@@ -1,0 +1,27 @@
+[
+    {
+        "id": 0,
+        "userId": 0,
+        "cookbookId": 1
+    },
+    {
+        "id": 1,
+        "userId": 0,
+        "cookbookId": 2
+    },
+    {
+        "id": 2,
+        "userId": 1,
+        "cookbookId": 0
+    },
+    {
+        "id": 3,
+        "userId": 2,
+        "cookbookId": 0
+    },
+    {
+        "id": 4,
+        "userId": 2,
+        "cookbookId": 1
+    }
+]
