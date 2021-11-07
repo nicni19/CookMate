@@ -11,33 +11,34 @@ export default class QueryService {
     public static users : IUserQueryService = {
         getUser: function (userId: string): User {
             const data = require('../../../assets/data/user.db.json');
-            let { id, firstname, lastname, cookbookId } = data.find((item: any) => item.id == userId);
-            if(id) {
-                return new User(
-                    id,
-                    firstname,
-                    lastname,
-                    this.getFollowersOfCookbook(cookbookId)
-                )
-            }
-            return null!;
+            let { id, firstname, lastname, cookbookId } = data.find((item: any) => item.id == userId) || {}
+            return id && new User(
+                id,
+                firstname,
+                lastname,
+                this.getFollowersOfCookbook(cookbookId)
+            ) || null!
+        },
+        getUserSimple: function (userId: string): UserSimple {
+            const data = require('../../../assets/data/user.db.json');
+            let { id, firstname, lastname, profilepicture } = data.find((item: any) => item.id == userId) || {}
+
+            return id && new UserSimple(
+                id,
+                firstname,
+                lastname
+            ) || null
         },
         getFollowersOfCookbook: function (cookbookId: string): CookbookSimple[] {
             const data = require('../../../assets/data/follower_relation.db.json');
-            let cookbook = data
-                                .filter((item: any) => item.cookbookId == cookbookId)
-                                .map((item: any) => (
-                                    new CookbookSimple(
-                                        item['id'],
-                                        item['name'],
-                                        new UserSimple("","","")
-                                    )
-                                ));
-            console.log(cookbook)
-            if(cookbook) {
-                return cookbook;
-            }
-            return [];
+            return data.filter((item: any) => item.cookbookId == cookbookId)
+                       ?.map((item: any) => (
+                           new CookbookSimple(
+                               item['id'],
+                               item['name'],
+                               this.getUserSimple(item['owner'])
+                           )
+                       )) || null!;
         }
     };
 
