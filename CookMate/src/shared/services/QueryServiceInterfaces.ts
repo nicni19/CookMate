@@ -13,6 +13,12 @@ export interface IUserQueryService {
     getUser(userId: string) : User;
 
     /**
+     * Retrieves a user matching the userId
+     * @param userId
+     */
+    getUserSimple(userId: string) : UserSimple;
+
+    /**
      * Retrieves the users following the cookbook which matches the cookbookId
      * @param cookbookId
      */
