@@ -12,7 +12,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
-      <Text>Cookbook info on user 1: ({userinfo.id}) {userinfo.firstName} {userinfo.lastName} following({userinfo.following.length})</Text>
+      {userinfo && <Text>Cookbook info on user 1: ({userinfo.id}) {userinfo.firstName} {userinfo.lastName} following ({userinfo.following.length})</Text>}
       <StatusBar style="auto" />
     </View>
   );
