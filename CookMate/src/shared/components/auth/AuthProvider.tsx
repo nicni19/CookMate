@@ -4,12 +4,12 @@ import { User } from "./AuthType";
 
 export const AuthContext = React.createContext<{
     user: User;
-    login: () => void;
-    logout: () => void;
+    signIn: () => void;
+    signOut: () => void;
 }>({
     user: null,
-    login: () => {},
-    logout: () => {}
+    signIn: () => {},
+    signOut: () => {}
 });
 
 interface AuthProviderProps {}
@@ -20,7 +20,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         <AuthContext.Provider
             value={{
                 user,
-                login: async () => {
+                signIn: async () => {
                     // TODO: call IUserQuery: getUser(id)
                     const testUser = {
                         id: "1",
@@ -37,7 +37,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                         console.log(err);
                     }
                 },
-                logout: async () => {
+                signOut: async () => {
                     setUser(null);
                     try {
                         await AsyncStorage.removeItem("user");

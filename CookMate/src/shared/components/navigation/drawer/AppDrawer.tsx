@@ -2,6 +2,6 @@ import React from "react";
 
 interface Props {}
 
-export const AppTabs = (props: Props) => {
+export const AppDrawer = (props: Props) => {
     return <></>;
 };

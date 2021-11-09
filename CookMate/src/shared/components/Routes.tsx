@@ -9,21 +9,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "./auth/AuthProvider";
 import { Center } from "./style/Center";
 import { AuthStack } from "./navigation/stacks/AuthStack";
-import { AppTabs } from "./navigation/tabs/AppTabs";
+import { AppDrawer } from "./navigation/drawer/AppDrawer";
 
 interface RoutesProps {}
 
 export const Routes: React.FC<RoutesProps> = ({}) => {
-    const { user, login } = useContext(AuthContext);
+    const { user, signIn } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // check if the user is logged in or not
         AsyncStorage.getItem("user")
             .then((userString) => {
                 if (userString) {
                     // decode it
-                    login();
+                    signIn();
                 }
                 setLoading(false);
             })
@@ -42,7 +41,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
 
     return (
         <NavigationContainer>
-            {user ? <AppTabs /> : <AuthStack />}
+            {user ? <AppDrawer /> : <AuthStack />}
         </NavigationContainer>
     );
 };
