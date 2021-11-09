@@ -1,3 +1,4 @@
 export type AppParamList = {
-    Home: undefined;
+    HomeScreen: undefined;
+    CreateRecipeScreen: undefined;
 };

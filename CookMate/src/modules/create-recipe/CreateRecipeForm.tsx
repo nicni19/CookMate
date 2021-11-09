@@ -14,6 +14,7 @@ import CreateRecipeImagePick from "./CreateRecipeImagePick";
 import CreateRecipeInformation from "./CreateRecipeInformation";
 import { FormikCreateRecipeFormValues } from "./CreateRecipeTypes";
 import Icon from "react-native-vector-icons/AntDesign";
+import { Center } from "../../shared/components/style/Center";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImagePick: null,
@@ -74,46 +75,39 @@ function CreateRecipeForm() {
     const lastStep = createRecipeForms.length - 1;
 
     return (
-        <SafeAreaView style={styles.container}>
-            {step == firstStep ? null : (
-                <Icon.Button
-                    name="arrowleft"
-                    size={30}
-                    backgroundColor="transparent"
-                    onPress={() => setStep(step - 1)}
-                    iconStyle={{ color: "grey" }}
-                />
-            )}
-            {step == lastStep ? (
-                <Icon.Button
-                    name="check"
-                    size={30}
-                    onPress={
-                        formik.handleSubmit as unknown as (
-                            ev: NativeSyntheticEvent<NativeTouchEvent>
-                        ) => void
-                    }
-                />
-            ) : (
-                <Icon.Button
-                    name="arrowright"
-                    size={30}
-                    onPress={() => setStep(step + 1)}
-                />
-            )}
-            {createRecipeFormsName[step]}
-            {createRecipeForms[step]}
-        </SafeAreaView>
+        <Center>
+            <SafeAreaView>
+                {step == firstStep ? null : (
+                    <Icon.Button
+                        name="arrowleft"
+                        size={30}
+                        backgroundColor="transparent"
+                        onPress={() => setStep(step - 1)}
+                        iconStyle={{ color: "grey" }}
+                    />
+                )}
+                {step == lastStep ? (
+                    <Icon.Button
+                        name="check"
+                        size={30}
+                        onPress={
+                            formik.handleSubmit as unknown as (
+                                ev: NativeSyntheticEvent<NativeTouchEvent>
+                            ) => void
+                        }
+                    />
+                ) : (
+                    <Icon.Button
+                        name="arrowright"
+                        size={30}
+                        onPress={() => setStep(step + 1)}
+                    />
+                )}
+                {createRecipeFormsName[step]}
+                {createRecipeForms[step]}
+            </SafeAreaView>
+        </Center>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center"
-    }
-});
 
 export default CreateRecipeForm;
