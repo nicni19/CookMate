@@ -18,6 +18,7 @@ import { CreateRecipeNavProps } from "../../shared/components/navigation/param-l
 import { AntDesign } from "@expo/vector-icons";
 import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
 import { theme } from "../../shared/theme";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImagePick: null,
@@ -46,35 +47,40 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
 
     const headerNavOptions = {
         previous: () => (
-            <AntDesign.Button
-                name="arrowleft"
-                size={24}
-                color="black"
-                backgroundColor="transparent"
-                onPress={() => setStep(step - 1)}
-            />
+            <TouchableOpacity style={{ marginLeft: "20%" }}onPress={() => setStep(step - 1)}>
+                <AntDesign
+                    name="arrowleft"
+                    size={24}
+                    color="black"
+                    backgroundColor="transparent"
+                />
+            </TouchableOpacity>
         ),
         next: () => (
-            <AntDesign.Button
-                name="arrowright"
-                size={24}
-                color={theme.palette.secondaryColor}
-                backgroundColor="transparent"
-                onPress={() => setStep(step + 1)}
-            />
+            <TouchableOpacity onPress={() => setStep(step + 1)}>
+                <AntDesign.Button
+                    name="arrowright"
+                    size={24}
+                    color={theme.palette.secondaryColor}
+                    backgroundColor="transparent"
+                />
+            </TouchableOpacity>
         ),
         check: () => (
-            <AntDesign.Button
-                name="checkcircle"
-                size={24}
-                color={theme.palette.secondaryColor}
-                backgroundColor="transparent"
-                onPress={
+            <TouchableOpacity
+                onPress={() =>
                     formik.handleSubmit as unknown as (
                         ev: NativeSyntheticEvent<NativeTouchEvent>
                     ) => void
                 }
-            />
+            >
+                <AntDesign.Button
+                    name="checkcircle"
+                    size={24}
+                    color={theme.palette.secondaryColor}
+                    backgroundColor="transparent"
+                />
+            </TouchableOpacity>
         )
     };
 
@@ -141,11 +147,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
         <CreateRecipeInstruction formik={formik} />
     ];
 
-    return (
-        <View style={styles.root}>
-            {createRecipeForms[step]}
-        </View>
-    );
+    return <View style={styles.root}>{createRecipeForms[step]}</View>;
 };
 
 export default CreateRecipeForm;

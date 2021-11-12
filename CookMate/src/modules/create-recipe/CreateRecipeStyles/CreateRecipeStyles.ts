@@ -48,8 +48,10 @@ export const styles = StyleSheet.create({
         borderRadius: 6
     },
     recipeImage: {
-        height: "50%",
-        width: "70%"
+        flex: 1,
+        width: "100%",
+        height: "100%",
+        resizeMode: "contain"
     },
     arrowBtn: {}
 });
