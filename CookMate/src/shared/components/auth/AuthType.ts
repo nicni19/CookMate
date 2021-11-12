@@ -1,1 +1,1 @@
-export type User = null | { id: string; firstName: string; lastName: string };
+export type UserSession = null | { id: string; firstName: string; lastName: string };

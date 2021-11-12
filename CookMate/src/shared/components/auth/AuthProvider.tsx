@@ -1,39 +1,38 @@
 import React, { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { User } from "./AuthType";
-import { ILoginService } from "../../services/QueryServiceInterfaces";
+import { UserSession } from "./AuthType";
+import QueryService from "../../services/QueryService";
+import { User } from "../../view-models/User";
 
 export const AuthContext = React.createContext<{
-    user: User;
-    signIn: (username: string, password: string) => void;
+    user: UserSession;
+    signIn: (id: string | undefined) => void;
     signOut: () => void;
 }>({
     user: null,
-    signIn: (username: string, password: string) => {},
+    signIn: () => {},
     signOut: () => {}
 });
 
 interface AuthProviderProps {}
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [user, setUser] = useState<User>(null);
+    const [user, setUser] = useState<UserSession>(null);
     return (
         <AuthContext.Provider
             value={{
                 user,
-                signIn: async (username, password) => {
-                    // TODO: call IUserQuery: getUser(id)
-                    console.warn("Signed in", username, password);
-                    const testUser = {
-                        id: "1",
-                        firstName: "test",
-                        lastName: "test"
-                    };
-                    setUser(testUser);
+                signIn: async (id) => {
+                    const { getUser } = QueryService.users;
+                    const user: User = getUser(id as string);
+
+                    const userSession: UserSession = { id: user.id, firstName: user.firstName, lastName: user.lastName};
+                    console.warn(userSession);
+                    setUser(userSession);
                     try {
                         await AsyncStorage.setItem(
                             "user_session",
-                            JSON.stringify(testUser)
+                            JSON.stringify(userSession)
                         );
                     } catch (err) {
                         console.log(err);
@@ -42,7 +41,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 signOut: async () => {
                     setUser(null);
                     try {
-                        await AsyncStorage.removeItem("user");
+                        await AsyncStorage.removeItem("user_session");
                     } catch (err) {
                         console.log(err);
                     }

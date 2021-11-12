@@ -1,8 +1,10 @@
 import React from "react";
 import { Center } from "../../shared/components/style/Center";
 import {
+    KeyboardAvoidingView,
     NativeSyntheticEvent,
     NativeTouchEvent,
+    Platform,
     Text,
     TextInput,
     TouchableOpacity,
@@ -12,6 +14,7 @@ import { ISignUp } from "./UserLoginTypes";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { AuthNavProps } from "../../shared/components/navigation/param-lists/AuthParamList";
+import { styles } from "./UserStyles/UserLoginStyles";
 
 type SignUpProps = {} & AuthNavProps<"SignUp">;
 
@@ -41,15 +44,23 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
     };
 
     return (
-        <Center>
+        <View style={styles.root}>
             <Formik
                 initialValues={initialValues}
                 onSubmit={(values) => handleSubmit(values)}
                 validationSchema={validationSchema}
             >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <View>
+                    <KeyboardAvoidingView
+                        behavior={Platform.select({
+                            android: undefined,
+                            ios: "padding"
+                        })}
+                        enabled
+                        style={styles.form}
+                    >
                         <TextInput
+                            style={styles.textfield}
                             onChangeText={handleChange("username")}
                             onBlur={handleBlur("username")}
                             value={values.username}
@@ -57,6 +68,7 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
                         />
 
                         <TextInput
+                            style={styles.textfield}
                             onChangeText={handleChange("email")}
                             onBlur={handleBlur("email")}
                             value={values.email}
@@ -64,6 +76,7 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
                         />
 
                         <TextInput
+                            style={styles.textfield}
                             secureTextEntry={true}
                             onChangeText={handleChange("password")}
                             onBlur={handleBlur("password")}
@@ -72,6 +85,7 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
                         />
 
                         <TextInput
+                            style={styles.textfield}
                             secureTextEntry={true}
                             onChangeText={handleChange("confirmPassword")}
                             onBlur={handleBlur("confirmPassword")}
@@ -80,20 +94,26 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
                         />
 
                         <TouchableOpacity
+                            style={styles.button}
                             onPress={
                                 handleSubmit as unknown as (
                                     ev: NativeSyntheticEvent<NativeTouchEvent>
                                 ) => void
                             }
                         >
-                            <Text>Sign Up</Text>
+                            <Text style={styles.btnText}>Sign Up</Text>
                         </TouchableOpacity>
-                    </View>
+                        <TouchableOpacity
+                            style={{ flexBasis: "100%", marginTop: "5%" }}
+                            onPress={() => navigation.push("SignIn")}
+                        >
+                            <Text style={styles.secondaryBtnText}>
+                                Already have an account? Sign in
+                            </Text>
+                        </TouchableOpacity>
+                    </KeyboardAvoidingView>
                 )}
             </Formik>
-            <TouchableOpacity onPress={() => navigation.push("SignIn")}>
-                <Text>Already have an account? Sign in</Text>
-            </TouchableOpacity>
-        </Center>
+        </View>
     );
 };

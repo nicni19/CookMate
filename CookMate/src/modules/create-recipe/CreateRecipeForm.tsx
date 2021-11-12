@@ -1,20 +1,17 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
-import {
-    StyleSheet,
-    NativeSyntheticEvent,
-    NativeTouchEvent,
-    SafeAreaView,
-    Text
-} from "react-native";
+import React, { useLayoutEffect, useState } from "react";
+import { View, GestureResponderEvent } from "react-native";
 import * as Yup from "yup";
 import CreateRecipeInstruction from "./CreateRecipeInstruction";
 import CreateRecipeIngredient from "./CreateRecipeIngredient";
 import CreateRecipeImagePick from "./CreateRecipeImagePick";
 import CreateRecipeInformation from "./CreateRecipeInformation";
 import { FormikCreateRecipeFormValues } from "./CreateRecipeTypes";
-import Icon from "react-native-vector-icons/AntDesign";
-import { Center } from "../../shared/components/style/Center";
+import { CreateRecipeNavProps } from "../../shared/components/navigation/param-lists/CreateRecipeParamList";
+import { AntDesign } from "@expo/vector-icons";
+import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
+import { theme } from "../../shared/theme";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImagePick: null,
@@ -32,8 +29,88 @@ const initialValues: FormikCreateRecipeFormValues = {
     }
 };
 
-function CreateRecipeForm() {
+interface CreateRecipeFormProps {
+    createRecipeNavProps: CreateRecipeNavProps<"CreateRecipeScreen">;
+}
+
+const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
+    createRecipeNavProps
+}) => {
     const [step, setStep] = useState<number>(0);
+
+    const headerNavOptions = {
+        previous: () => (
+            <TouchableOpacity
+                style={{ marginLeft: "20%" }}
+                onPress={() => setStep(step - 1)}
+            >
+                <AntDesign
+                    name="arrowleft"
+                    size={24}
+                    color="black"
+                    backgroundColor="transparent"
+                />
+            </TouchableOpacity>
+        ),
+        next: () => (
+            <TouchableOpacity
+                style={{ marginRight: "20%" }}
+                onPress={() => setStep(step + 1)}
+            >
+                <AntDesign
+                    name="arrowright"
+                    size={24}
+                    color={theme.palette.secondaryColor}
+                    backgroundColor="transparent"
+                />
+            </TouchableOpacity>
+        ),
+        check: () => (
+            <TouchableOpacity
+                style={{ marginRight: "20%" }}
+                onPress={
+                    formik.handleSubmit as unknown as ((
+                        event: GestureResponderEvent
+                    ) => void) &
+                        (() => void)
+                }
+            >
+                <AntDesign
+                    name="checkcircle"
+                    size={24}
+                    color={theme.palette.secondaryColor}
+                    backgroundColor="transparent"
+                />
+            </TouchableOpacity>
+        )
+    };
+
+    useLayoutEffect(() => {
+        createRecipeNavProps.navigation.setOptions({
+            headerTitle: createRecipeFormsName[step]
+        });
+
+        const firstStep = 0;
+        const lastStep = createRecipeForms.length - 1;
+        {
+            step == firstStep
+                ? createRecipeNavProps.navigation.setOptions({
+                      headerLeft: undefined
+                  })
+                : createRecipeNavProps.navigation.setOptions({
+                      headerLeft: headerNavOptions.previous
+                  });
+        }
+        {
+            step == lastStep
+                ? createRecipeNavProps.navigation.setOptions({
+                      headerRight: headerNavOptions.check
+                  })
+                : createRecipeNavProps.navigation.setOptions({
+                      headerRight: headerNavOptions.next
+                  });
+        }
+    }, [createRecipeNavProps.navigation, step]);
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -52,10 +129,17 @@ function CreateRecipeForm() {
             })
         }),
         onSubmit: (values) => {
+            formik.resetForm();
             console.warn(values);
-            console.warn("test");
         }
     });
+
+    const createRecipeFormsName: string[] = [
+        "Select image of your dish",
+        "Enter recipe details",
+        "Enter recipe ingredients",
+        "Enter recipe instructions"
+    ];
 
     const createRecipeForms: JSX.Element[] = [
         <CreateRecipeImagePick formik={formik} />,
@@ -64,50 +148,7 @@ function CreateRecipeForm() {
         <CreateRecipeInstruction formik={formik} />
     ];
 
-    const createRecipeFormsName: JSX.Element[] = [
-        <Text>Select image of your dish</Text>,
-        <Text>Enter recipe details</Text>,
-        <Text>Enter recipe ingredients</Text>,
-        <Text>Enter recipe instructions</Text>
-    ];
-
-    const firstStep = 0;
-    const lastStep = createRecipeForms.length - 1;
-
-    return (
-        <Center>
-            <SafeAreaView>
-                {step == firstStep ? null : (
-                    <Icon.Button
-                        name="arrowleft"
-                        size={30}
-                        backgroundColor="transparent"
-                        onPress={() => setStep(step - 1)}
-                        iconStyle={{ color: "grey" }}
-                    />
-                )}
-                {step == lastStep ? (
-                    <Icon.Button
-                        name="check"
-                        size={30}
-                        onPress={
-                            formik.handleSubmit as unknown as (
-                                ev: NativeSyntheticEvent<NativeTouchEvent>
-                            ) => void
-                        }
-                    />
-                ) : (
-                    <Icon.Button
-                        name="arrowright"
-                        size={30}
-                        onPress={() => setStep(step + 1)}
-                    />
-                )}
-                {createRecipeFormsName[step]}
-                {createRecipeForms[step]}
-            </SafeAreaView>
-        </Center>
-    );
-}
+    return <View style={styles.root}>{createRecipeForms[step]}</View>;
+};
 
 export default CreateRecipeForm;

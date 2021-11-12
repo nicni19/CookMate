@@ -1,21 +1,38 @@
-import { Formik, FormikProps } from "formik";
-import * as yup from "yup";
 import React from "react";
-import { SafeAreaView, TextInput } from "react-native";
+import { TextInput, View } from "react-native";
 import { CreateRecipeFormProps } from "./CreateRecipeTypes";
+import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
 
-const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({ formik }) => {
+const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
+    formik
+}) => {
     return (
-        <SafeAreaView>
+        <View style={styles.informationForm}>
             <TextInput
+                style={[
+                    styles.textfield,
+                    { flexBasis: "100%", marginBottom: "5%", marginTop: "5%" }
+                ]}
                 onChangeText={(value) =>
-                    formik.setFieldValue("createRecipeInformation.recipeName", value)
+                    formik.setFieldValue(
+                        "createRecipeInformation.recipeName",
+                        value
+                    )
                 }
                 value={formik.values.createRecipeInformation.recipeName}
                 placeholder={"Name of the recipe"}
             />
 
             <TextInput
+                style={[
+                    styles.textfield,
+                    {
+                        flexBasis: "100%",
+                        height: "30%",
+                        marginBottom: "5%",
+                        marginTop: "5%"
+                    }
+                ]}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipeDescription",
@@ -24,16 +41,29 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({ formik }) =>
                 }
                 value={formik.values.createRecipeInformation.recipeDescription}
                 placeholder={"Description"}
+                multiline={true}
+                numberOfLines={20}
             />
 
             <TextInput
+                style={[
+                    styles.textfield,
+                    { flexBasis: "100%", marginBottom: "5%", marginTop: "5%" }
+                ]}
                 onChangeText={(value) =>
-                    formik.setFieldValue("createRecipeInformation.recipeTime", value)
+                    formik.setFieldValue(
+                        "createRecipeInformation.recipeTime",
+                        value
+                    )
                 }
                 value={formik.values.createRecipeInformation.recipeTime}
                 placeholder={"Estimated cooking time"}
             />
             <TextInput
+                style={[
+                    styles.textfield,
+                    { flexBasis: "100%", marginBottom: "5%", marginTop: "5%" }
+                ]}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipePeople",
@@ -43,7 +73,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({ formik }) =>
                 value={formik.values.createRecipeInformation.recipePeople}
                 placeholder={"For how many people"}
             />
-        </SafeAreaView>
+        </View>
     );
 };
 

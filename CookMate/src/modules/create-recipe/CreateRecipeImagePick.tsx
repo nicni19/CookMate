@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { TouchableOpacity, View, Text, Platform, Image } from "react-native";
+import React, { useEffect } from "react";
+import { TouchableOpacity, Platform, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { CreateRecipeFormProps } from "./CreateRecipeTypes";
+import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { theme } from "../../shared/theme";
 
 const CreateRecipeImagePick: React.FC<CreateRecipeFormProps> = ({ formik }) => {
     useEffect(() => {
@@ -34,17 +37,23 @@ const CreateRecipeImagePick: React.FC<CreateRecipeFormProps> = ({ formik }) => {
     const currentPickedRecipeImage = formik.values.createRecipeImagePick;
 
     return (
-        <View>
-            <TouchableOpacity onPress={pickRecipePhotoFromLibrary}>
-                <Text>Pick Recipe Image</Text>
-            </TouchableOpacity>
-            {currentPickedRecipeImage && (
+        <TouchableOpacity
+            style={styles.imagePicker}
+            onPress={pickRecipePhotoFromLibrary}
+        >
+            {currentPickedRecipeImage ? (
                 <Image
                     source={{ uri: currentPickedRecipeImage }}
-                    style={{ width: 200, height: 200 }}
+                    style={styles.recipeImage}
+                />
+            ) : (
+                <FontAwesome5
+                    name="image"
+                    color={theme.palette.secondaryColor}
+                    size={40}
                 />
             )}
-        </View>
+        </TouchableOpacity>
     );
 };
 
