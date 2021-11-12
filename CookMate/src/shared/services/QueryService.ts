@@ -1,4 +1,4 @@
-import { ICookbookQueryService, IRecipeQueryService, IUserQueryService } from "./QueryServiceInterfaces";
+import {ICookbookQueryService, ILoginService, IRecipeQueryService, IUserQueryService} from "./QueryServiceInterfaces";
 import { User } from "../view-models/User";
 import { UserSimple } from "../view-models/UserSimple";
 import { Cookbook } from "../view-models/Cookbook";
@@ -104,4 +104,12 @@ export default class QueryService {
             throw new Error("Function not implemented.");
         }
     };
+
+    public static authentication : ILoginService = {
+        requestLogin(username: string, password: string): boolean {
+            const data = require('../../../assets/data/user.db.json');
+
+            return !!data.find((user: any) => user.username == username && user.password == password);
+        }
+    }
 }
