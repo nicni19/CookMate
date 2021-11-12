@@ -13,6 +13,7 @@ import {
     Platform
 } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
 
 const initialValues: RecipeIngredient = {
     ingredient: "",
@@ -40,9 +41,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
     return (
         <View
             style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center"
+                flex: 1
             }}
         >
             <FlatList
@@ -73,38 +72,49 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                             ios: "padding"
                         })}
                         enabled
-                        style={{ flex: 1 }}
+                        style={{
+                            flex: 1,
+                            width: "100%"
+                        }}
                         keyboardVerticalOffset={headerHeight}
                     >
-                        <TextInput
-                            onChangeText={handleChange("ingredient")}
-                            onBlur={handleBlur("ingredient")}
-                            value={values.ingredient}
-                            placeholder={"Ingredient"}
-                        />
+                        <View style={styles.form}>
+                            <TextInput
+                                style={styles.textfield}
+                                onChangeText={handleChange("ingredient")}
+                                onBlur={handleBlur("ingredient")}
+                                value={values.ingredient}
+                                placeholder={"Ingredient"}
+                            />
 
-                        <TextInput
-                            onChangeText={handleChange("quantity")}
-                            onBlur={handleBlur("quantity")}
-                            value={values.quantity}
-                            placeholder={"Quantity"}
-                        />
+                            <TextInput
+                                style={styles.textfield}
+                                onChangeText={handleChange("quantity")}
+                                onBlur={handleBlur("quantity")}
+                                value={values.quantity}
+                                placeholder={"Quantity"}
+                            />
 
-                        <TextInput
-                            onChangeText={handleChange("unit")}
-                            onBlur={handleBlur("unit")}
-                            value={values.unit}
-                            placeholder={"Unit"}
-                        />
-                        <TouchableOpacity
-                            onPress={
-                                handleSubmit as unknown as (
-                                    ev: NativeSyntheticEvent<NativeTouchEvent>
-                                ) => void
-                            }
-                        >
-                            <Text>Add Ingredient</Text>
-                        </TouchableOpacity>
+                            <TextInput
+                                style={styles.textfield}
+                                onChangeText={handleChange("unit")}
+                                onBlur={handleBlur("unit")}
+                                value={values.unit}
+                                placeholder={"Unit"}
+                            />
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={
+                                    handleSubmit as unknown as (
+                                        ev: NativeSyntheticEvent<NativeTouchEvent>
+                                    ) => void
+                                }
+                            >
+                                <Text style={styles.btnText}>
+                                    Add Ingredient
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </KeyboardAvoidingView>
                 )}
             </Formik>

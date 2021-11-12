@@ -3,6 +3,7 @@ import * as yup from "yup";
 import React from "react";
 import { SafeAreaView, TextInput, View } from "react-native";
 import { CreateRecipeFormProps } from "./CreateRecipeTypes";
+import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
 
 const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
     formik
@@ -16,6 +17,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
             }}
         >
             <TextInput
+                style={styles.textfield}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipeName",
@@ -27,6 +29,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
             />
 
             <TextInput
+                style={styles.textfield}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipeDescription",
@@ -38,6 +41,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
             />
 
             <TextInput
+                style={styles.textfield}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipeTime",
@@ -48,6 +52,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
                 placeholder={"Estimated cooking time"}
             />
             <TextInput
+                style={styles.textfield}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipePeople",

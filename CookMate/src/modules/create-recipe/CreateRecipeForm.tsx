@@ -14,9 +14,9 @@ import CreateRecipeIngredient from "./CreateRecipeIngredient";
 import CreateRecipeImagePick from "./CreateRecipeImagePick";
 import CreateRecipeInformation from "./CreateRecipeInformation";
 import { FormikCreateRecipeFormValues } from "./CreateRecipeTypes";
-import { Center } from "../../shared/components/style/Center";
 import { CreateRecipeNavProps } from "../../shared/components/navigation/param-lists/CreateRecipeParamList";
 import { AntDesign } from "@expo/vector-icons";
+import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImagePick: null,
@@ -147,7 +147,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
     ];
 
     return (
-        <View style={{ width: "100%", height: "100%" }}>
+        <View style={styles.root}>
             {createRecipeForms[step]}
         </View>
     );

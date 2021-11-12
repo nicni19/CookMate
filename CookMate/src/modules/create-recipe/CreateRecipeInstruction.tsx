@@ -14,6 +14,7 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { CreateRecipeFormProps, RecipeInstruction } from "./CreateRecipeTypes";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
 
 const initialValues: RecipeInstruction = {
     instruction: ""
@@ -74,11 +75,12 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                             ios: "padding"
                         })}
                         enabled
-                        style={{ flex: 1 }}
+                        style={{ flex: 1, width: "100%" }}
                         keyboardVerticalOffset={headerHeight}
                     >
-                        <ScrollView>
+                        <View style={styles.form}>
                             <TextInput
+                                style={styles.textfield}
                                 onChangeText={handleChange("instruction")}
                                 onBlur={handleBlur("instruction")}
                                 value={values.instruction}
@@ -86,15 +88,18 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                             />
 
                             <TouchableOpacity
+                                style={styles.button}
                                 onPress={
                                     handleSubmit as unknown as (
                                         ev: NativeSyntheticEvent<NativeTouchEvent>
                                     ) => void
                                 }
                             >
-                                <Text>Add Instruction</Text>
+                                <Text style={styles.btnText}>
+                                    Add Instruction
+                                </Text>
                             </TouchableOpacity>
-                        </ScrollView>
+                        </View>
                     </KeyboardAvoidingView>
                 )}
             </Formik>
