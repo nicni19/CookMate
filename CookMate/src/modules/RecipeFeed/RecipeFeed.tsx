@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { SafeAreaView, StyleSheet, View, FlatList, Text } from 'react-native';
 import Card from './Card';
-import data from './recipes.json'
+import data from './recipes.json';
 
 class RecipeFeed extends Component {
     styles = StyleSheet.create({
@@ -17,8 +17,7 @@ class RecipeFeed extends Component {
             alignItems: "center",
         },
         verticalCard: {
-            height: 170,
-            width: 118,
+            width: "45%",
             margin: 5,
             borderWidth: 0,
             borderRadius: 15,
@@ -35,6 +34,7 @@ class RecipeFeed extends Component {
         verticalContainer: {
             width: "100%",
             margin: 0,
+            marginLeft: "2%",
             borderWidth: 0,
             flex: 3,
             alignSelf: "center",
@@ -45,12 +45,13 @@ class RecipeFeed extends Component {
             <View>
                 <SafeAreaView style={this.styles.horizontalContainer}>
                     <FlatList
-                        data={data.recipes}
-                        renderItem={({item}) => <Card cardStyle={this.styles.horizontalCard} title={item.title} duration={item.duration} persons={item.persons} imageUrl={item.imageUrl}/>}
+                        data={data.cookbooks}
+                        renderItem={({item}) => <Card cardStyle={this.styles.horizontalCard} title={item.title} duration={item.author} imageUrl={item.imageUrl}/>}
                         horizontal={true}
                     />
                 </SafeAreaView>
                 <SafeAreaView style={this.styles.verticalContainer}>
+                    <Text>News from cookbooks you follow</Text>
                     <FlatList
                         data={data.recipes}
                         renderItem={({item}) => <Card cardStyle={this.styles.verticalCard} title={item.title} duration={item.duration} persons={item.persons} imageUrl={item.imageUrl}/>}

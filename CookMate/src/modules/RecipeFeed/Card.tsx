@@ -6,7 +6,7 @@ interface ICard {
     imageUrl: string
     title: string
     duration: string
-    persons: number
+    persons?: number
 }
 
 class Card extends React.Component<any,ICard> {
@@ -26,7 +26,7 @@ class Card extends React.Component<any,ICard> {
                 <Image style={this.styles.image} source={{uri: this.props.imageUrl}}/>
                 <Text>{this.props.title}</Text>
                 <Text>{this.props.duration} h</Text>
-                <Text>{this.props.persons} Person(s)</Text>
+                {this.props.persons && <Text>{this.props.persons} Person(s)</Text>}
             </View>
         )
     }

@@ -35,6 +35,50 @@
       "duration": 1,
       "persons": 6,
       "imageUrl": "https://madensverden.dk/wp-content/uploads/2021/06/hjemmelavet-pizza.jpg"
+    },
+    {
+      "title": "Lasagna",
+      "duration": 2,
+      "persons": 4,
+      "imageUrl": "https://www.modernhoney.com/wp-content/uploads/2019/08/Classic-Lasagna-14-scaled.jpg"
+    },
+    {
+      "title": "Pizza",
+      "duration": 1,
+      "persons": 6,
+      "imageUrl": "https://madensverden.dk/wp-content/uploads/2021/06/hjemmelavet-pizza.jpg"
+    }
+  ],
+  "cookbooks": [
+    {
+      "title": "Twin Weeks",
+      "author": "Laura Palmer",
+      "imageUrl": "https://static.wikia.nocookie.net/twinpeaks/images/e/ef/Laura_Palmer%2C_the_Queen_Of_Hearts.jpg/revision/latest?cb=20170615044123"
+    },
+    {
+      "title": "Twin Weeks",
+      "author": "Laura Palmer",
+      "imageUrl": "https://static.wikia.nocookie.net/twinpeaks/images/e/ef/Laura_Palmer%2C_the_Queen_Of_Hearts.jpg/revision/latest?cb=20170615044123"
+    },
+    {
+      "title": "Twin Weeks",
+      "author": "Laura Palmer",
+      "imageUrl": "https://static.wikia.nocookie.net/twinpeaks/images/e/ef/Laura_Palmer%2C_the_Queen_Of_Hearts.jpg/revision/latest?cb=20170615044123"
+    },
+    {
+      "title": "Twin Weeks",
+      "author": "Laura Palmer",
+      "imageUrl": "https://static.wikia.nocookie.net/twinpeaks/images/e/ef/Laura_Palmer%2C_the_Queen_Of_Hearts.jpg/revision/latest?cb=20170615044123"
+    },
+    {
+      "title": "Twin Weeks",
+      "author": "Laura Palmer",
+      "imageUrl": "https://static.wikia.nocookie.net/twinpeaks/images/e/ef/Laura_Palmer%2C_the_Queen_Of_Hearts.jpg/revision/latest?cb=20170615044123"
+    },
+    {
+      "title": "Twin Weeks",
+      "author": "Laura Palmer",
+      "imageUrl": "https://static.wikia.nocookie.net/twinpeaks/images/e/ef/Laura_Palmer%2C_the_Queen_Of_Hearts.jpg/revision/latest?cb=20170615044123"
     }
   ]
 }
