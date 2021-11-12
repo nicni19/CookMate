@@ -50,8 +50,7 @@ export const styles = StyleSheet.create({
     recipeImage: {
         flex: 1,
         width: "100%",
-        height: "100%",
-        resizeMode: "contain"
+        height: "100%"
     },
     arrowBtn: {}
 });

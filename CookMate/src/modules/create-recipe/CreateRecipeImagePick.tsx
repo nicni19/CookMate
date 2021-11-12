@@ -41,20 +41,18 @@ const CreateRecipeImagePick: React.FC<CreateRecipeFormProps> = ({ formik }) => {
             style={styles.imagePicker}
             onPress={pickRecipePhotoFromLibrary}
         >
-            <View>
+            {currentPickedRecipeImage ? (
+                <Image
+                    source={{ uri: currentPickedRecipeImage }}
+                    style={styles.recipeImage}
+                />
+            ) : (
                 <FontAwesome5
                     name="image"
                     color={theme.palette.secondaryColor}
                     size={40}
                 />
-
-                {currentPickedRecipeImage && (
-                    <Image
-                        source={{ uri: currentPickedRecipeImage }}
-                        style={styles.recipeImage}
-                    />
-                )}
-            </View>
+            )}
         </TouchableOpacity>
     );
 };
