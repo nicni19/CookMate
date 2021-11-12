@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { theme } from "../../../shared/theme";
 
 export const styles = StyleSheet.create({
     root: {
@@ -32,7 +33,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "space-between",
         alignContent: "center",
-        backgroundColor: "#EEEEEE",
+        backgroundColor: theme.palette.backgroundColor,
         padding: "3%"
     },
     arrowBtn: {}

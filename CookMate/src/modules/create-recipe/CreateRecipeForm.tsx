@@ -64,7 +64,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
             <AntDesign.Button
                 name="arrowright"
                 size={24}
-                color={theme.secondaryColor}
+                color={theme.palette.secondaryColor}
                 backgroundColor="transparent"
                 onPress={() => setStep(step + 1)}
             />
@@ -73,7 +73,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
             <AntDesign.Button
                 name="checkcircle"
                 size={24}
-                color={theme.secondaryColor}
+                color={theme.palette.secondaryColor}
                 backgroundColor="transparent"
                 onPress={
                     formik.handleSubmit as unknown as (

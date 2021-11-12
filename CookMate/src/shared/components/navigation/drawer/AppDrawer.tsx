@@ -17,7 +17,7 @@ export const AppDrawer: React.FC<AppDrawerProps> = () => {
             screenOptions={{
                 headerTitle: "CookMate",
                 headerStyle: {
-                    backgroundColor: theme.primaryColor
+                    backgroundColor: theme.palette.primaryColor
                 },
                 headerTitleStyle: {
                     fontWeight: "300",
