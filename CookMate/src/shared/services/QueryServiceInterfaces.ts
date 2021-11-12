@@ -22,7 +22,7 @@ export interface IUserQueryService {
      * Retrieves the users following the cookbook which matches the cookbookId
      * @param cookbookId
      */
-    getFollowersOfCookbook(cookbookId: string) : CookbookSimple[];
+    getFollowersOfCookbook(cookbookId: string) : UserSimple[];
 }
 
 export interface ICookbookQueryService {
@@ -37,6 +37,8 @@ export interface ICookbookQueryService {
      * @param userId
      */
     getUserCookbook(userId : string) : Cookbook;
+
+    getCookbookSimple(userId: string) : CookbookSimple[];
 }
 
 export interface IRecipeQueryService {

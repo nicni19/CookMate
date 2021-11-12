@@ -7,7 +7,11 @@ import QueryService from './src/shared/services/QueryService';
 import { User } from './src/shared/view-models/User';
 
 export default function App() {
-  let userinfo = QueryService.users.getUser("0");
+  let userinfo = QueryService.users.getUser("1");
+
+  let cookbook = QueryService.cookbooks.getUserCookbook(userinfo.id)
+
+  //console.log(userinfo)
 
   return (
     <View style={styles.container}>
