@@ -8,7 +8,8 @@ import {
     Text,
     TouchableOpacity,
     View,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Platform
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { CreateRecipeFormProps, RecipeInstruction } from "./CreateRecipeTypes";
@@ -62,7 +63,10 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
             >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
                     <KeyboardAvoidingView
-                        behavior="padding"
+                        behavior={Platform.select({
+                            android: undefined,
+                            ios: "padding"
+                        })}
                         enabled
                         style={{ flex: 1 }}
                         keyboardVerticalOffset={headerHeight}
