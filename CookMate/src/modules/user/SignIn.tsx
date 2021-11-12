@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
     KeyboardAvoidingView,
     NativeSyntheticEvent,
@@ -15,6 +15,8 @@ import { ISignIn } from "./UserLoginTypes";
 import * as Yup from "yup";
 import { AuthNavProps } from "../../shared/components/navigation/param-lists/AuthParamList";
 import { styles } from "./UserStyles/UserLoginStyles";
+import QueryService from "../../shared/services/QueryService";
+import { Center } from "../../shared/components/style/Center";
 
 type SignInProps = {} & AuthNavProps<"SignIn">;
 
@@ -29,13 +31,21 @@ const validationSchema = Yup.object({
 });
 
 export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
+    const [signInError, setSignInError] = useState<string | null>(null);
     const { signIn } = useContext(AuthContext);
 
     const handleSubmit = (values: ISignIn) => {
-        // TODO: call ILoginService authenticate (return id) else -1
         const { username, password } = values;
-        // TODO: signIn with id if authenticated else error
-        signIn("1");
+        const { requestLogin } = QueryService.authentication;
+        
+        const userId = requestLogin(username, password);
+
+        if(userId) {
+            signIn(userId);
+        } else {
+            setSignInError("Username and password don't match");
+            console.warn(signInError);
+        }    
     };
 
     return (

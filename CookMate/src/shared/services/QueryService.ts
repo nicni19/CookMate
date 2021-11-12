@@ -19,11 +19,14 @@ export default class QueryService {
             let { id, firstname, lastname, cookbookId } = data.find((item: any) => item.id == userId) || {}
 
             let cookbookFollowers: CookbookSimple[] = [];
+            //TODO: The following function is undefined
+            /*
             this.getFollowersOfCookbook(cookbookId).forEach((user: any) => {
                 cookbookFollowers.push(
                     QueryService.cookbooks.getUserCookbook(user.id)
                 )
             });
+            */
             
             
             // If "id" is not null, return a new User
@@ -130,10 +133,15 @@ export default class QueryService {
     };
 
     public static authentication : ILoginService = {
-        requestLogin(username: string, password: string): boolean {
+        requestLogin(username: string, password: string): string | null {
             const data = require('../../../assets/data/user.db.json');
 
-            return !!data.find((user: any) => user.username == username && user.password == password);
+            const user = data.find((user: any) => user.username == username && user.password == password);
+            if(user) {
+                return user.id;
+            } else {
+                return null;
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserSession } from "./AuthType";
+import QueryService from "../../services/QueryService";
+import { User } from "../../view-models/User";
 
 export const AuthContext = React.createContext<{
     user: UserSession;
@@ -21,17 +23,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             value={{
                 user,
                 signIn: async (id) => {
-                    // TODO: call IUserQuery: getUser(id)
-                    const testUser: UserSession = {
-                        id: "1",
-                        firstName: "test",
-                        lastName: "test"
-                    };
-                    setUser(testUser);
+                    const { getUser } = QueryService.users;
+                    const user: User = getUser(id as string);
+
+                    const userSession: UserSession = { id: user.id, firstName: user.firstName, lastName: user.lastName};
+                    console.warn(userSession);
+                    setUser(userSession);
                     try {
                         await AsyncStorage.setItem(
                             "user_session",
-                            JSON.stringify(testUser)
+                            JSON.stringify(userSession)
                         );
                     } catch (err) {
                         console.log(err);
@@ -40,7 +41,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 signOut: async () => {
                     setUser(null);
                     try {
-                        await AsyncStorage.removeItem("user");
+                        await AsyncStorage.removeItem("user_session");
                     } catch (err) {
                         console.log(err);
                     }
