@@ -129,6 +129,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
             })
         }),
         onSubmit: (values) => {
+            formik.resetForm();
             console.warn(values);
         }
     });
