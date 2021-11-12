@@ -52,3 +52,12 @@ export interface IRecipeQueryService {
      */
     addRecipe(cookbookId : string, recipe : Recipe) : void;
 }
+
+export interface ILoginService {
+    /**
+     * Requests login based on username and password
+     * @param username
+     * @param password
+     */
+    requestLogin(username : string, password : string) : boolean;
+}
