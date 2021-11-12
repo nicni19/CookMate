@@ -21,12 +21,10 @@ const initialValues: ISignIn = {
     password: ""
 };
 
-const validationSchema = {
-    validationSchema: Yup.object({
-        username: Yup.string().required(),
-        password: Yup.string().required()
-    })
-};
+const validationSchema = Yup.object({
+    username: Yup.string().required(),
+    password: Yup.string().required()
+});
 
 export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
     const { signIn } = useContext(AuthContext);
@@ -45,15 +43,15 @@ export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
                     <View>
                         <TextInput
-                            onChangeText={handleChange}
-                            onBlur={handleBlur}
+                            onChangeText={handleChange("username")}
+                            onBlur={handleBlur("username")}
                             value={values.username}
                             placeholder={"Username"}
                         />
 
                         <TextInput
-                            onChangeText={handleChange}
-                            onBlur={handleBlur}
+                            onChangeText={handleChange("password")}
+                            onBlur={handleBlur("password")}
                             value={values.password}
                             placeholder={"Password"}
                         />

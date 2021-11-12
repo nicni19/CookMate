@@ -22,14 +22,12 @@ const initialValues: ISignUp = {
     confirmPassword: ""
 };
 
-const validationSchema = {
-    validationSchema: Yup.object({
-        username: Yup.string().required(),
-        email: Yup.string().email().required(),
-        password: Yup.string().required(),
-        confirmedPassword: Yup.string().required()
-    })
-};
+const validationSchema = Yup.object({
+    username: Yup.string().required(),
+    email: Yup.string().email().required(),
+    password: Yup.string().required(),
+    confirmedPassword: Yup.string().required()
+});
 
 export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
     const handleSubmit = (values: ISignUp) => {
@@ -46,29 +44,29 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
                     <View>
                         <TextInput
-                            onChangeText={handleChange}
-                            onBlur={handleBlur}
+                            onChangeText={handleChange("username")}
+                            onBlur={handleBlur("username")}
                             value={values.username}
                             placeholder={"Username"}
                         />
 
                         <TextInput
-                            onChangeText={handleChange}
-                            onBlur={handleBlur}
+                            onChangeText={handleChange("email")}
+                            onBlur={handleBlur("email")}
                             value={values.email}
                             placeholder={"Email"}
                         />
 
                         <TextInput
-                            onChangeText={handleChange}
-                            onBlur={handleBlur}
+                            onChangeText={handleChange("password")}
+                            onBlur={handleBlur("password")}
                             value={values.password}
                             placeholder={"Password"}
                         />
 
                         <TextInput
-                            onChangeText={handleChange}
-                            onBlur={handleBlur}
+                            onChangeText={handleChange("confirmPassword")}
+                            onBlur={handleBlur("confirmPassword")}
                             value={values.confirmPassword}
                             placeholder={"Confirm Password"}
                         />
