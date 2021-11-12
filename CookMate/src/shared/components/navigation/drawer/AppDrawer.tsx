@@ -4,6 +4,7 @@ import { HomeScreen } from "../../screens/HomeScreen";
 import { AppParamList } from "../param-lists/AppParamList";
 import { CreateRecipeStack } from "../stacks/CreateRecipeStack";
 import { theme } from "../../../theme";
+import { SignOutScreen } from "../../screens/SignOutScreen";
 
 interface AppDrawerProps {}
 
@@ -36,6 +37,13 @@ export const AppDrawer: React.FC<AppDrawerProps> = () => {
                 component={CreateRecipeStack}
                 options={{
                     title: "Create Recipe"
+                }}
+            />
+            <Drawer.Screen
+                name="SignOutScreen"
+                component={SignOutScreen}
+                options={{
+                    title: "Sign Out"
                 }}
             />
         </Drawer.Navigator>
