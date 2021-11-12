@@ -8,9 +8,10 @@ import {
     TextInput,
     Text,
     TouchableOpacity,
-    View
+    View,
+    KeyboardAvoidingView
 } from "react-native";
-import { Center } from "../../shared/components/style/Center";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const initialValues: RecipeIngredient = {
     ingredient: "",
@@ -33,10 +34,12 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
         <Text>{item.ingredient + " " + item.quantity + " " + item.unit}</Text>
     );
 
+    const headerHeight = useHeaderHeight();
+
     return (
         <View style={{ flex: 1 }}>
             <FlatList
-                style={{ width: "100%", maxHeight: "50%"}}
+                style={{ width: "100%", maxHeight: "50%" }}
                 data={recipeIngredients}
                 renderItem={renderRecipeIngredientItems}
                 initialNumToRender={5}
@@ -57,7 +60,12 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                 }}
             >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <View>
+                    <KeyboardAvoidingView
+                        behavior="padding"
+                        enabled
+                        style={{ flex: 1 }}
+                        keyboardVerticalOffset={headerHeight}
+                    >
                         <TextInput
                             onChangeText={handleChange("ingredient")}
                             onBlur={handleBlur("ingredient")}
@@ -87,7 +95,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                         >
                             <Text>Add Ingredient</Text>
                         </TouchableOpacity>
-                    </View>
+                    </KeyboardAvoidingView>
                 )}
             </Formik>
         </View>

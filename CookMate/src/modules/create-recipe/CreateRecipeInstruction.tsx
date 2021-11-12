@@ -7,9 +7,12 @@ import {
     TextInput,
     Text,
     TouchableOpacity,
-    View
+    View,
+    KeyboardAvoidingView
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { CreateRecipeFormProps, RecipeInstruction } from "./CreateRecipeTypes";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const initialValues: RecipeInstruction = {
     instruction: ""
@@ -28,16 +31,20 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
         item: RecipeInstruction;
     }) => <Text>{item.instruction}</Text>;
 
+    const headerHeight = useHeaderHeight();
+
     return (
         <View style={{ flex: 1 }}>
             <FlatList
-                style={{ width: "100%", maxHeight: "50%"}}
+                style={{ width: "100%", maxHeight: "50%" }}
                 data={recipeInstructions}
                 renderItem={renderRecipeInstructionItems}
                 initialNumToRender={5}
                 maxToRenderPerBatch={10}
                 windowSize={10}
-                keyExtractor={(instruction, idx) => instruction.instruction + idx}
+                keyExtractor={(instruction, idx) =>
+                    instruction.instruction + idx
+                }
             />
 
             <Formik
@@ -54,24 +61,31 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                 }}
             >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <View>
-                        <TextInput
-                            onChangeText={handleChange("instruction")}
-                            onBlur={handleBlur("instruction")}
-                            value={values.instruction}
-                            placeholder={"Instruction"}
-                        />
+                    <KeyboardAvoidingView
+                        behavior="padding"
+                        enabled
+                        style={{ flex: 1 }}
+                        keyboardVerticalOffset={headerHeight}
+                    >
+                        <ScrollView>
+                            <TextInput
+                                onChangeText={handleChange("instruction")}
+                                onBlur={handleBlur("instruction")}
+                                value={values.instruction}
+                                placeholder={"Instruction"}
+                            />
 
-                        <TouchableOpacity
-                            onPress={
-                                handleSubmit as unknown as (
-                                    ev: NativeSyntheticEvent<NativeTouchEvent>
-                                ) => void
-                            }
-                        >
-                            <Text>Add Instruction</Text>
-                        </TouchableOpacity>
-                    </View>
+                            <TouchableOpacity
+                                onPress={
+                                    handleSubmit as unknown as (
+                                        ev: NativeSyntheticEvent<NativeTouchEvent>
+                                    ) => void
+                                }
+                            >
+                                <Text>Add Instruction</Text>
+                            </TouchableOpacity>
+                        </ScrollView>
+                    </KeyboardAvoidingView>
                 )}
             </Formik>
         </View>
