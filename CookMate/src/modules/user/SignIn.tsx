@@ -30,8 +30,8 @@ export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
     const { signIn } = useContext(AuthContext);
 
     const handleSubmit = (values: ISignIn) => {
-        console.warn(values.username, values.password);
-        signIn();
+        const { username, password } = values;
+        signIn(username, password);
     };
 
     return (
