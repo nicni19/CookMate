@@ -14,12 +14,19 @@ import {
 } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
+import * as Yup from "yup";
 
 const initialValues: RecipeIngredient = {
     ingredient: "",
     quantity: "",
     unit: ""
 };
+
+const validationSchema = Yup.object({
+    ingredient: Yup.string().required(),
+    quantity: Yup.string().required(),
+    unit: Yup.string().required()
+});
 
 const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
     formik
@@ -59,6 +66,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
             />
             <Formik
                 initialValues={initialValues}
+                validationSchema={validationSchema}
                 onSubmit={(values) => {
                     const updatedRecipeIngredients = recipeIngredients.slice();
                     updatedRecipeIngredients.push(values);
