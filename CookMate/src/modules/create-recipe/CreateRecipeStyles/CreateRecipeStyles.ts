@@ -13,16 +13,16 @@ export const styles = StyleSheet.create({
         flex: 1,
         padding: "5%",
         backgroundColor: "#DDDDDD",
-        textAlign: "center",
+        textAlign: "left",
         borderWidth: 1,
-        borderColor: "#d6d4d4"
+        borderColor: "#d6d4d4",
     },
     button: {
         padding: "5%",
         backgroundColor: theme.palette.secondaryColor,
         alignSelf: "center",
         textAlign: "center",
-        width: "100%",
+        flexBasis: "100%",
         marginTop: "5%"
     },
     btnText: {
@@ -72,10 +72,11 @@ export const styles = StyleSheet.create({
     },
     informationForm: {
         flex: 1,
-        width: "100%",
         flexDirection: "row",
-        alignContent: "center",
+        flexWrap: "wrap",
+        alignItems: "center",
         backgroundColor: theme.palette.backgroundColor,
-        padding: "10%"
+        padding: "10%",
+        width: "100%"
     }
 });

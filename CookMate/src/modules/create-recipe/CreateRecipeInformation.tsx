@@ -11,7 +11,10 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
     return (
         <View style={styles.informationForm}>
             <TextInput
-                style={[styles.textfield, { maxWidth: "100%" }]}
+                style={[
+                    styles.textfield,
+                    { flexBasis: "100%", marginBottom: "5%", marginTop: "5%" }
+                ]}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipeName",
@@ -23,7 +26,15 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
             />
 
             <TextInput
-                style={[styles.textfield, { width: "100%" }]}
+                style={[
+                    styles.textfield,
+                    {
+                        flexBasis: "100%",
+                        height: "30%",
+                        marginBottom: "5%",
+                        marginTop: "5%"
+                    }
+                ]}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipeDescription",
@@ -32,10 +43,15 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
                 }
                 value={formik.values.createRecipeInformation.recipeDescription}
                 placeholder={"Description"}
+                multiline={true}
+                numberOfLines={20}
             />
 
             <TextInput
-                style={[styles.textfield, { width: "100%" }]}
+                style={[
+                    styles.textfield,
+                    { flexBasis: "100%", marginBottom: "5%", marginTop: "5%" }
+                ]}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipeTime",
@@ -46,7 +62,10 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
                 placeholder={"Estimated cooking time"}
             />
             <TextInput
-                style={[styles.textfield, { width: "100%" }]}
+                style={[
+                    styles.textfield,
+                    { flexBasis: "100%", marginBottom: "5%", marginTop: "5%" }
+                ]}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipePeople",
