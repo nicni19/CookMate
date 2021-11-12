@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "cookbookId": 1,
+    "description": "",
+    "estimatedCooktime": 0,
+    "name": "And",
+    "image": "./and.jpeg",
+    "ingredients": [
+      {
+        "name": "And",
+        "unit": {
+          "name": "And",
+          "symbol": "And?"
+        },
+        "quantity": 1
+      }
+    ],
+    "instructions": [
+      {
+        "sortingNumber": 0,
+        "text": "Step 1"
+      },
+      {
+        "sortingNumber": 1,
+        "text": "Step 2"
+      },
+      {
+        "sortingNumber": 2,
+        "text": "Step 3"
+      },
+      {
+        "sortingNumber": 3,
+        "text": "Step 4"
+      },
+      {
+        "sortingNumber": 4,
+        "text": "Step 5"
+      }
+    ]
+  }
+]

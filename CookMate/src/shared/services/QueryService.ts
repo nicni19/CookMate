@@ -1,10 +1,12 @@
-import { ICookbookQueryService, IRecipeQueryService, IUserQueryService } from "./QueryServiceInterfaces";
+import {ICookbookQueryService, ILoginService, IRecipeQueryService, IUserQueryService} from "./QueryServiceInterfaces";
 import { User } from "../view-models/User";
 import { UserSimple } from "../view-models/UserSimple";
 import { Cookbook } from "../view-models/Cookbook";
 import { Recipe } from "../view-models/Recipe";
 import { RecipeSimple } from "../view-models/RecipeSimple";
 import { CookbookSimple } from "../view-models/CookbookSimple";
+import {Instruction} from "../view-models/Instruction";
+import {Ingredient} from "../view-models/Ingredient";
 
 export default class QueryService {
 
@@ -95,13 +97,43 @@ export default class QueryService {
 
     public static recipes : IRecipeQueryService = {
         getRecipe: function (recipeId: string): Recipe {
-            throw new Error("Function not implemented.");
+            const data = require('../../../assets/data/recipe.db.json')
+
+            return data.find((recipe: any) => recipe.id == recipeId);
         },
         getRecipes: function (cookbookId: string): RecipeSimple[] {
-            throw new Error("Function not implemented.");
+            const data = require('../../../assets/data/recipe.db.json')
+
+            return data.filter((recipes: any) => recipes.cookbookId == cookbookId)
+                ?.map((recipe: any) => {
+                    new Recipe(
+                        new RecipeSimple(
+                            recipe.id,
+                            recipe.name,
+                            recipe.estimatedCooktime,
+                            recipe.servings,
+                            recipe.image
+                        ),
+                        recipe.description,
+                        recipe.instructions.map((instruction: any) => {
+                            new Instruction(instruction.id, instruction.sortingNumber, instruction.text)
+                        }),
+                        recipe.ingredients.map((ingredient: any) => {
+                            new Ingredient(ingredient.id, ingredient.name, ingredient.unit, ingredient.quantity)
+                        })
+                    )
+                });
         },
         addRecipe: function (cookbookId: string, recipe: Recipe): void {
             throw new Error("Function not implemented.");
         }
     };
+
+    public static authentication : ILoginService = {
+        requestLogin(username: string, password: string): boolean {
+            const data = require('../../../assets/data/user.db.json');
+
+            return !!data.find((user: any) => user.username == username && user.password == password);
+        }
+    }
 }
