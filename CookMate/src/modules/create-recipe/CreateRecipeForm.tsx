@@ -15,6 +15,7 @@ import CreateRecipeInformation from "./CreateRecipeInformation";
 import { FormikCreateRecipeFormValues } from "./CreateRecipeTypes";
 import Icon from "react-native-vector-icons/AntDesign";
 import { Center } from "../../shared/components/style/Center";
+import { CreateRecipeNavProps } from "../../shared/components/navigation/param-lists/CreateRecipeParamList";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImagePick: null,
@@ -32,7 +33,11 @@ const initialValues: FormikCreateRecipeFormValues = {
     }
 };
 
-function CreateRecipeForm() {
+interface CreateRecipeFormProps {
+    createRecipeNavProps: CreateRecipeNavProps<"CreateRecipeScreen">
+}
+
+const CreateRecipeForm: React.FC<CreateRecipeFormProps> = () => {
     const [step, setStep] = useState<number>(0);
 
     const formik = useFormik({

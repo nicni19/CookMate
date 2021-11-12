@@ -3,6 +3,7 @@ import React from "react";
 import { HomeScreen } from "../../screens/HomeScreen";
 import { CreateRecipeScreen } from "../../screens/CreateRecipeScreen";
 import { AppParamList } from "../param-lists/AppParamList";
+import { CreateRecipeStack } from "../stacks/CreateRecipeStack";
 
 interface AppDrawerProps {}
 
@@ -18,8 +19,8 @@ export const AppDrawer: React.FC<AppDrawerProps> = () => {
         >
             <Drawer.Screen name="HomeScreen" component={HomeScreen} />
             <Drawer.Screen
-                name="CreateRecipeScreen"
-                component={CreateRecipeScreen}
+                name="CreateRecipeStack"
+                component={CreateRecipeStack}
             />
         </Drawer.Navigator>
     );
