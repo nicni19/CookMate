@@ -4,10 +4,10 @@ import {
     FlatList,
     NativeSyntheticEvent,
     NativeTouchEvent,
-    SafeAreaView,
     TextInput,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    View
 } from "react-native";
 import { CreateRecipeFormProps, RecipeInstruction } from "./CreateRecipeTypes";
 
@@ -15,7 +15,9 @@ const initialValues: RecipeInstruction = {
     instruction: ""
 };
 
-const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({ formik }) => {
+const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
+    formik
+}) => {
     const [recipeInstructions, setRecipeInstructions] = useState<
         RecipeInstruction[]
     >(formik.values.createRecipeInstruction.recipeInstructions);
@@ -27,13 +29,15 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({ formik }) =>
     }) => <Text>{item.instruction}</Text>;
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <FlatList
+                style={{ width: "100%", maxHeight: "50%"}}
                 data={recipeInstructions}
                 renderItem={renderRecipeInstructionItems}
                 initialNumToRender={5}
                 maxToRenderPerBatch={10}
                 windowSize={10}
+                keyExtractor={(instruction, idx) => instruction.instruction + idx}
             />
 
             <Formik
@@ -50,7 +54,7 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({ formik }) =>
                 }}
             >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <SafeAreaView>
+                    <View>
                         <TextInput
                             onChangeText={handleChange("instruction")}
                             onBlur={handleBlur("instruction")}
@@ -67,10 +71,10 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({ formik }) =>
                         >
                             <Text>Add Instruction</Text>
                         </TouchableOpacity>
-                    </SafeAreaView>
+                    </View>
                 )}
             </Formik>
-        </SafeAreaView>
+        </View>
     );
 };
 

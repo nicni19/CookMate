@@ -5,7 +5,8 @@ import {
     NativeSyntheticEvent,
     NativeTouchEvent,
     SafeAreaView,
-    Text
+    Text,
+    View
 } from "react-native";
 import * as Yup from "yup";
 import CreateRecipeInstruction from "./CreateRecipeInstruction";
@@ -147,7 +148,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
 
     return (
         <Center>
-            <SafeAreaView>{createRecipeForms[step]}</SafeAreaView>
+            <View>{createRecipeForms[step]}</View>
         </Center>
     );
 };

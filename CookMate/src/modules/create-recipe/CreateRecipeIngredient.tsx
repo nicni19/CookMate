@@ -36,11 +36,13 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
     return (
         <View style={{ flex: 1 }}>
             <FlatList
+                style={{ width: "100%", maxHeight: "50%"}}
                 data={recipeIngredients}
                 renderItem={renderRecipeIngredientItems}
                 initialNumToRender={5}
                 maxToRenderPerBatch={10}
                 windowSize={10}
+                keyExtractor={(ingredient, idx) => ingredient.ingredient + idx}
             />
             <Formik
                 initialValues={initialValues}
