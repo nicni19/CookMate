@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     NativeSyntheticEvent,
@@ -34,11 +34,17 @@ const initialValues: FormikCreateRecipeFormValues = {
 };
 
 interface CreateRecipeFormProps {
-    createRecipeNavProps: CreateRecipeNavProps<"CreateRecipeScreen">
+    createRecipeNavProps: CreateRecipeNavProps<"CreateRecipeScreen">;
 }
 
-const CreateRecipeForm: React.FC<CreateRecipeFormProps> = () => {
+const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
+    createRecipeNavProps
+}) => {
     const [step, setStep] = useState<number>(0);
+
+    useEffect(() => {
+        createRecipeNavProps.navigation.setOptions({ headerTitle: "Create Recipe" });
+    }, []);
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -113,6 +119,6 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = () => {
             </SafeAreaView>
         </Center>
     );
-}
+};
 
 export default CreateRecipeForm;
