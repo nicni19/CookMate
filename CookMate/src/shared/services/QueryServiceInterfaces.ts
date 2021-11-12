@@ -68,6 +68,5 @@ export interface ILoginService {
      * @param username
      * @param password
      */
-
     requestLogin(username : string, password : string) : boolean;
 }
