@@ -11,14 +11,18 @@ import {
     KeyboardAvoidingView,
     Platform
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { CreateRecipeFormProps, RecipeInstruction } from "./CreateRecipeTypes";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
+import * as Yup from "yup";
 
 const initialValues: RecipeInstruction = {
     instruction: ""
 };
+
+const validationSchema = Yup.object({
+    instruction: Yup.string().required()
+});
 
 const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
     formik
@@ -57,6 +61,7 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
 
             <Formik
                 initialValues={initialValues}
+                validationSchema={validationSchema}
                 onSubmit={(values) => {
                     const updatedRecipeInstructions =
                         recipeInstructions.slice();
