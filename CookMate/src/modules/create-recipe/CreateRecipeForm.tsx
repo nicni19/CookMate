@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
     StyleSheet,
     NativeSyntheticEvent,
@@ -13,9 +13,9 @@ import CreateRecipeIngredient from "./CreateRecipeIngredient";
 import CreateRecipeImagePick from "./CreateRecipeImagePick";
 import CreateRecipeInformation from "./CreateRecipeInformation";
 import { FormikCreateRecipeFormValues } from "./CreateRecipeTypes";
-import Icon from "react-native-vector-icons/AntDesign";
 import { Center } from "../../shared/components/style/Center";
 import { CreateRecipeNavProps } from "../../shared/components/navigation/param-lists/CreateRecipeParamList";
+import { AntDesign } from "@expo/vector-icons";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImagePick: null,
@@ -43,8 +43,67 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
     const [step, setStep] = useState<number>(0);
 
     useEffect(() => {
-        createRecipeNavProps.navigation.setOptions({ headerTitle: "Create Recipe" });
+        createRecipeNavProps.navigation.setOptions({
+            headerTitle: "Create Recipe"
+        });
     }, []);
+
+    const headerNavOptions = {
+        previous: () => (
+            <AntDesign.Button
+                name="arrowleft"
+                size={24}
+                color="black"
+                backgroundColor="transparent"
+                onPress={() => setStep(step - 1)}
+            />
+        ),
+        next: () => (
+            <AntDesign.Button
+                name="arrowright"
+                size={24}
+                color="black"
+                backgroundColor="transparent"
+                onPress={() => setStep(step + 1)}
+            />
+        ),
+        check: () => (
+            <AntDesign.Button
+                name="checkcircle"
+                size={24}
+                color="black"
+                backgroundColor="transparent"
+                onPress={
+                    formik.handleSubmit as unknown as (
+                        ev: NativeSyntheticEvent<NativeTouchEvent>
+                    ) => void
+                }
+            />
+        )
+    };
+
+    useLayoutEffect(() => {
+        const firstStep = 0;
+        const lastStep = createRecipeForms.length - 1;
+        {
+            step == firstStep
+                ? createRecipeNavProps.navigation.setOptions({
+                      headerLeft: undefined
+                  })
+                : createRecipeNavProps.navigation.setOptions({
+                      headerLeft: headerNavOptions.previous
+                  });
+        }
+        {
+            step == lastStep
+                ? createRecipeNavProps.navigation.setOptions({
+                      headerRight: headerNavOptions.check
+                  })
+                : createRecipeNavProps.navigation.setOptions({
+                      headerRight: headerNavOptions.next
+                  });
+        }
+    }, [createRecipeNavProps.navigation, step]);
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -82,38 +141,9 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
         <Text>Enter recipe instructions</Text>
     ];
 
-    const firstStep = 0;
-    const lastStep = createRecipeForms.length - 1;
-
     return (
         <Center>
             <SafeAreaView>
-                {step == firstStep ? null : (
-                    <Icon.Button
-                        name="arrowleft"
-                        size={30}
-                        backgroundColor="transparent"
-                        onPress={() => setStep(step - 1)}
-                        iconStyle={{ color: "grey" }}
-                    />
-                )}
-                {step == lastStep ? (
-                    <Icon.Button
-                        name="check"
-                        size={30}
-                        onPress={
-                            formik.handleSubmit as unknown as (
-                                ev: NativeSyntheticEvent<NativeTouchEvent>
-                            ) => void
-                        }
-                    />
-                ) : (
-                    <Icon.Button
-                        name="arrowright"
-                        size={30}
-                        onPress={() => setStep(step + 1)}
-                    />
-                )}
                 {createRecipeFormsName[step]}
                 {createRecipeForms[step]}
             </SafeAreaView>
