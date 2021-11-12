@@ -29,7 +29,8 @@ const validationSchema = Yup.object({
 export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
     const { signIn } = useContext(AuthContext);
 
-    const handleSubmit = () => {
+    const handleSubmit = (values: ISignIn) => {
+        console.warn(values.username, values.password);
         signIn();
     };
 
@@ -37,7 +38,7 @@ export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
         <Center>
             <Formik
                 initialValues={initialValues}
-                onSubmit={handleSubmit}
+                onSubmit={(values) => handleSubmit(values)}
                 validationSchema={validationSchema}
             >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -50,6 +51,7 @@ export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
                         />
 
                         <TextInput
+                            secureTextEntry={true}
                             onChangeText={handleChange("password")}
                             onBlur={handleBlur("password")}
                             value={values.password}

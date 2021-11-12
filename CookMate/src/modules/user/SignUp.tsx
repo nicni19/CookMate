@@ -31,7 +31,8 @@ const validationSchema = Yup.object({
 
 export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
     const handleSubmit = (values: ISignUp) => {
-        console.log(values);
+        console.warn(values);
+        navigation.push("SignIn");
     };
 
     return (
@@ -58,6 +59,7 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
                         />
 
                         <TextInput
+                            secureTextEntry={true}
                             onChangeText={handleChange("password")}
                             onBlur={handleBlur("password")}
                             value={values.password}
@@ -65,6 +67,7 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
                         />
 
                         <TextInput
+                            secureTextEntry={true}
                             onChangeText={handleChange("confirmPassword")}
                             onBlur={handleBlur("confirmPassword")}
                             value={values.confirmPassword}
@@ -78,7 +81,7 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
                                 ) => void
                             }
                         >
-                            <Text>Sign In</Text>
+                            <Text>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
                 )}
