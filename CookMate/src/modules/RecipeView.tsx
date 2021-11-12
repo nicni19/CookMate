@@ -1,8 +1,7 @@
 import React,{Component} from "react";
-import {StyleSheet, Text, View, Image, FlatList} from "react-native";
+import {StyleSheet, Text, View, Image, FlatList, Alert, Button} from "react-native";
 
-
-class Recipe extends Component {
+class RecipeView extends Component {
     render(){
         return(
             <View style={styles.wrapper}>
@@ -13,6 +12,10 @@ class Recipe extends Component {
                     <Text>I really love this dish, nice and filling. Man meat is a treat for all ages :)</Text>
                 </View>
                 <View style={styles.flatlist}>
+                    <View style={styles.instructions_ingredients}>
+                        <Text>Instructions</Text>
+                        <Text>Ingredients</Text>
+                    </View>
                     <FlatList
                         horizontal={true}
                         data={[{key:"Instructions"},{key:"Ingredients"}]}
@@ -33,7 +36,10 @@ const styles = StyleSheet.create({
     },
     flatlist: {
         flex: 1,
+        display:"flex",
         marginHorizontal:50,
+        width:"100%",
+        alignItems:"center",
     },
     items: {
         padding: 20,
@@ -48,7 +54,13 @@ const styles = StyleSheet.create({
     picture: {
         width: "100%",
         height: "200px",
+    },
+    instructions_ingredients:{
+        display:"flex",
+        flexDirection:"row",
+        justifyContent:"space-between",
+
     }
 });
 
-export default Recipe;
+export default RecipeView;
