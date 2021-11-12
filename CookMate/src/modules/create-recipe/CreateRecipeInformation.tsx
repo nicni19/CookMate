@@ -1,15 +1,26 @@
 import { Formik, FormikProps } from "formik";
 import * as yup from "yup";
 import React from "react";
-import { SafeAreaView, TextInput } from "react-native";
+import { SafeAreaView, TextInput, View } from "react-native";
 import { CreateRecipeFormProps } from "./CreateRecipeTypes";
 
-const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({ formik }) => {
+const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
+    formik
+}) => {
     return (
-        <SafeAreaView>
+        <View
+            style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center"
+            }}
+        >
             <TextInput
                 onChangeText={(value) =>
-                    formik.setFieldValue("createRecipeInformation.recipeName", value)
+                    formik.setFieldValue(
+                        "createRecipeInformation.recipeName",
+                        value
+                    )
                 }
                 value={formik.values.createRecipeInformation.recipeName}
                 placeholder={"Name of the recipe"}
@@ -28,7 +39,10 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({ formik }) =>
 
             <TextInput
                 onChangeText={(value) =>
-                    formik.setFieldValue("createRecipeInformation.recipeTime", value)
+                    formik.setFieldValue(
+                        "createRecipeInformation.recipeTime",
+                        value
+                    )
                 }
                 value={formik.values.createRecipeInformation.recipeTime}
                 placeholder={"Estimated cooking time"}
@@ -43,7 +57,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({ formik }) =>
                 value={formik.values.createRecipeInformation.recipePeople}
                 placeholder={"For how many people"}
             />
-        </SafeAreaView>
+        </View>
     );
 };
 

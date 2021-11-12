@@ -38,7 +38,13 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
     const headerHeight = useHeaderHeight();
 
     return (
-        <View style={{ flex: 1 }}>
+        <View
+            style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center"
+            }}
+        >
             <FlatList
                 style={{ width: "100%", maxHeight: "50%" }}
                 data={recipeIngredients}

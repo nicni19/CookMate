@@ -34,7 +34,13 @@ const CreateRecipeImagePick: React.FC<CreateRecipeFormProps> = ({ formik }) => {
     const currentPickedRecipeImage = formik.values.createRecipeImagePick;
 
     return (
-        <View>
+        <View
+            style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center"
+            }}
+        >
             <TouchableOpacity onPress={pickRecipePhotoFromLibrary}>
                 <Text>Pick Recipe Image</Text>
             </TouchableOpacity>
