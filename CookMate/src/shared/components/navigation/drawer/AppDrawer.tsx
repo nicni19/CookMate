@@ -25,10 +25,19 @@ export const AppDrawer: React.FC<AppDrawerProps> = () => {
                 }
             }}
         >
-            <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+            <Drawer.Screen
+                name="HomeScreen"
+                component={HomeScreen}
+                options={{
+                    title: "Home"
+                }}
+            />
             <Drawer.Screen
                 name="CreateRecipeStack"
                 component={CreateRecipeStack}
+                options={{
+                    title: "Create Recipe"
+                }}
             />
         </Drawer.Navigator>
     );
