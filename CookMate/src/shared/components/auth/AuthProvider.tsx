@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { User } from "./AuthType";
+import { ILoginService } from "../../services/QueryServiceInterfaces";
 
 export const AuthContext = React.createContext<{
     user: User;
-    signIn: () => void;
+    signIn: (username: string, password: string) => void;
     signOut: () => void;
 }>({
     user: null,
-    signIn: () => {},
+    signIn: (username: string, password: string) => {},
     signOut: () => {}
 });
 
@@ -20,8 +21,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         <AuthContext.Provider
             value={{
                 user,
-                signIn: async () => {
+                signIn: async (username, password) => {
                     // TODO: call IUserQuery: getUser(id)
+                    console.warn("Signed in", username, password);
                     const testUser = {
                         id: "1",
                         firstName: "test",
