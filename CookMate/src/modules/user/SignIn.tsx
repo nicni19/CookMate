@@ -12,8 +12,9 @@ import { Center } from "../../shared/components/style/Center";
 import { Formik } from "formik";
 import { ISignIn } from "./UserLoginTypes";
 import * as Yup from "yup";
+import { AuthNavProps } from "../../shared/components/navigation/param-lists/AuthParamList";
 
-interface SignInProps {}
+type SignInProps = {} & AuthNavProps<"SignIn">;
 
 const initialValues: ISignIn = {
     username: "",
@@ -27,7 +28,7 @@ const validationSchema = {
     })
 };
 
-export const SignIn: React.FC<SignInProps> = () => {
+export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
     const { signIn } = useContext(AuthContext);
 
     const handleSubmit = () => {
@@ -69,6 +70,9 @@ export const SignIn: React.FC<SignInProps> = () => {
                     </View>
                 )}
             </Formik>
+            <TouchableOpacity onPress={() => navigation.push("SignUp")}>
+                <Text>Don't have an account? Sign up</Text>
+            </TouchableOpacity>
         </Center>
     );
 };
