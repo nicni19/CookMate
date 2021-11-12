@@ -23,16 +23,20 @@ const initialValues: ISignUp = {
 };
 
 const validationSchema = Yup.object({
-    username: Yup.string().required(),
-    email: Yup.string().email().required(),
-    password: Yup.string().required(),
-    confirmedPassword: Yup.string().required()
+    username: Yup.string().required("Username is required"),
+    email: Yup.string().email().required("Email is required"),
+    password: Yup.string().required("Password is required"),
+    confirmedPassword: Yup.string().oneOf(
+        [Yup.ref("password"), null],
+        "Passwords must match"
+    )
 });
 
 export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
     const handleSubmit = (values: ISignUp) => {
+        console.warn("test");
         console.warn(values);
-        navigation.push("SignIn");
+        //navigation.push("SignIn");
     };
 
     return (
