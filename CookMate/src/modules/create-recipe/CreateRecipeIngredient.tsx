@@ -9,7 +9,8 @@ import {
     Text,
     TouchableOpacity,
     View,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Platform
 } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 
@@ -61,7 +62,10 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
             >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
                     <KeyboardAvoidingView
-                        behavior="padding"
+                        behavior={Platform.select({
+                            android: undefined,
+                            ios: "padding"
+                        })}
                         enabled
                         style={{ flex: 1 }}
                         keyboardVerticalOffset={headerHeight}
