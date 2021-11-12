@@ -6,7 +6,8 @@ import data from './recipes.json';
 class RecipeFeed extends Component {
     styles = StyleSheet.create({
         horizontalCard: {
-            width: 110,
+            width: 100,
+            height: 100,
             margin: 5,
             marginLeft: 0,
             marginRight: 10,
@@ -16,7 +17,6 @@ class RecipeFeed extends Component {
             flex: 1,
             backgroundColor: "#af3c3c",
             alignItems: "center",
-            textAlign: "left",
         },
         verticalCard: {
             width: "43%",
@@ -31,7 +31,8 @@ class RecipeFeed extends Component {
             alignItems: "flex-start",
         },
         horizontalContainer: {
-            width: "100%",
+            width: 300,
+            height: 100,
             margin: 0,
             padding: 0,
             marginLeft: "4%",
