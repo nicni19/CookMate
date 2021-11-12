@@ -44,12 +44,6 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
 }) => {
     const [step, setStep] = useState<number>(0);
 
-    useEffect(() => {
-        createRecipeNavProps.navigation.setOptions({
-            headerTitle: "Create Recipe"
-        });
-    }, []);
-
     const headerNavOptions = {
         previous: () => (
             <AntDesign.Button

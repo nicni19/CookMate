@@ -5,7 +5,9 @@ export const styles = StyleSheet.create({
     root: {
         backgroundColor: "white",
         width: "100%",
-        height: "100%"
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center"
     },
     textfield: {
         flex: 1,
@@ -35,6 +37,19 @@ export const styles = StyleSheet.create({
         alignContent: "center",
         backgroundColor: theme.palette.backgroundColor,
         padding: "3%"
+    },
+    imagePicker: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: theme.palette.backgroundColor,
+        maxHeight: "50%",
+        width: "70%",
+        borderRadius: 6
+    },
+    recipeImage: {
+        height: "50%",
+        width: "70%"
     },
     arrowBtn: {}
 });
