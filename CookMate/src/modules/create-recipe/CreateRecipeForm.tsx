@@ -6,7 +6,8 @@ import {
     NativeTouchEvent,
     SafeAreaView,
     Text,
-    View
+    View,
+    GestureResponderEvent
 } from "react-native";
 import * as Yup from "yup";
 import CreateRecipeInstruction from "./CreateRecipeInstruction";
@@ -47,7 +48,10 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
 
     const headerNavOptions = {
         previous: () => (
-            <TouchableOpacity style={{ marginLeft: "20%" }}onPress={() => setStep(step - 1)}>
+            <TouchableOpacity
+                style={{ marginLeft: "20%" }}
+                onPress={() => setStep(step - 1)}
+            >
                 <AntDesign
                     name="arrowleft"
                     size={24}
@@ -57,8 +61,11 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
             </TouchableOpacity>
         ),
         next: () => (
-            <TouchableOpacity onPress={() => setStep(step + 1)}>
-                <AntDesign.Button
+            <TouchableOpacity
+                style={{ marginRight: "20%" }}
+                onPress={() => setStep(step + 1)}
+            >
+                <AntDesign
                     name="arrowright"
                     size={24}
                     color={theme.palette.secondaryColor}
@@ -68,13 +75,15 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
         ),
         check: () => (
             <TouchableOpacity
-                onPress={() =>
-                    formik.handleSubmit as unknown as (
-                        ev: NativeSyntheticEvent<NativeTouchEvent>
-                    ) => void
+                style={{ marginRight: "20%" }}
+                onPress={
+                    formik.handleSubmit as unknown as ((
+                        event: GestureResponderEvent
+                    ) => void) &
+                        (() => void)
                 }
             >
-                <AntDesign.Button
+                <AntDesign
                     name="checkcircle"
                     size={24}
                     color={theme.palette.secondaryColor}
@@ -129,7 +138,6 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
         }),
         onSubmit: (values) => {
             console.warn(values);
-            console.warn("test");
         }
     });
 

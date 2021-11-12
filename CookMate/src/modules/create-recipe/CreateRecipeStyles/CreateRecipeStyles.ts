@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     list: {
         width: "100%", 
         maxHeight: "60%", 
-        margin: "10%"
+        margin: "5%"
     },
     listItem: {
         fontWeight: "200",
@@ -66,8 +66,16 @@ export const styles = StyleSheet.create({
         textAlign: "center",
         minWidth: "90%",
         marginBottom: "2%",
-        alignSelf: "auto",
+        alignSelf: "center",
         borderWidth: 1,
         borderColor: "#d6d4d4"
+    },
+    informationForm: {
+        flex: 1,
+        width: "100%",
+        flexDirection: "row",
+        alignContent: "center",
+        backgroundColor: theme.palette.backgroundColor,
+        padding: "10%"
     }
 });

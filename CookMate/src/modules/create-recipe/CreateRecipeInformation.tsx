@@ -9,15 +9,9 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
     formik
 }) => {
     return (
-        <View
-            style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center"
-            }}
-        >
+        <View style={styles.informationForm}>
             <TextInput
-                style={styles.textfield}
+                style={[styles.textfield, { maxWidth: "100%" }]}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipeName",
@@ -29,7 +23,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
             />
 
             <TextInput
-                style={styles.textfield}
+                style={[styles.textfield, { width: "100%" }]}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipeDescription",
@@ -41,7 +35,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
             />
 
             <TextInput
-                style={styles.textfield}
+                style={[styles.textfield, { width: "100%" }]}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipeTime",
@@ -52,7 +46,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
                 placeholder={"Estimated cooking time"}
             />
             <TextInput
-                style={styles.textfield}
+                style={[styles.textfield, { width: "100%" }]}
                 onChangeText={(value) =>
                     formik.setFieldValue(
                         "createRecipeInformation.recipePeople",
