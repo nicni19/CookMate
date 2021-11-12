@@ -33,7 +33,9 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
     }: {
         item: RecipeIngredient;
     }) => (
-        <Text>{item.ingredient + " " + item.quantity + " " + item.unit}</Text>
+        <Text style={styles.listItem}>
+            {item.quantity + " " + item.unit + " " + item.ingredient}
+        </Text>
     );
 
     const headerHeight = useHeaderHeight();
@@ -41,11 +43,13 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
     return (
         <View
             style={{
-                flex: 1
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center"
             }}
         >
             <FlatList
-                style={{ width: "100%", maxHeight: "50%" }}
+                style={styles.list}
                 data={recipeIngredients}
                 renderItem={renderRecipeIngredientItems}
                 initialNumToRender={5}
@@ -72,49 +76,42 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                             ios: "padding"
                         })}
                         enabled
-                        style={{
-                            flex: 1,
-                            width: "100%"
-                        }}
+                        style={styles.form}
                         keyboardVerticalOffset={headerHeight}
                     >
-                        <View style={styles.form}>
-                            <TextInput
-                                style={styles.textfield}
-                                onChangeText={handleChange("ingredient")}
-                                onBlur={handleBlur("ingredient")}
-                                value={values.ingredient}
-                                placeholder={"Ingredient"}
-                            />
+                        <TextInput
+                            style={styles.textfield}
+                            onChangeText={handleChange("ingredient")}
+                            onBlur={handleBlur("ingredient")}
+                            value={values.ingredient}
+                            placeholder={"Ingredient"}
+                        />
 
-                            <TextInput
-                                style={styles.textfield}
-                                onChangeText={handleChange("quantity")}
-                                onBlur={handleBlur("quantity")}
-                                value={values.quantity}
-                                placeholder={"Quantity"}
-                            />
+                        <TextInput
+                            style={styles.textfield}
+                            onChangeText={handleChange("quantity")}
+                            onBlur={handleBlur("quantity")}
+                            value={values.quantity}
+                            placeholder={"Quantity"}
+                        />
 
-                            <TextInput
-                                style={styles.textfield}
-                                onChangeText={handleChange("unit")}
-                                onBlur={handleBlur("unit")}
-                                value={values.unit}
-                                placeholder={"Unit"}
-                            />
-                            <TouchableOpacity
-                                style={styles.button}
-                                onPress={
-                                    handleSubmit as unknown as (
-                                        ev: NativeSyntheticEvent<NativeTouchEvent>
-                                    ) => void
-                                }
-                            >
-                                <Text style={styles.btnText}>
-                                    Add Ingredient
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                        <TextInput
+                            style={styles.textfield}
+                            onChangeText={handleChange("unit")}
+                            onBlur={handleBlur("unit")}
+                            value={values.unit}
+                            placeholder={"Unit"}
+                        />
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={
+                                handleSubmit as unknown as (
+                                    ev: NativeSyntheticEvent<NativeTouchEvent>
+                                ) => void
+                            }
+                        >
+                            <Text style={styles.btnText}>Add Ingredient</Text>
+                        </TouchableOpacity>
                     </KeyboardAvoidingView>
                 )}
             </Formik>

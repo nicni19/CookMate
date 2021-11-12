@@ -31,7 +31,7 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
         item
     }: {
         item: RecipeInstruction;
-    }) => <Text>{item.instruction}</Text>;
+    }) => <Text style={styles.listItem}>{item.instruction}</Text>;
 
     const headerHeight = useHeaderHeight();
 
@@ -44,7 +44,7 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
             }}
         >
             <FlatList
-                style={{ width: "100%", maxHeight: "50%" }}
+                style={styles.list}
                 data={recipeInstructions}
                 renderItem={renderRecipeInstructionItems}
                 initialNumToRender={5}
@@ -75,31 +75,27 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                             ios: "padding"
                         })}
                         enabled
-                        style={{ flex: 1, width: "100%" }}
+                        style={styles.form}
                         keyboardVerticalOffset={headerHeight}
                     >
-                        <View style={styles.form}>
-                            <TextInput
-                                style={styles.textfield}
-                                onChangeText={handleChange("instruction")}
-                                onBlur={handleBlur("instruction")}
-                                value={values.instruction}
-                                placeholder={"Instruction"}
-                            />
+                        <TextInput
+                            style={styles.textfield}
+                            onChangeText={handleChange("instruction")}
+                            onBlur={handleBlur("instruction")}
+                            value={values.instruction}
+                            placeholder={"Instruction"}
+                        />
 
-                            <TouchableOpacity
-                                style={styles.button}
-                                onPress={
-                                    handleSubmit as unknown as (
-                                        ev: NativeSyntheticEvent<NativeTouchEvent>
-                                    ) => void
-                                }
-                            >
-                                <Text style={styles.btnText}>
-                                    Add Instruction
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={
+                                handleSubmit as unknown as (
+                                    ev: NativeSyntheticEvent<NativeTouchEvent>
+                                ) => void
+                            }
+                        >
+                            <Text style={styles.btnText}>Add Instruction</Text>
+                        </TouchableOpacity>
                     </KeyboardAvoidingView>
                 )}
             </Formik>

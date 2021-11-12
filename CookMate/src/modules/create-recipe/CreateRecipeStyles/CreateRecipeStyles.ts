@@ -13,11 +13,13 @@ export const styles = StyleSheet.create({
         flex: 1,
         padding: "5%",
         backgroundColor: "#DDDDDD",
-        textAlign: "center"
+        textAlign: "center",
+        borderWidth: 1,
+        borderColor: "#d6d4d4"
     },
     button: {
         padding: "5%",
-        backgroundColor: "green",
+        backgroundColor: theme.palette.secondaryColor,
         alignSelf: "center",
         textAlign: "center",
         width: "100%",
@@ -52,5 +54,20 @@ export const styles = StyleSheet.create({
         width: "100%",
         height: "100%"
     },
-    arrowBtn: {}
+    list: {
+        width: "100%", 
+        maxHeight: "60%", 
+        margin: "10%"
+    },
+    listItem: {
+        fontWeight: "200",
+        padding: "5%",
+        backgroundColor: theme.palette.backgroundColor,
+        textAlign: "center",
+        minWidth: "90%",
+        marginBottom: "2%",
+        alignSelf: "auto",
+        borderWidth: 1,
+        borderColor: "#d6d4d4"
+    }
 });
