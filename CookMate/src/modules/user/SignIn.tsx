@@ -11,12 +11,20 @@ import { AuthContext } from "../../shared/components/auth/AuthProvider";
 import { Center } from "../../shared/components/style/Center";
 import { Formik } from "formik";
 import { ISignIn } from "./UserLoginTypes";
+import * as Yup from "yup";
 
 interface SignInProps {}
 
 const initialValues: ISignIn = {
     username: "",
     password: ""
+};
+
+const validationSchema = {
+    validationSchema: Yup.object({
+        username: Yup.string().required(),
+        password: Yup.string().required()
+    })
 };
 
 export const SignIn: React.FC<SignInProps> = () => {
@@ -28,7 +36,11 @@ export const SignIn: React.FC<SignInProps> = () => {
 
     return (
         <Center>
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={handleSubmit}
+                validationSchema={validationSchema}
+            >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
                     <View>
                         <TextInput

@@ -7,4 +7,6 @@ export interface ISignIn {
 export interface ISignUp {
     username: string;
     password: string;
+    email: string;
+    confirmPassword: string;
 }
