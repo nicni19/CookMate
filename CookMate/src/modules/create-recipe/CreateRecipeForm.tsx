@@ -1,14 +1,6 @@
 import { useFormik } from "formik";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import {
-    StyleSheet,
-    NativeSyntheticEvent,
-    NativeTouchEvent,
-    SafeAreaView,
-    Text,
-    View,
-    GestureResponderEvent
-} from "react-native";
+import React, { useLayoutEffect, useState } from "react";
+import { View, GestureResponderEvent } from "react-native";
 import * as Yup from "yup";
 import CreateRecipeInstruction from "./CreateRecipeInstruction";
 import CreateRecipeIngredient from "./CreateRecipeIngredient";
