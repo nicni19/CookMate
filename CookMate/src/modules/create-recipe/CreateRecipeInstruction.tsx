@@ -27,7 +27,7 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({ formik }) =>
     }) => <Text>{item.instruction}</Text>;
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 1 }}>
             <FlatList
                 data={recipeInstructions}
                 renderItem={renderRecipeInstructionItems}

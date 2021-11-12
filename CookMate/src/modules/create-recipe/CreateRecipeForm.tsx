@@ -83,6 +83,10 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
     };
 
     useLayoutEffect(() => {
+        createRecipeNavProps.navigation.setOptions({
+            headerTitle: createRecipeFormsName[step]
+        });
+
         const firstStep = 0;
         const lastStep = createRecipeForms.length - 1;
         {
@@ -127,6 +131,13 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
         }
     });
 
+    const createRecipeFormsName: string[] = [
+        "Select image of your dish",
+        "Enter recipe details",
+        "Enter recipe ingredients",
+        "Enter recipe instructions"
+    ];
+
     const createRecipeForms: JSX.Element[] = [
         <CreateRecipeImagePick formik={formik} />,
         <CreateRecipeInformation formik={formik} />,
@@ -134,19 +145,9 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
         <CreateRecipeInstruction formik={formik} />
     ];
 
-    const createRecipeFormsName: JSX.Element[] = [
-        <Text>Select image of your dish</Text>,
-        <Text>Enter recipe details</Text>,
-        <Text>Enter recipe ingredients</Text>,
-        <Text>Enter recipe instructions</Text>
-    ];
-
     return (
         <Center>
-            <SafeAreaView>
-                {createRecipeFormsName[step]}
-                {createRecipeForms[step]}
-            </SafeAreaView>
+            <SafeAreaView>{createRecipeForms[step]}</SafeAreaView>
         </Center>
     );
 };

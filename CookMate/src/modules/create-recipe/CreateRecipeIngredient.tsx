@@ -5,12 +5,12 @@ import {
     FlatList,
     NativeSyntheticEvent,
     NativeTouchEvent,
-    SafeAreaView,
     TextInput,
     Text,
     TouchableOpacity,
     View
 } from "react-native";
+import { Center } from "../../shared/components/style/Center";
 
 const initialValues: RecipeIngredient = {
     ingredient: "",
@@ -18,7 +18,9 @@ const initialValues: RecipeIngredient = {
     unit: ""
 };
 
-const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({ formik }) => {
+const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
+    formik
+}) => {
     const [recipeIngredients, setRecipeIngredients] = useState<
         RecipeIngredient[]
     >(formik.values.createRecipeIngredient.recipeIngredients);
@@ -32,16 +34,14 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({ formik }) => 
     );
 
     return (
-        <SafeAreaView>
-            <View>
-                <FlatList
-                    data={recipeIngredients}
-                    renderItem={renderRecipeIngredientItems}
-                    initialNumToRender={5}
-                    maxToRenderPerBatch={10}
-                    windowSize={10}
-                />
-            </View>
+        <View style={{ flex: 1 }}>
+            <FlatList
+                data={recipeIngredients}
+                renderItem={renderRecipeIngredientItems}
+                initialNumToRender={5}
+                maxToRenderPerBatch={10}
+                windowSize={10}
+            />
             <Formik
                 initialValues={initialValues}
                 onSubmit={(values) => {
@@ -55,7 +55,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({ formik }) => 
                 }}
             >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <SafeAreaView>
+                    <View>
                         <TextInput
                             onChangeText={handleChange("ingredient")}
                             onBlur={handleBlur("ingredient")}
@@ -85,10 +85,10 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({ formik }) => 
                         >
                             <Text>Add Ingredient</Text>
                         </TouchableOpacity>
-                    </SafeAreaView>
+                    </View>
                 )}
             </Formik>
-        </SafeAreaView>
+        </View>
     );
 };
 
