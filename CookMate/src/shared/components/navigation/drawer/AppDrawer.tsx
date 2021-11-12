@@ -1,7 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React from "react";
 import { HomeScreen } from "../../screens/HomeScreen";
-import { CreateRecipeScreen } from "../../screens/CreateRecipeScreen";
 import { AppParamList } from "../param-lists/AppParamList";
 import { CreateRecipeStack } from "../stacks/CreateRecipeStack";
 import { theme } from "../../../theme";

@@ -30,8 +30,10 @@ export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
     const { signIn } = useContext(AuthContext);
 
     const handleSubmit = (values: ISignIn) => {
+        // TODO: call ILoginService authenticate (return id) else -1
         const { username, password } = values;
-        signIn(username, password);
+        // TODO: signIn with id if authenticated else error
+        signIn("1");
     };
 
     return (

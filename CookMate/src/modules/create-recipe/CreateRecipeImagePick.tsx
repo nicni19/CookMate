@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { TouchableOpacity, View, Text, Platform, Image } from "react-native";
+import React, { useEffect } from "react";
+import { TouchableOpacity, Platform, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { CreateRecipeFormProps } from "./CreateRecipeTypes";
 import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
