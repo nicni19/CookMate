@@ -4,6 +4,7 @@ import { HomeScreen } from "../../screens/HomeScreen";
 import { CreateRecipeScreen } from "../../screens/CreateRecipeScreen";
 import { AppParamList } from "../param-lists/AppParamList";
 import { CreateRecipeStack } from "../stacks/CreateRecipeStack";
+import { theme } from "../../../theme";
 
 interface AppDrawerProps {}
 
@@ -14,7 +15,14 @@ export const AppDrawer: React.FC<AppDrawerProps> = () => {
         <Drawer.Navigator
             initialRouteName="HomeScreen"
             screenOptions={{
-                headerTitle: "CookMate"
+                headerTitle: "CookMate",
+                headerStyle: {
+                    backgroundColor: theme.primaryColor
+                },
+                headerTitleStyle: {
+                    fontWeight: "300",
+                    fontSize: 25
+                }
             }}
         >
             <Drawer.Screen name="HomeScreen" component={HomeScreen} />

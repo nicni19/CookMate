@@ -17,6 +17,7 @@ import { FormikCreateRecipeFormValues } from "./CreateRecipeTypes";
 import { CreateRecipeNavProps } from "../../shared/components/navigation/param-lists/CreateRecipeParamList";
 import { AntDesign } from "@expo/vector-icons";
 import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
+import { theme } from "../../shared/theme";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImagePick: null,
@@ -63,7 +64,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
             <AntDesign.Button
                 name="arrowright"
                 size={24}
-                color="black"
+                color={theme.secondaryColor}
                 backgroundColor="transparent"
                 onPress={() => setStep(step + 1)}
             />
@@ -72,7 +73,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
             <AntDesign.Button
                 name="checkcircle"
                 size={24}
-                color="black"
+                color={theme.secondaryColor}
                 backgroundColor="transparent"
                 onPress={
                     formik.handleSubmit as unknown as (
