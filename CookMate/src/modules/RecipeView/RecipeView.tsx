@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import {StyleSheet, Text, View, Image, FlatList} from "react-native";
 import { Recipe } from "../../shared/view-models/Recipe";
+import IngredientInstructionCard from "./IngredientInstructionCard";
 
 type RecipeViewProps = {
     recipe: Recipe;
@@ -10,26 +11,30 @@ class RecipeView extends Component<RecipeViewProps,any> {
     render(){
         return(
             <View style={styles.wrapper}>
-                <View>
+                <View style={{height:"50%"}}>
                     <Text style={styles.title}>{this.props.recipe.name}</Text>
                     <Text>[TODO: Show user]</Text>
                     <Image style={styles.picture} source={{uri: this.props.recipe.imageURL}}/>
                     <Text>{this.props.recipe.description}</Text>
                 </View>
-                <View style={styles.flatlist}>
+                <View style={{height:"50%"}}>
                     <View style={styles.instructions_ingredients}>
                         <Text>Instructions</Text>
                         <Text>Ingredients</Text>
                     </View>
-                    <FlatList
-                        horizontal={true}
-                        data={[{key:"Instructions"},{key:"Ingredients"}]}
-                        renderItem={({item}) => <Text style={styles.items}>{item.key}</Text>}/>
+                    <IngredientInstructionCard recipe={this.props.recipe}></IngredientInstructionCard>
                 </View>
             </View>
         )
     }
 }
+
+/*
+    <FlatList
+                        horizontal={true}
+                        data={[{key:"Instructions"},{key:"Ingredients"}]}
+                        renderItem={({item}) => <Text style={styles.items}>{item.key}</Text>}/>
+*/
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -38,20 +43,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: "100%",
-    },
-    flatlist: {
-        flex: 1,
-        display:"flex",
-        marginHorizontal:50,
-        width:"100%",
-        alignItems:"center",
-    },
-    items: {
-        padding: 20,
-        fontSize: 18,
-        height: 200,
-        backgroundColor:"grey",
-        borderRadius:25,
+        height: "100%",
     },
     title: {
         fontSize: 40,
@@ -64,7 +56,6 @@ const styles = StyleSheet.create({
         display:"flex",
         flexDirection:"row",
         justifyContent:"space-between",
-
     }
 });
 
