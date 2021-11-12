@@ -10,9 +10,12 @@ const Drawer = createDrawerNavigator<AppParamList>();
 
 export const AppDrawer: React.FC<AppDrawerProps> = () => {
     return (
-        <Drawer.Navigator initialRouteName="HomeScreen" screenOptions={{
-            headerTitle: "CookMate"
-        }}>
+        <Drawer.Navigator
+            initialRouteName="HomeScreen"
+            screenOptions={{
+                headerTitle: "CookMate"
+            }}
+        >
             <Drawer.Screen name="HomeScreen" component={HomeScreen} />
             <Drawer.Screen
                 name="CreateRecipeScreen"
