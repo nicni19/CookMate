@@ -61,10 +61,8 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
 
     const addRecipeIngredient = (values: RecipeIngredient) => {
         const updatedRecipeIngredients = recipeIngredients.slice();
+        values.id = updatedRecipeIngredients.length + 1;
         updatedRecipeIngredients.push(values);
-        updatedRecipeIngredients.forEach(
-            (_, idx) => (updatedRecipeIngredients[idx].id = idx)
-        );
         updateRecipeIngredientsValues(updatedRecipeIngredients);
     };
 
@@ -72,9 +70,6 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
         const updatedRecipeIngredients = recipeIngredients.filter(
             (ingredient) =>
                 ingredient.id !== selectedIngredient?.id
-        );
-        updatedRecipeIngredients.forEach(
-            (_, idx) => (updatedRecipeIngredients[idx].id = idx)
         );
         updateRecipeIngredientsValues(updatedRecipeIngredients);
     };
