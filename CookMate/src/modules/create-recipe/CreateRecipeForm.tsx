@@ -1,4 +1,4 @@
-import { useFormik } from "formik";
+import { FormikProvider, useFormik } from "formik";
 import React, { useLayoutEffect, useState } from "react";
 import { View, GestureResponderEvent } from "react-native";
 import * as Yup from "yup";
@@ -74,11 +74,16 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
                     ) => void) &
                         (() => void)
                 }
+                disabled={!(formik.isValid && formik.dirty)}
             >
                 <AntDesign
                     name="checkcircle"
                     size={24}
-                    color={theme.palette.secondaryColor}
+                    color={
+                        formik.isValid && formik.dirty
+                            ? theme.palette.secondaryColor
+                            : theme.palette.backgroundColor
+                    }
                     backgroundColor="transparent"
                 />
             </TouchableOpacity>
