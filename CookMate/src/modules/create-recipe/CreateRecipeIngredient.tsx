@@ -71,7 +71,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
     const deleteRecipeIngredient = () => {
         const updatedRecipeIngredients = recipeIngredients.filter(
             (ingredient) =>
-                ingredient.ingredient !== selectedIngredient?.ingredient
+                ingredient.id !== selectedIngredient?.id
         );
         updatedRecipeIngredients.forEach(
             (_, idx) => (updatedRecipeIngredients[idx].id = idx)
