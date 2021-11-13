@@ -29,7 +29,7 @@ const initialValues: RecipeIngredient = {
 
 const validationSchema = Yup.object({
     ingredient: Yup.string().required(),
-    quantity: Yup.string().required(),
+    quantity: Yup.number().min(1).required(),
     unit: Yup.string().required()
 });
 
@@ -146,7 +146,14 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                     resetForm();
                 }}
             >
-                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                {({
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    values,
+                    isValid,
+                    dirty
+                }) => (
                     <KeyboardAvoidingView
                         behavior={Platform.select({
                             android: undefined,
@@ -265,12 +272,20 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                             clearButtonMode="always"
                         />
                         <TouchableOpacity
-                            style={styles.button}
+                            style={
+                                isValid && dirty
+                                    ? styles.button
+                                    : [
+                                          styles.button,
+                                          { backgroundColor: "grey" }
+                                      ]
+                            }
                             onPress={
                                 handleSubmit as unknown as (
                                     ev: NativeSyntheticEvent<NativeTouchEvent>
                                 ) => void
                             }
+                            disabled={!(isValid && dirty)}
                         >
                             <Text style={styles.btnText}>Add Ingredient</Text>
                         </TouchableOpacity>

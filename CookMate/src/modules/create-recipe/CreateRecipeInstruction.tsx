@@ -66,8 +66,7 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                 instruction.sortingNumber !== selectedInstruction?.sortingNumber
         );
         updatedRecipeInstructions.forEach(
-            (_, idx) =>
-                (updatedRecipeInstructions[idx].sortingNumber = idx + 1)
+            (_, idx) => (updatedRecipeInstructions[idx].sortingNumber = idx + 1)
         );
         updateRecipeInstructionsValues(updatedRecipeInstructions);
     };
@@ -134,7 +133,14 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                     resetForm();
                 }}
             >
-                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                {({
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    values,
+                    isValid,
+                    dirty
+                }) => (
                     <KeyboardAvoidingView
                         behavior={Platform.select({
                             android: undefined,
@@ -201,12 +207,20 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                         />
 
                         <TouchableOpacity
-                            style={styles.button}
+                            style={
+                                isValid && dirty
+                                    ? styles.button
+                                    : [
+                                          styles.button,
+                                          { backgroundColor: "grey" }
+                                      ]
+                            }
                             onPress={
                                 handleSubmit as unknown as (
                                     ev: NativeSyntheticEvent<NativeTouchEvent>
                                 ) => void
                             }
+                            disabled={!(isValid && dirty)}
                         >
                             <Text style={styles.btnText}>Add Instruction</Text>
                         </TouchableOpacity>
