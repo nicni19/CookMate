@@ -10,7 +10,8 @@ import {
     View,
     KeyboardAvoidingView,
     Platform,
-    Modal
+    Modal,
+    TextInputChangeEventData
 } from "react-native";
 import { CreateRecipeFormProps, RecipeInstruction } from "./CreateRecipeTypes";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -70,6 +71,16 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                 (updatedRecipeInstructions[idx].sortingNumber = idx + 1)
         );
         updateRecipeInstructionsValues(updatedRecipeInstructions);
+    };
+
+    const handleRecipeInstructionEdit = (
+        e: NativeSyntheticEvent<TextInputChangeEventData>
+    ) => {
+        const selectedRecipeInstructionIndex =
+            (selectedInstruction?.sortingNumber as number) - 1;
+        recipeInstructions[selectedRecipeInstructionIndex].text =
+            e.nativeEvent.text;
+        updateRecipeInstructionsValues(recipeInstructions);
     };
 
     const onListItemPress = (instruction: RecipeInstruction) => {
@@ -146,7 +157,15 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                                     <View style={styles.modalViewTextfieldIcon}>
                                         <TextInput
                                             style={styles.modalViewTextfield}
-                                            value={selectedInstruction?.text}
+                                            value={
+                                                recipeInstructions[
+                                                    (selectedInstruction?.sortingNumber as number) -
+                                                        1
+                                                ]?.text
+                                            }
+                                            onChange={
+                                                handleRecipeInstructionEdit
+                                            }
                                             placeholder={"Instruction"}
                                             clearButtonMode="always"
                                         />
