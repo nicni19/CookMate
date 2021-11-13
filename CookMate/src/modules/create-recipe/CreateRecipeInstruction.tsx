@@ -10,7 +10,6 @@ import {
     View,
     KeyboardAvoidingView,
     Platform,
-    Alert,
     Modal
 } from "react-native";
 import { CreateRecipeFormProps, RecipeInstruction } from "./CreateRecipeTypes";
