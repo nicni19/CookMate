@@ -55,7 +55,7 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
         const updatedRecipeInstructions = recipeInstructions.slice();
         updatedRecipeInstructions.push(values);
         updatedRecipeInstructions.forEach(
-            (item, idx) =>
+            (_, idx) =>
                 (updatedRecipeInstructions[idx].sortingNumber = idx + 1)
         );
         updateRecipeInstructionsValues(updatedRecipeInstructions);
