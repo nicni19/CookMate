@@ -1,5 +1,4 @@
 import React from "react";
-import { Center } from "../../shared/components/style/Center";
 import {
     KeyboardAvoidingView,
     NativeSyntheticEvent,
@@ -16,7 +15,7 @@ import * as Yup from "yup";
 import { AuthNavProps } from "../../shared/components/navigation/param-lists/AuthParamList";
 import { styles } from "./UserStyles/UserLoginStyles";
 
-type SignUpProps = {} & AuthNavProps<"SignUp">;
+type SignUpProps = {} & AuthNavProps<"SignUpScreen">;
 
 const initialValues: ISignUp = {
     username: "",
@@ -40,7 +39,7 @@ const validationSchema = Yup.object({
 export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
     const handleSubmit = (values: ISignUp) => {
         console.warn(values);
-        navigation.push("SignIn");
+        navigation.push("SignInScreen");
     };
 
     return (
@@ -105,7 +104,7 @@ export const SignUp: React.FC<SignUpProps> = ({ navigation }) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={{ flexBasis: "100%", marginTop: "5%" }}
-                            onPress={() => navigation.push("SignIn")}
+                            onPress={() => navigation.push("SignInScreen")}
                         >
                             <Text style={styles.secondaryBtnText}>
                                 Already have an account? Sign in

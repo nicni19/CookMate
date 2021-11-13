@@ -16,9 +16,8 @@ import * as Yup from "yup";
 import { AuthNavProps } from "../../shared/components/navigation/param-lists/AuthParamList";
 import { styles } from "./UserStyles/UserLoginStyles";
 import QueryService from "../../shared/services/QueryService";
-import { Center } from "../../shared/components/style/Center";
 
-type SignInProps = {} & AuthNavProps<"SignIn">;
+type SignInProps = {} & AuthNavProps<"SignInScreen">;
 
 const initialValues: ISignIn = {
     username: "",
@@ -93,7 +92,7 @@ export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={{ flexBasis: "100%", marginTop: "5%"  }}
-                            onPress={() => navigation.push("SignUp")}
+                            onPress={() => navigation.push("SignUpScreen")}
                         >
                             <Text style={styles.secondaryBtnText}>
                                 Don't have an account? Sign up

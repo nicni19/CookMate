@@ -2,8 +2,8 @@ import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 
 export type AuthParamList = {
-    SignIn: undefined;
-    SignUp: undefined;
+    SignInScreen: undefined;
+    SignUpScreen: undefined;
 };
 
 export type AuthNavProps<T extends keyof AuthParamList> = {

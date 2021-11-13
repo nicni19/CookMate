@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { SignIn } from "../../../../modules/user/SignIn";
-import { SignUp } from "../../../../modules/user/SignUp";
+import { SignInScreen } from "../../screens/SignInScreen";
+import { SignUpScreen } from "../../screens/SignUpScreen";
 import { AuthParamList } from "../param-lists/AuthParamList";
 
 interface AuthStackProps {}
@@ -14,10 +14,10 @@ export const AuthStack: React.FC<AuthStackProps> = () => {
             screenOptions={{
                 header: () => null
             }}
-            initialRouteName="SignIn"
+            initialRouteName="SignInScreen"
         >
-            <Stack.Screen name="SignIn" component={SignIn} />
-            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="SignInScreen" component={SignInScreen} />
+            <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         </Stack.Navigator>
     );
 };
