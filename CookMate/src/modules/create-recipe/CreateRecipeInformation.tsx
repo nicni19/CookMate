@@ -21,6 +21,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
                 }
                 value={formik.values.createRecipeInformation.recipeName}
                 placeholder={"Name of the recipe"}
+                clearButtonMode="always"
             />
 
             <TextInput
@@ -43,6 +44,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
                 placeholder={"Description"}
                 multiline={true}
                 numberOfLines={20}
+                clearButtonMode="always"
             />
 
             <TextInput
@@ -58,6 +60,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
                 }
                 value={formik.values.createRecipeInformation.recipeTime}
                 placeholder={"Estimated cooking time"}
+                clearButtonMode="always"
             />
             <TextInput
                 style={[
@@ -72,6 +75,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
                 }
                 value={formik.values.createRecipeInformation.recipePeople}
                 placeholder={"For how many people"}
+                clearButtonMode="always"
             />
         </View>
     );

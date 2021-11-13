@@ -148,6 +148,7 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                                             style={styles.modalViewTextfield}
                                             value={selectedInstruction?.text}
                                             placeholder={"Instruction"}
+                                            clearButtonMode="always"
                                         />
                                         <AntDesign
                                             style={{ marginLeft: "5%" }}

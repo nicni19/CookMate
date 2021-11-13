@@ -94,6 +94,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                             onBlur={handleBlur("ingredient")}
                             value={values.ingredient}
                             placeholder={"Ingredient"}
+                            clearButtonMode="always"
                         />
 
                         <TextInput
@@ -102,6 +103,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                             onBlur={handleBlur("quantity")}
                             value={values.quantity}
                             placeholder={"Quantity"}
+                            clearButtonMode="always"
                         />
 
                         <TextInput
@@ -110,6 +112,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                             onBlur={handleBlur("unit")}
                             value={values.unit}
                             placeholder={"Unit"}
+                            clearButtonMode="always"
                         />
                         <TouchableOpacity
                             style={styles.button}
