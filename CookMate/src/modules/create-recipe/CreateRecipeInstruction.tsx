@@ -55,8 +55,7 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
         const updatedRecipeInstructions = recipeInstructions.slice();
         updatedRecipeInstructions.push(values);
         updatedRecipeInstructions.forEach(
-            (_, idx) =>
-                (updatedRecipeInstructions[idx].sortingNumber = idx + 1)
+            (_, idx) => (updatedRecipeInstructions[idx].sortingNumber = idx + 1)
         );
         updateRecipeInstructionsValues(updatedRecipeInstructions);
     };
@@ -67,17 +66,18 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                 instruction.sortingNumber !== selectedInstruction?.sortingNumber
         );
         updatedRecipeInstructions.forEach(
-            (item, idx) =>
+            (_, idx) =>
                 (updatedRecipeInstructions[idx].sortingNumber = idx + 1)
         );
         updateRecipeInstructionsValues(updatedRecipeInstructions);
     };
 
+    const selectedRecipeInstructionIndex =
+        (selectedInstruction?.sortingNumber as number) - 1;
+
     const handleRecipeInstructionEdit = (
         e: NativeSyntheticEvent<TextInputChangeEventData>
     ) => {
-        const selectedRecipeInstructionIndex =
-            (selectedInstruction?.sortingNumber as number) - 1;
         recipeInstructions[selectedRecipeInstructionIndex].text =
             e.nativeEvent.text;
         updateRecipeInstructionsValues(recipeInstructions);
@@ -159,8 +159,7 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                                             style={styles.modalViewTextfield}
                                             value={
                                                 recipeInstructions[
-                                                    (selectedInstruction?.sortingNumber as number) -
-                                                        1
+                                                    selectedRecipeInstructionIndex
                                                 ]?.text
                                             }
                                             onChange={
