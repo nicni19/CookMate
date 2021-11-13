@@ -127,7 +127,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
                 recipePeople: Yup.number().required()
             }),
             createRecipeIngredient: Yup.object({
-                recipeIngredients: Yup.array()
+                recipeIngredients: Yup.array().min(1, "Ingredients list cannot be empty").required()
             }),
             createRecipeInstruction: Yup.object({
                 recipeInstructions: Yup.array()
