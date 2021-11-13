@@ -21,6 +21,7 @@ export interface CreateRecipeFormProps {
 }
 
 export interface RecipeIngredient {
+    id: number;
     ingredient: string;
     quantity: string;
     unit: string;
