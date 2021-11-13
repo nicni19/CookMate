@@ -64,10 +64,9 @@ export const styles = StyleSheet.create({
         fontWeight: "200",
         padding: "5%",
         backgroundColor: theme.palette.backgroundColor,
-        textAlign: "center",
+        textAlign: "left",
         minWidth: "90%",
         marginBottom: "2%",
-        alignSelf: "center",
         borderWidth: 1,
         borderColor: "#d6d4d4"
     },
