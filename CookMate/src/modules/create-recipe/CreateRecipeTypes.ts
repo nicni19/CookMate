@@ -27,5 +27,6 @@ export interface RecipeIngredient {
 }
 
 export interface RecipeInstruction {
-    instruction: string;
+    sortingNumber: number;
+    text: string;
 }

@@ -56,19 +56,27 @@ export const styles = StyleSheet.create({
         height: "100%"
     },
     list: {
-        width: "100%", 
+        width: "90%", 
         maxHeight: "60%", 
         margin: "5%"
     },
     listItem: {
-        fontWeight: "200",
-        padding: "5%",
+        fontSize: 17,
+        fontWeight: "200"
+    },
+    listItemView: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        alignItems: "center",
         backgroundColor: theme.palette.backgroundColor,
         textAlign: "left",
         minWidth: "90%",
+        maxWidth: "100%",
         marginBottom: "2%",
         borderWidth: 1,
-        borderColor: "#d6d4d4"
+        borderColor: "#d6d4d4",
+        padding: "5%"
     },
     informationForm: {
         flex: 1,
@@ -78,5 +86,45 @@ export const styles = StyleSheet.create({
         backgroundColor: theme.palette.backgroundColor,
         padding: "10%",
         width: "100%"
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        justifyContent: "center",
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        width: "90%",
+        height: "20%"
+      },
+      modalViewCloseBtn: {
+          color: "red",
+          fontWeight: "500",
+          paddingTop: "5%",
+          marginTop: "5%"
+      },
+      modalViewTextfieldIcon: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        alignItems: "center",
+        width: "100%",
+      },
+      modalViewTextfield: {
+        flex: 1,
+        padding: "5%",
+        backgroundColor: "#DDDDDD",
+        textAlign: "left",
+        borderWidth: 1,
+        borderColor: "#d6d4d4",
+        width: "90%",
+        height: "100%"
     }
 });

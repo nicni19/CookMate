@@ -67,7 +67,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={(values) => {
+                onSubmit={(values, { resetForm }) => {
                     const updatedRecipeIngredients = recipeIngredients.slice();
                     updatedRecipeIngredients.push(values);
                     formik.setFieldValue(
@@ -75,6 +75,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                         updatedRecipeIngredients
                     );
                     setRecipeIngredients(updatedRecipeIngredients);
+                    resetForm();
                 }}
             >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
