@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import {User} from "../../../view-models/User";
+import {User} from "../../shared/view-models/User";
 import {Button, Image, Pressable, StyleSheet, Text, View} from "react-native";
-import {Cookbook} from "../../../view-models/Cookbook";
+import {Cookbook} from "../../shared/view-models/Cookbook";
 
 
 type UserProfileHeaderProps = {
