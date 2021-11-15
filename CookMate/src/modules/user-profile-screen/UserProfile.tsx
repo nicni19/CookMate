@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import {User} from "../../../view-models/User";
+import {User} from "../../shared/view-models/User";
 import {Image, StyleSheet, Text, View} from "react-native";
-import {Cookbook} from "../../../view-models/Cookbook";
-import {CookbookSimple} from "../../../view-models/CookbookSimple";
-import {UserSimple} from "../../../view-models/UserSimple";
-import {RecipeSimple} from "../../../view-models/RecipeSimple";
+import {Cookbook} from "../../shared/view-models/Cookbook";
+import {CookbookSimple} from "../../shared/view-models/CookbookSimple";
+import {UserSimple} from "../../shared/view-models/UserSimple";
+import {RecipeSimple} from "../../shared/view-models/RecipeSimple";
 import {UserProfileHeader} from "./UserProfileHeader";
 
 type UserProfileProps = {
@@ -15,7 +15,7 @@ const userJeppe = new UserSimple("5", "Jeppe", "Stenstrup");
 const andreasSimpleRecipe = new RecipeSimple("100", "Pasta e Ceci", 45, 4, "https://live.staticflickr.com/65535/49678442758_cb4cf78850_h.jpg");
 let testUser = new User("1", "Andreas", "Edal Pedersen", [new CookbookSimple("2", "Jeppes kogebog", userJeppe)]);
 
-export class UserProfileScreen extends Component<UserProfileProps> {
+export class UserProfile extends Component<UserProfileProps> {
     render() {
         // let currentUser = QueryService.users.getUser(this.props.userId);
         let currentUser = testUser;
