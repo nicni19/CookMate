@@ -10,7 +10,7 @@ export interface IUserQueryService {
      * Retrieves a user matching the userId
      * @param userId
      */
-    getUser(userId: string) : User;
+    getUser(userId: string) : Promise<User>;
 
     /**
      * Retrieves a user matching the userId

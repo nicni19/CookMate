@@ -8,35 +8,23 @@ import { CookbookSimple } from "../view-models/CookbookSimple";
 import {Instruction} from "../view-models/Instruction";
 import {Ingredient} from "../view-models/Ingredient";
 
+import { getFirestore, collection, query, where, getDocs, documentId } from "firebase/firestore";
+import { db, provider, auth } from '../utils/firebaseConfig';
+
 export default class QueryService {
 
     public static users : IUserQueryService = {
-        getUser: function (userId: string): User {
-            const data = require('../../../assets/data/user.db.json');
+        getUser: async function (userId: string): Promise<User> {
 
-            // Deconstructing data from user.db.json into variables
-            // If data.find(...) returns null or fails, an empty object is returned and the variables are set to null
-            let { id, firstname, lastname, cookbookId } = data.find((item: any) => item.id == userId) || {}
-
-            let cookbookFollowers: CookbookSimple[] = [];
-            //TODO: The following function is undefined
-            /*
-            this.getFollowersOfCookbook(cookbookId).forEach((user: any) => {
-                cookbookFollowers.push(
-                    QueryService.cookbooks.getUserCookbook(user.id)
-                )
-            });
-            */
+            const q = query(collection(db, "users"), where(documentId(), "==", ""+userId));
+            const querySnapshot = await getDocs(q);
             
+            return new Promise((res:any) => {
+                querySnapshot.forEach((doc) => {
+                    res(new User(doc.id, doc.data().firstname, doc.data().lastname, []))
+                });
+            })
             
-            // If "id" is not null, return a new User
-            // Else return null
-            return id && new User(
-                id,
-                firstname,
-                lastname,
-                cookbookFollowers
-                ) || null!
         },
         getUserSimple: function (userId: string): UserSimple {
             const data = require('../../../assets/data/user.db.json');
