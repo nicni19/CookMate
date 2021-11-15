@@ -18,7 +18,7 @@ class Card extends React.Component<any,ICard> {
     styles = StyleSheet.create({
     text: {
         marginLeft: "5%",
-        fontFamily: "Roboto",
+        fontFamily: "Roboto"
     }
     })
     render() {

@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     cookbookViewHeaderContainer: {
         flex: 1,
         flexDirection: "row",
-        maxHeight: 90
+        maxHeight: 90,
+        width: "100%"
     },
     profilePicture: {
         width: 90,
@@ -75,7 +76,8 @@ const styles = StyleSheet.create({
         alignSelf: "stretch",
         position: "relative",
         zIndex: 5,
-        elevation: 5
+        elevation: 5,
+        width: "100%"
     },
     profileBanner: {
         backgroundColor: '#eeeeee',
