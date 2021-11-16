@@ -7,7 +7,7 @@ import {UserSimple} from "../../shared/view-models/UserSimple";
 import {RecipeSimple} from "../../shared/view-models/RecipeSimple";
 import {UserProfileHeader} from "./UserProfileHeader";
 import data from "../RecipeFeed/recipes.json";
-import Card from "../RecipeFeed/Card";
+import RecipeCard from "../RecipeFeed/RecipeCard";
 
 type UserProfileProps = {
     userId: string
@@ -49,7 +49,7 @@ export class UserProfile extends Component<UserProfileProps> {
                     style={styles.listStyling}
                     data={currentCookbook.recipes}
                     renderItem={({ item }) => (
-                        <Card
+                        <RecipeCard
                             cardStyle={this.styles.verticalCard}
                             imageStyle={this.styles.image}
                             title={item.name}

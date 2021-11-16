@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList, Text } from "react-native";
-import Card from "./Card";
+import RecipeCard from "./RecipeCard";
 import data from "./recipes.json";
+import CookBookCard from "./CookBookCard";
 
 class RecipeFeed extends Component {
     styles = StyleSheet.create({
@@ -77,7 +78,7 @@ class RecipeFeed extends Component {
             width: "70%",
             marginTop: "13%",
             marginBottom: "8%",
-            height: 80,
+            height: "47%",
             borderRadius: 50
         }
     });
@@ -89,7 +90,7 @@ class RecipeFeed extends Component {
                     <FlatList
                         data={data.cookbooks}
                         renderItem={({ item }) => (
-                            <Card
+                            <CookBookCard
                                 cardStyle={this.styles.horizontalCard}
                                 imageStyle={this.styles.profileImage}
                                 title={item.title}
@@ -108,7 +109,7 @@ class RecipeFeed extends Component {
                     <FlatList
                         data={data.recipes}
                         renderItem={({ item }) => (
-                            <Card
+                            <RecipeCard
                                 cardStyle={this.styles.verticalCard}
                                 imageStyle={this.styles.image}
                                 title={item.title}
