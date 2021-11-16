@@ -16,13 +16,13 @@ export interface IUserQueryService {
      * Retrieves a user matching the userId
      * @param userId
      */
-    getUserSimple(userId: string) : UserSimple;
+    getUserSimple(userId: string) : Promise<UserSimple>;
 
     /**
      * Retrieves the users following the cookbook which matches the cookbookId
      * @param cookbookId
      */
-    getFollowersOfCookbook(cookbookId: string) : UserSimple[];
+    getFollowersOfCookbook(cookbookId: string) : Promise<UserSimple[]>;
 }
 
 export interface ICookbookQueryService {
@@ -30,7 +30,7 @@ export interface ICookbookQueryService {
      * Retrieves a cookbook matching the cookbookId
      * @param cookbookId
      */
-    getCookbook(cookbookId : string) : Cookbook;
+    getCookbook(cookbookId : string) : Promise<Cookbook>;
 
     /**
      * Retrieves the cookbook belonging to the user matching the userId
@@ -38,7 +38,7 @@ export interface ICookbookQueryService {
      */
     getUserCookbook(userId : string) : Cookbook;
 
-    getCookbookSimple(userId: string) : CookbookSimple[];
+    getFollowedCookbooks(userIds: string[]) : Promise<CookbookSimple[]>;
 }
 
 export interface IRecipeQueryService {
@@ -46,13 +46,13 @@ export interface IRecipeQueryService {
      * Retrieves a recipe matching the recipeId
      * @param recipeId
      */
-    getRecipe(recipeId : string) : Recipe;
+    getRecipe(recipeId : string) : Promise<Recipe>;
 
     /**
      * Retrieves all the recipes from the cookbook matching the cookbookId
      * @param cookbookId
      */
-    getRecipes(cookbookId : string) : RecipeSimple[];
+    getRecipes(cookbookId : string) : Promise<RecipeSimple[]>;
 
     /**
      * Adds the recipe to the cookbook matching the cookbookId
@@ -68,5 +68,5 @@ export interface ILoginService {
      * @param username
      * @param password
      */
-    requestLogin(username : string, password : string) : string | null;
+    requestLogin(username : string, password : string) : Promise<boolean>;
 }
