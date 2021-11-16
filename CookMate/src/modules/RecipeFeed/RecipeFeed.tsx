@@ -7,7 +7,7 @@ class RecipeFeed extends Component {
     styles = StyleSheet.create({
         horizontalCard: {
             width: 100,
-            height: 100,
+            height: "95%",
             margin: 5,
             marginLeft: 0,
             marginRight: 10,
@@ -31,13 +31,12 @@ class RecipeFeed extends Component {
             alignItems: "flex-start"
         },
         horizontalContainer: {
-            width: 300,
             height: 100,
             margin: 0,
             padding: 0,
             marginLeft: "4%",
             borderWidth: 0,
-            flex: 2
+            flex: 5
         },
         verticalContainer: {
             width: "100%",
@@ -47,11 +46,12 @@ class RecipeFeed extends Component {
             marginLeft: "4%",
             marginRight: "0%",
             borderWidth: 0,
-            flex: 6
+            flex: 12
             //alignSelf: "center",
         },
         text: {
-            fontFamily: "Roboto"
+            fontFamily: "Roboto",
+            marginBottom: "2%",
         },
         titleText: {
             fontFamily: "Roboto",
