@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList, Text } from "react-native";
-import Card from "./Card";
+import RecipeCard from "./RecipeCard";
 import data from "./recipes.json";
+import CookBookCard from "./CookBookCard";
 
 class RecipeFeed extends Component {
     styles = StyleSheet.create({
         horizontalCard: {
             width: 100,
-            height: 100,
+            height: "95%",
             margin: 5,
             marginLeft: 0,
             marginRight: 10,
@@ -31,13 +32,12 @@ class RecipeFeed extends Component {
             alignItems: "flex-start"
         },
         horizontalContainer: {
-            width: 300,
             height: 100,
             margin: 0,
             padding: 0,
             marginLeft: "4%",
             borderWidth: 0,
-            flex: 2
+            flex: 5
         },
         verticalContainer: {
             width: "100%",
@@ -47,11 +47,12 @@ class RecipeFeed extends Component {
             marginLeft: "4%",
             marginRight: "0%",
             borderWidth: 0,
-            flex: 6
+            flex: 12
             //alignSelf: "center",
         },
         text: {
-            fontFamily: "Roboto"
+            fontFamily: "Roboto",
+            marginBottom: "2%",
         },
         titleText: {
             fontFamily: "Roboto",
@@ -77,7 +78,7 @@ class RecipeFeed extends Component {
             width: "70%",
             marginTop: "13%",
             marginBottom: "8%",
-            height: 80,
+            height: "47%",
             borderRadius: 50
         }
     });
@@ -89,7 +90,7 @@ class RecipeFeed extends Component {
                     <FlatList
                         data={data.cookbooks}
                         renderItem={({ item }) => (
-                            <Card
+                            <CookBookCard
                                 cardStyle={this.styles.horizontalCard}
                                 imageStyle={this.styles.profileImage}
                                 title={item.title}
@@ -108,7 +109,7 @@ class RecipeFeed extends Component {
                     <FlatList
                         data={data.recipes}
                         renderItem={({ item }) => (
-                            <Card
+                            <RecipeCard
                                 cardStyle={this.styles.verticalCard}
                                 imageStyle={this.styles.image}
                                 title={item.title}
