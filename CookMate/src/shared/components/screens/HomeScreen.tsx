@@ -23,11 +23,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = () => {
             })
         })();
 
-        (async function() {
-            await QueryService.recipes.getRecipe("eIolgyJYebqM8gOFXxaZ").then((item: any) => {
-                //console.log(item)
+        /*(async function() {
+            await QueryService.cookbooks.getFollowedCookbooks(["JEBGMGpCc2RWTczrwHUj"]).then((item: any) => {
+                console.log(item)
             })
-        })();
+        })();*/
 
         /*(async function() {
             let x = await QueryService.recipes.addRecipe("JEBGMGpCc2RWTczrwHUj", new Recipe(
@@ -65,6 +65,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = () => {
 
     return (
         <Center>
+            {console.log(user)}
             <Text>Home</Text>
             <Text>Username: {user && user.firstName}</Text>
         </Center>

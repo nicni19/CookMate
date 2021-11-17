@@ -36,7 +36,7 @@ export interface ICookbookQueryService {
      * Retrieves the cookbook belonging to the user matching the userId
      * @param userId
      */
-    getUserCookbook(userId : string) : Cookbook;
+    getUserCookbook(userId : string) : Promise<Cookbook>;
 
     getFollowedCookbooks(userIds: string[]) : Promise<CookbookSimple[]>;
 }

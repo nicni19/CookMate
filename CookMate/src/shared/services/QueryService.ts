@@ -8,7 +8,7 @@ import { CookbookSimple } from "../view-models/CookbookSimple";
 import {Instruction} from "../view-models/Instruction";
 import {Ingredient} from "../view-models/Ingredient";
 
-import { getFirestore, collection, query, where, getDocs, documentId, setDoc, doc, addDoc } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, documentId, setDoc, doc, addDoc, getDoc } from "firebase/firestore";
 import { db, provider, auth } from '../utils/firebaseConfig';
 import { Unit } from "../view-models/Unit";
 
@@ -16,25 +16,23 @@ export default class QueryService {
 
     public static users : IUserQueryService = {
         getUser: async function (userId: string): Promise<User> {
+            const w = db.collection('users')
+            const wDoc = await w.doc(userId+"").get()
+                        
+            const getUser = async (id: any, data: any) => {
+                if(!data) return null!;
+                return new User(id,
+                                await data.firstname,
+                                await data.lastname,
+                                await data.following.length > 0 ? await QueryService.cookbooks.getFollowedCookbooks(data.following) : null!
+                );
+            }
 
-            const q = query(collection(db, "users"), where(documentId(), "==", ""+userId));
-            const querySnapshot = await getDocs(q);
-
-            let toReturn : User = null!;
-            let followerlist: string[] = [];
-            querySnapshot.forEach((doc) => {
-                followerlist = doc.data().following
-                toReturn = new User(doc.id, doc.data().firstname, doc.data().lastname, []);
-            })
-
-            let following: CookbookSimple[] = await QueryService.cookbooks.getFollowedCookbooks(followerlist);
-            toReturn.following = following;
-            
-            return toReturn;
+            return await getUser(userId, await wDoc.data());
             
         },
         getUserSimple: async function (userId: string): Promise<UserSimple> {
-            const q = query(collection(db, "users"), where(documentId(), "==", ""+userId));
+            const q = query(collection(db, "users"), where(documentId(), "==", userId));
             const querySnapshot = await getDocs(q);
 
             let toReturn: UserSimple = null!;
@@ -64,7 +62,7 @@ export default class QueryService {
             const q = query(collection(db, "cookbooks"), where(documentId(), "==", cookbookId));
             const querySnapshot = await getDocs(q);
 
-            let toReturn: Cookbook = null!;
+            let toReturn: Cookbook = new Cookbook(null!, null!, null!, null!, null!);
             let userId: string = null!;
             let cookbookFollowers: UserSimple[] = await QueryService.users.getFollowersOfCookbook(cookbookId)
 
@@ -83,15 +81,32 @@ export default class QueryService {
 
             return toReturn;
         },
-        getUserCookbook: function (userId: string): Cookbook {
-            const data = require('../../../assets/data/cookbook.db.json');
-            return data.find((item: any) => item.owner == userId)
+        getUserCookbook: async function (userId: string): Promise<Cookbook> {
+            const q = query(collection(db, "cookbooks"), where("owner","==",userId));
+            const querySnapshot = await getDocs(q);
+            const owner: UserSimple = await QueryService.users.getUserSimple(userId);
+
+            let toReturn: Cookbook = null!;
+            querySnapshot.forEach(async (doc) => {
+                let followers: UserSimple[] = await QueryService.users.getFollowersOfCookbook(doc.id)
+                let recipes: RecipeSimple[] = await QueryService.recipes.getRecipes(doc.id);
+                
+                toReturn = new Cookbook(
+                    doc.id,
+                    doc.data().name,
+                    owner,
+                    followers,
+                    recipes
+                )
+            })
+
+            return toReturn;
         },
         getFollowedCookbooks: async function (userIds: string[]): Promise<CookbookSimple[]> {
-            const q = query(collection(db, "cookbooks"), where("owner","in",userIds));
+            const q = query(collection(db, "cookbooks"), where(documentId(),"in",userIds));
             const querySnapshot = await getDocs(q);
-            
-            let toReturn : Array<CookbookSimple> = [];
+
+            let toReturn: CookbookSimple[] = [];
             querySnapshot.forEach((doc) => {
                 toReturn.push(new CookbookSimple(
                     doc.id,
@@ -99,6 +114,7 @@ export default class QueryService {
                     doc.data().owner
                 ));
             })
+
             return toReturn;
         }
     };
