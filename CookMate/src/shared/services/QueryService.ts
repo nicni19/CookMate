@@ -8,140 +8,209 @@ import { CookbookSimple } from "../view-models/CookbookSimple";
 import {Instruction} from "../view-models/Instruction";
 import {Ingredient} from "../view-models/Ingredient";
 
+import { getFirestore, collection, query, where, getDocs, documentId, setDoc, doc, addDoc, getDoc } from "firebase/firestore";
+import { db, provider, auth } from '../utils/firebaseConfig';
+import { Unit } from "../view-models/Unit";
+
 export default class QueryService {
 
     public static users : IUserQueryService = {
-        getUser: function (userId: string): User {
-            const data = require('../../../assets/data/user.db.json');
+        getUser: async function (userId: string): Promise<User> {
+            const w = db.collection('users')
+            const wDoc = await w.doc(userId+"").get()
+                        
+            const getUser = async (id: any, data: any) => {
+                if(!data) return null!;
+                return new User(id,
+                                await data.firstname,
+                                await data.lastname,
+                                await data.following.length > 0 ? await QueryService.cookbooks.getFollowedCookbooks(data.following) : null!
+                );
+            }
 
-            // Deconstructing data from user.db.json into variables
-            // If data.find(...) returns null or fails, an empty object is returned and the variables are set to null
-            let { id, firstname, lastname, cookbookId } = data.find((item: any) => item.id == userId) || {}
-
-            let cookbookFollowers: CookbookSimple[] = [];
-            //TODO: The following function is undefined
-            /*
-            this.getFollowersOfCookbook(cookbookId).forEach((user: any) => {
-                cookbookFollowers.push(
-                    QueryService.cookbooks.getUserCookbook(user.id)
-                )
-            });
-            */
+            return await getUser(userId, await wDoc.data());
             
-            
-            // If "id" is not null, return a new User
-            // Else return null
-            return id && new User(
-                id,
-                firstname,
-                lastname,
-                cookbookFollowers
-                ) || null!
         },
-        getUserSimple: function (userId: string): UserSimple {
-            const data = require('../../../assets/data/user.db.json');
+        getUserSimple: async function (userId: string): Promise<UserSimple> {
+            const q = query(collection(db, "users"), where(documentId(), "==", userId));
+            const querySnapshot = await getDocs(q);
+
+            let toReturn: UserSimple = null!;
+
+            querySnapshot.forEach((doc) => {
+                toReturn = new UserSimple(doc.id, doc.data().firstname, doc.data().lastname);
+            })
             
-            // Deconstructing data from user.db.json into variables
-            // If data.find(...) returns null or fails, an empty object is returned and the variables are set to null
-            let { id, firstname, lastname, profilepicture } = data.find((item: any) => item.id == userId || item.id == "0") || {}
-
-            // If "id" is not null, return a new UserSimple
-            // Else return null
-            return id && new UserSimple(
-                id,
-                firstname,
-                lastname
-            ) || null
+            return toReturn;
         },
-        getFollowersOfCookbook: function (cookbookId: string): UserSimple[] {
-            const data = require('../../../assets/data/follower_relation.db.json');
+        getFollowersOfCookbook: async function (cookbookId: string): Promise<UserSimple[]> {
+            const q = query(collection(db, "users"), where("following", "array-contains", cookbookId));
+            const querySnapshot = await getDocs(q);
 
-            // Filter data to get only the items we need
-            // Map the data from an object to an array of new CookbookSimple
-            // If data.filter(...).map(...) returns null or fails, null is returned
-            // "?." means that, if .filter(...) fails or returns null, .map doesn't run and saves memory and processing time, and falls back to "|| null"
-            return data.filter((item: any) => item.cookbookId == cookbookId)
-                       ?.map((item: any) => (
-                           this.getUserSimple(item.userId)
-                       )) || null!;
+            let toReturn: Array<UserSimple> = [];
+
+            querySnapshot.forEach((doc) => {
+                toReturn.push(new UserSimple(doc.id, doc.data().firstname, doc.data().lastname));
+            })
+
+            return toReturn;
         }
     };
 
     public static cookbooks : ICookbookQueryService = {
-        getCookbook: function (cookbookId: string): Cookbook {
-            const data = require('../../../assets/data/cookbook.db.json');
-            return data.filter((item: any) => item.id == cookbookId)
-            ?.map((item: any) => {
-                new Cookbook(
-                    item.id,
-                    item.name,
-                    item.owner,
-                    [QueryService.users.getUserSimple(item.id)],
-                    [new RecipeSimple("","",0,0,"")]
+        getCookbook: async function (cookbookId: string): Promise<Cookbook> {
+            const q = query(collection(db, "cookbooks"), where(documentId(), "==", cookbookId));
+            const querySnapshot = await getDocs(q);
+
+            let toReturn: Cookbook = new Cookbook(null!, null!, null!, null!, null!);
+            let userId: string = null!;
+            let cookbookFollowers: UserSimple[] = await QueryService.users.getFollowersOfCookbook(cookbookId)
+
+            querySnapshot.forEach((doc) => {
+                userId = doc.data().owner
+                toReturn = new Cookbook(
+                    doc.id,
+                    doc.data().name,
+                    null!,
+                    cookbookFollowers,
+                    null!
                 )
             })
+
+            toReturn.owner = await QueryService.users.getUserSimple(userId);
+
+            return toReturn;
         },
-        getUserCookbook: function (userId: string): Cookbook {
-            const data = require('../../../assets/data/cookbook.db.json');
-            return data.find((item: any) => item.owner == userId)
-        },
-        getCookbookSimple: function (userId: string): CookbookSimple[] {
-            const data = require('../../../assets/data/cookbook.db.json');
-            return data.filter((item: any) => item.owner == userId)
-            ?.map((item: any) => {
-                new CookbookSimple(
-                    item.id,
-                    item.name,
-                    item.owner
+        getUserCookbook: async function (userId: string): Promise<Cookbook> {
+            const q = query(collection(db, "cookbooks"), where("owner","==",userId));
+            const querySnapshot = await getDocs(q);
+            const owner: UserSimple = await QueryService.users.getUserSimple(userId);
+
+            let toReturn: Cookbook = null!;
+            querySnapshot.forEach(async (doc) => {
+                let followers: UserSimple[] = await QueryService.users.getFollowersOfCookbook(doc.id)
+                let recipes: RecipeSimple[] = await QueryService.recipes.getRecipes(doc.id);
+                
+                toReturn = new Cookbook(
+                    doc.id,
+                    doc.data().name,
+                    owner,
+                    followers,
+                    recipes
                 )
             })
+
+            return toReturn;
+        },
+        getFollowedCookbooks: async function (userIds: string[]): Promise<CookbookSimple[]> {
+            const q = query(collection(db, "cookbooks"), where(documentId(),"in",userIds));
+            const querySnapshot = await getDocs(q);
+
+            let toReturn: CookbookSimple[] = [];
+            querySnapshot.forEach((doc) => {
+                toReturn.push(new CookbookSimple(
+                    doc.id,
+                    doc.data().name,
+                    doc.data().owner
+                ));
+            })
+
+            return toReturn;
         }
     };
 
     public static recipes : IRecipeQueryService = {
-        getRecipe: function (recipeId: string): Recipe {
-            const data = require('../../../assets/data/recipe.db.json')
+        getRecipe: async function (recipeId: string): Promise<Recipe> {
+            const q = query(collection(db, "recipes"), where(documentId(),"==",recipeId));
+            const querySnapshot = await getDocs(q);
 
-            return data.find((recipe: any) => recipe.id == recipeId);
+            let toReturn : Recipe = null!;
+
+            querySnapshot.forEach((doc) => {
+                let instructions : Array<Instruction> = doc.data().instructions.map((item: any) => {
+                    return new Instruction(doc.id, item.sortOrder, item.name)
+                })
+                let ingredients : Array<Ingredient> = doc.data().Ingredients.map((item: any) => {
+                    return new Ingredient(doc.id, item.name, new Unit(item.unit, item.unit), item.quantity)
+                })
+                toReturn = new Recipe(
+                    new RecipeSimple(
+                        doc.id,
+                        doc.data().name,
+                        doc.data().estimatedCooktime,
+                        doc.data().servings,
+                        doc.data().image
+                    ),
+                    doc.data().description,
+                    instructions,
+                    ingredients
+                )
+            })
+
+            return toReturn;
         },
-        getRecipes: function (cookbookId: string): RecipeSimple[] {
-            const data = require('../../../assets/data/recipe.db.json')
+        getRecipes: async function (cookbookId: string): Promise<RecipeSimple[]> {
+            const q = query(collection(db, "recipes"), where("cookbookId","==",cookbookId));
+            const querySnapshot = await getDocs(q);
 
-            return data.filter((recipes: any) => recipes.cookbookId == cookbookId)
-                ?.map((recipe: any) => {
-                    new Recipe(
-                        new RecipeSimple(
-                            recipe.id,
-                            recipe.name,
-                            recipe.estimatedCooktime,
-                            recipe.servings,
-                            recipe.image
-                        ),
-                        recipe.description,
-                        recipe.instructions.map((instruction: any) => {
-                            new Instruction(instruction.id, instruction.sortingNumber, instruction.text)
-                        }),
-                        recipe.ingredients.map((ingredient: any) => {
-                            new Ingredient(ingredient.id, ingredient.name, ingredient.unit, ingredient.quantity)
-                        })
+            let toReturn : Array<RecipeSimple> = [];
+
+            querySnapshot.forEach((doc) => {
+                toReturn.push(
+                    new RecipeSimple(
+                        doc.id,
+                        doc.data().name,
+                        doc.data().estimatedCooktime,
+                        doc.data().servings,
+                        doc.data().image
                     )
-                });
+                )
+            })
+
+            return toReturn;
         },
-        addRecipe: function (cookbookId: string, recipe: Recipe): void {
-            throw new Error("Function not implemented.");
+        addRecipe: async function (cookbookId: string, recipe: Recipe): Promise<boolean> {
+            const docRef = await addDoc(collection(db, "recipes"), {
+                cookbookId: cookbookId,
+                name: recipe.name,
+                description: recipe.description,
+                estimatedCooktime: recipe.estimatedCookingTime,
+                servings: recipe.servings,
+                image: recipe.imageURL,
+                Ingredients: recipe.ingredients.map((ingredient: any) => {
+                    return {
+                        name: ingredient.name,
+                        quantity: ingredient.quantity,
+                        unit: ingredient.unit.name
+                    }
+                }),
+                instructions: recipe.instructions.map((instruction: any) => {
+                    return {
+                        name: instruction.text,
+                        sortOrder: instruction.sortingNumber
+                    }
+                })
+            });
+
+            
+            return !!docRef.id
         }
     };
 
     public static authentication : ILoginService = {
-        requestLogin(username: string, password: string): string | null {
-            const data = require('../../../assets/data/user.db.json');
+        async requestLogin(username: string, password: string): Promise<boolean> {
+            const q = query(collection(db, "users"), where("username","==",username));
+            const querySnapshot = await getDocs(q);
 
-            const user = data.find((user: any) => user.username == username && user.password == password);
-            if(user) {
-                return user.id;
-            } else {
-                return null;
-            }
+            let loggedIn: boolean = false;
+
+            querySnapshot.forEach((doc) => {
+                if(!loggedIn && doc.data().password == password) {
+                    loggedIn = !loggedIn
+                }
+            })
+            
+            return loggedIn;
         }
     }
 }
