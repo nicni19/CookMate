@@ -19,8 +19,8 @@ class RecipeView extends Component<RecipeViewProps,any> {
                 </View>
                 <View style={{height:"50%"}}>
                     <View style={styles.instructions_ingredients}>
-                        <Text>Instructions</Text>
-                        <Text>Ingredients</Text>
+                        <Text style={styles.instructions_ingredients_text}>Instructions</Text>
+                        <Text style={styles.instructions_ingredients_text}>Ingredients</Text>
                     </View>
                     <IngredientInstructionCard recipe={this.props.recipe}></IngredientInstructionCard>
                 </View>
@@ -38,24 +38,25 @@ class RecipeView extends Component<RecipeViewProps,any> {
 
 const styles = StyleSheet.create({
     wrapper: {
-        flex: 1,
-        backgroundColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: "100%",
-        height: "100%",
+        
     },
     title: {
-        fontSize: 40,
+        fontSize: 50,
     },
     picture: {
         width: "100%",
-        height: "200px",
+        height: 250,
+        backgroundColor: "purple",
     },
     instructions_ingredients:{
-        display:"flex",
+        paddingLeft: "15%",
+        paddingRight: "15%",
         flexDirection:"row",
         justifyContent:"space-between",
+        backgroundColor: "lightgrey",
+    },
+    instructions_ingredients_text:{
+        fontSize:18,
     }
 });
 
