@@ -5,7 +5,6 @@ export type AppParamList = {
     SignOutScreen: undefined;
     FeedStack: undefined;
     RecipeFeedScreen: undefined;
-    RecipeViewScreen: undefined;
 };
 
 export type AppNavProps<T extends keyof AppParamList> =
