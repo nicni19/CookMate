@@ -20,10 +20,10 @@ interface RecipeFeed {}
 export const RecipeFeed: React.FC<RecipeFeed> = () => {
 
     const { user } = useContext(AuthContext);
-    console.log("---",user);
     const [theuser, setTheuser] = useState<User>();
     const [isLoading, setLoading] = useState(true);
     const [recipes, setRecipes] = useState<Recipe[]>([]);
+
     let cookbooks: any = [];
     let tempUser: User;
 
@@ -33,12 +33,10 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
                 setTheuser(item);
                 tempUser = item;
             }).then(() => {
-                console.log("TempUser ",tempUser);
                 let tempRecipes: Recipe[] = [];
                 tempUser.following.forEach(async (cookbook: any) => {
                     await QueryService.recipes.getRecipes(cookbook.id).then((recipe: any) => {
                         for (let i = 0; i < recipe.length; i++) {
-                            console.log(recipe[i]);
                             tempRecipes.push(recipe[i]);
                         }
                     })
@@ -93,7 +91,6 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
             marginRight: "0%",
             borderWidth: 0,
             flex: 12
-            //alignSelf: "center",
         },
         text: {
             fontFamily: "Roboto",
@@ -132,8 +129,6 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
             flex: 1,
         }
     });
-    console.log("Theuser2",theuser)
-    console.log(recipes);
     return (
         <View style={styles.mainView}>
             {isLoading ?
@@ -152,7 +147,6 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
                                     cardStyle={styles.horizontalCard}
                                     imageStyle={styles.profileImage}
                                     title={item.name}
-                                    //author="DaBoi"
                                     //author={}
                                     //imageUrl={item}
                                 />
