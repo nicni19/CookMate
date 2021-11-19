@@ -2,6 +2,7 @@ import React,{ Component } from "react";
 import { View,Text, FlatList, ScrollView } from "react-native";
 import { Recipe } from "../../shared/view-models/Recipe";
 import { StyleSheet} from 'react-native';
+import { Dimensions } from 'react-native';
 
 type cardProps = {
     recipe: Recipe
@@ -10,26 +11,32 @@ type cardProps = {
 class IngredientInstructionCard extends Component<cardProps,any>{
     render(){
         return(
-        <ScrollView style={{flex:1}} horizontal={true}>
-            <View style={[styles.listStyle,{paddingTop:10,paddingLeft:5,paddingBottom:5}]}>
-                <FlatList 
-                    data={this.props.recipe.ingredients}
-                    renderItem={({item}) => <View style={styles.ingredientListStyle}>
-                                                <Text style={{backgroundColor:"lightgrey",borderRadius:40,flex:0,paddingRight:10,paddingLeft:10}}>{item.quantity}{item.unit.symbol}</Text>
-                                                <Text style={{backgroundColor:"lightgrey",borderRadius:40,flex:1,paddingLeft:10}}>{item.name}</Text>
-                                            </View>}/>
+        <View>
+            <View style={styles.instructions_ingredients}>
+                        <Text style={styles.instructions_ingredients_text}>Ingredients</Text>
+                        <Text style={styles.instructions_ingredients_text}>Instructions</Text>
             </View>
+            <ScrollView style={{flex:0}} horizontal={true} snapToInterval={Dimensions.get('window').width-60} snapToAlignment={"center"} decelerationRate={0.8}>
+                <View style={[styles.listStyle,{paddingTop:10,paddingLeft:5,paddingBottom:5}]}>
+                    <FlatList 
+                        data={this.props.recipe.ingredients}
+                        renderItem={({item}) => <View style={styles.ingredientListStyle}>
+                                                    <Text style={styles.quantityUnitStyle}>{item.quantity}{item.unit.symbol}</Text>
+                                                    <Text style={styles.itemNameStyle}>{item.name}</Text>
+                                                </View>}/>
+                </View>
 
-            <View style={styles.listStyle}>
-                <FlatList 
-                    data={this.props.recipe.instructions}
-                    renderItem={({item}) => <View style={styles.insttuctionListStyle}>
-                                                <Text style={{alignContent:"center",height:22,marginLeft:10,width:60,borderRadius:100,paddingLeft:5,paddingRight:5,flexDirection:"row",display:"flex",paddingBottom:5,flex:0, backgroundColor:"white"}}>{item.sortingNumber}</Text>
-                                                <Text style={{alignContent:"center",marginLeft:10,width:"100%",paddingLeft:5,paddingRight:10,flexDirection:"row",display:"flex",paddingBottom:5,flex:1}}>{item.text}</Text>
-                                            </View>}/>
-            
-            </View>
-        </ScrollView>
+                <View style={styles.listStyle}>
+                    <FlatList 
+                        data={this.props.recipe.instructions}
+                        renderItem={({item}) => <View style={styles.insttuctionListStyle}>
+                                                    <Text style={styles.sortingNumberStyle}>{item.sortingNumber}</Text>
+                                                    <Text style={styles.instructionTextStyle}>{item.text}</Text>
+                                                </View>}/>
+                
+                </View>
+            </ScrollView>
+        </View>
         )
     }
 }
@@ -38,20 +45,18 @@ export default IngredientInstructionCard;
 
 const cardStyle = StyleSheet.create({
     card: {
-        width:"80vw",
-        paddingLeft:5,
-        paddingRight:5,
         display:"flex",
         paddingBottom:5,
         flex:1,
         fontSize:20,
+        paddingVertical:20,
+        paddingHorizontal:10,
     }
 })
 
 const styles = StyleSheet.create({
     listStyle: {
-        height: 400,
-        width:"80vw",
+        width:Dimensions.get("window").width*0.9,
         alignContent: "center",
         borderRadius:30,
         marginLeft:5,
@@ -63,16 +68,61 @@ const styles = StyleSheet.create({
     ingredientListStyle:{
         ...cardStyle.card,
         flexDirection:"row",
-        paddingTop:"10px",
-        paddingRight:"15px",
-        paddingLeft:"10px",
+        flexGrow:0,
+        paddingBottom:10,
     },
     insttuctionListStyle:{
         ...cardStyle.card,
         flexDirection: "row",
-        paddingTop:"20px",
-        paddingRight:"10px",
-        paddingLeft:"10px",
-    }
+        paddingBottom:10,
+    },
+    quantityUnitStyle:{
+        backgroundColor:"lightgrey",
+        borderRadius:40,
+        flex:0,
+        paddingRight:10,
+        paddingLeft:10,
+    },
+    itemNameStyle:{
+        backgroundColor:"lightgrey",
+        borderRadius:40,
+        flex:1,
+        paddingLeft:10,
+    },
+    sortingNumberStyle:{
+        alignContent:"center",
+        height:22,
+        marginLeft:10,
+        width:20,
+        borderRadius:100,
+        paddingLeft:5,
+        paddingRight:5,
+        flexDirection:"row",
+        display:"flex",
+        paddingBottom:5,
+        flex:0, 
+        backgroundColor:"white",
+    },
+    instructionTextStyle:{
+        alignContent:"center",
+        marginLeft:10,
+        width:"100%",
+        paddingLeft:5,
+        paddingRight:10,
+        flexDirection:"row",
+        display:"flex",
+        paddingBottom:5,
+        flex:1
+    },
+    instructions_ingredients_text:{
+        fontSize:18,
+    },
+    instructions_ingredients:{
+        paddingLeft: "15%",
+        paddingRight: "15%",
+        paddingBottom:5,
+        flexDirection:"row",
+        justifyContent:"space-between",
+    },
 
 });
