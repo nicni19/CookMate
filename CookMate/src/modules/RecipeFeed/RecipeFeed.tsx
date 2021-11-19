@@ -7,6 +7,9 @@ import CookBookCard from "./CookBookCard";
 import QueryService from "../../shared/services/QueryService";
 import { UserSession } from "../../shared/components/auth/AuthType";
 import { AuthContext } from "../../shared/components/auth/AuthProvider";
+import {Center} from "../../shared/components/style/Center";
+import {User} from "../../shared/view-models/User";
+import {Recipe} from "../../shared/view-models/Recipe";
 
 //const userCook = await QueryService.users.getUser(user?.id?);
 //const cookbooks = userCook.following;
@@ -18,15 +21,34 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
 
     const { user } = useContext(AuthContext);
     console.log("---",user);
-    const [theuser, setTheuser]: any = useState();
+    const [theuser, setTheuser] = useState<User>();
+    const [isLoading, setLoading] = useState(true);
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
+    let cookbooks: any = [];
+    let tempUser: User;
 
     useEffect(() => {
         (async function() {
-            await QueryService.users.getUser(user.id).then((item:any) => {
-                setTheuser((item))
+            await QueryService.users.getUser(user.id).then((item: User) => {
+                setTheuser(item);
+                tempUser = item;
+            }).then(() => {
+                console.log("TempUser ",tempUser);
+                let tempRecipes: Recipe[] = [];
+                tempUser.following.forEach(async (cookbook: any) => {
+                    await QueryService.recipes.getRecipes(cookbook.id).then((recipe: any) => {
+                        for (let i = 0; i < recipe.length; i++) {
+                            console.log(recipe[i]);
+                            tempRecipes.push(recipe[i]);
+                        }
+                    })
+                    setRecipes(tempRecipes);
+                })
             });
-        })();
-    })
+        })().finally(() => {setLoading(false)});
+    },[user])
+
+
 
     let styles = StyleSheet.create({
         horizontalCard: {
@@ -105,45 +127,56 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
             borderRadius: 50
         }
     });
+    console.log("Theuser2",theuser)
+    console.log(recipes);
     return (
         <View style={{ flex: 1 }}>
-            <SafeAreaView style={styles.horizontalContainer}>
-                <Text style={styles.titleText}>Cookbooks</Text>
-                <Text>{theuser && theuser.firstname}</Text>
-                <FlatList
-                    data={[]}
-                    renderItem={({ item }) => (
-                        <CookBookCard
-                            cardStyle={styles.horizontalCard}
-                            imageStyle={styles.profileImage}
-                            title={item.name}
-                            author={item.owner}
-                            //imageUrl={item}
+            {isLoading ?
+                <Center>
+                    <Text>Loading...</Text>
+                </Center>
+            :
+                <View>
+                    <SafeAreaView style={styles.horizontalContainer}>
+                        <Text style={styles.titleText}>Cookbooks</Text>
+                        <Text>{theuser && theuser.firstName}</Text>
+                        <FlatList
+                            data={theuser && theuser.following}
+                            renderItem={({ item }) => (
+                                <CookBookCard
+                                    cardStyle={styles.horizontalCard}
+                                    imageStyle={styles.profileImage}
+                                    title={item.name}
+                                    //author={item.owner}
+                                    //author={}
+                                    //imageUrl={item}
+                                />
+                            )}
+                            horizontal={true}
                         />
-                    )}
-                    horizontal={true}
-                />
-            </SafeAreaView>
-            <View style={styles.lineView}></View>
-            <SafeAreaView style={styles.verticalContainer}>
-                <Text style={styles.text}>
-                    News from cookbooks you follow
-                </Text>
-                <FlatList
-                    data={data.recipes}
-                    renderItem={({ item }) => (
-                        <RecipeCard
-                            cardStyle={styles.verticalCard}
-                            imageStyle={styles.image}
-                            title={item.title}
-                            duration={item.duration}
-                            persons={item.persons}
-                            imageUrl={item.imageUrl}
+                    </SafeAreaView>
+                    <View style={styles.lineView}></View>
+                    <SafeAreaView style={styles.verticalContainer}>
+                        <Text style={styles.text}>
+                            News from cookbooks you follow
+                        </Text>
+                        <FlatList
+                            data={recipes}
+                            renderItem={({ item }) => (
+                                <RecipeCard
+                                    cardStyle={styles.verticalCard}
+                                    imageStyle={styles.image}
+                                    title={item.name}
+                                    duration={item.estimatedCookingTime}
+                                    persons={item.servings}
+                                    imageUrl={item.imageURL}
+                                />
+                            )}
+                            numColumns={2}
                         />
-                    )}
-                    numColumns={2}
-                />
-            </SafeAreaView>
+                    </SafeAreaView>
+                </View>
+            }
         </View>
     );
 }
