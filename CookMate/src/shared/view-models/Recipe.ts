@@ -8,7 +8,7 @@ export class Recipe extends RecipeSimple {
     ingredients : Ingredient[];
 
     constructor(recipe: RecipeSimple, description: string, instructions: Instruction[], ingredients: Ingredient[]) {
-        super(recipe.id, recipe.name, recipe.estimatedCookingTime, recipe.servings, recipe.imageURL);
+        super(recipe.id, recipe.cookbookId, recipe.name, recipe.estimatedCookingTime, recipe.servings, recipe.imageURL);
 
         this.description = description;
         this.instructions = instructions;
