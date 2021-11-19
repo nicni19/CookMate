@@ -33,11 +33,11 @@ export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
     const [signInError, setSignInError] = useState<string | null>(null);
     const { signIn } = useContext(AuthContext);
 
-    const handleSubmit = (values: ISignIn) => {
+    const handleSubmit = async (values: ISignIn) => {
         const { username, password } = values;
         const { requestLogin } = QueryService.authentication;
         
-        const userId = requestLogin(username, password);
+        const userId = await requestLogin(username, password);
 
         if(userId) {
             signIn(userId);
@@ -51,7 +51,7 @@ export const SignIn: React.FC<SignInProps> = ({ navigation }) => {
         <View style={styles.root}>
             <Formik
                 initialValues={initialValues}
-                onSubmit={(values) => handleSubmit(values)}
+                onSubmit={async (values) => await handleSubmit(values)}
                 validationSchema={validationSchema}
             >
                 {({ handleChange, handleBlur, handleSubmit, values }) => (

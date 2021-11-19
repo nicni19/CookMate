@@ -208,6 +208,7 @@ export default class QueryService {
                     userId = (doc.data().password == password ? doc.id : null!)
                 }
             })
+            console.log(userId);
             return userId;
 
         }
