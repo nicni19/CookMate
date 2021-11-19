@@ -1,50 +1,41 @@
 import React,{Component} from "react";
-import {StyleSheet, Text, View, Image, FlatList} from "react-native";
+import {StyleSheet, Text, View, Image, FlatList, ScrollView} from "react-native";
 import { Recipe } from "../../shared/view-models/Recipe";
+import { UserSimple } from "../../shared/view-models/UserSimple";
 import IngredientInstructionCard from "./IngredientInstructionCard";
 
 type RecipeViewProps = {
-    recipe: Recipe;
+    recipe: Recipe | undefined,
+    owner: UserSimple | undefined
 }
 
 class RecipeView extends Component<RecipeViewProps,any> {
     render(){
         return(
-            <View style={styles.wrapper}>
+            <ScrollView style={{backgroundColor:"white",height:"100%"}}>
                 <View style={{}}>
-                    <Text style={styles.title}>{this.props.recipe.name}</Text>
-                    <Text style={{paddingLeft:"2.5%",paddingBottom:5}}>{this.props.recipe.cookbookId}</Text>
-                    <Image style={styles.picture} source={{uri: this.props.recipe.imageURL}}/>
-                    <View style={{borderBottomColor:"lightgrey",borderBottomWidth:1,paddingTop:"2px"}}/>
-                    <Text style={{padding:"8px"}}>{this.props.recipe.description}</Text>
+                    <Text style={styles.title}>{this.props.recipe?.name}</Text>
+                    <Text style={{paddingLeft:"2.5%",paddingBottom:5,fontSize:20}}>{this.props.owner?.firstName} {this.props.owner?.lastName}</Text>
+                    <Image style={styles.picture} source={{uri: this.props.recipe?.imageURL}}/>
+                    <View style={{borderBottomColor:"lightgrey",borderBottomWidth:1,paddingTop:2}}/>
+                    <Text style={{padding:8}}>{this.props.recipe?.description}</Text>
                 </View>
-                <View style={{height:"50%"}}>
+                <View style={{height:500}}>
                     <View style={{borderBottomColor:"lightgrey",borderBottomWidth:1}}/>
-                    <View style={styles.instructions_ingredients}>
-                        <Text style={styles.instructions_ingredients_text}>Ingredients</Text>
-                        <Text style={styles.instructions_ingredients_text}>Instructions</Text>
-                    </View>
                     <IngredientInstructionCard recipe={this.props.recipe}></IngredientInstructionCard>
                 </View>
-            </View>
+            </ScrollView>
         )
     }
 }
-
-/*
-    <FlatList
-                        horizontal={true}
-                        data={[{key:"Instructions"},{key:"Ingredients"}]}
-                        renderItem={({item}) => <Text style={styles.items}>{item.key}</Text>}/>
-*/
 
 const styles = StyleSheet.create({
     wrapper: {
         backgroundColor:"white",
     },
     title: {
-        fontSize: 50,
-        paddingLeft:"2.5%",
+        fontSize: 40,
+        paddingHorizontal:"2.5%",
     },
     picture: {
         width: "100%",

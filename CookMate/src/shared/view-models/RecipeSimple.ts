@@ -1,6 +1,6 @@
 export class RecipeSimple {
     id : string;
-    cookbookId : string;
+    cookbookId : string | undefined;
     name : string;
     estimatedCookingTime : number; // In minutes
     servings : number;
