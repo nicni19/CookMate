@@ -1,17 +1,19 @@
 import React, {Component, SetStateAction, useEffect, useState} from "react";
 import {User} from "../../shared/view-models/User";
-import {FlatList, Image, StyleSheet, Text, View} from "react-native";
+import {ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Cookbook} from "../../shared/view-models/Cookbook";
 import {UserProfileHeader} from "./UserProfileHeader";
 import RecipeCard from "../RecipeFeed/RecipeCard";
 import QueryService from "../../shared/services/QueryService";
 import {Center} from "../../shared/components/style/Center";
+import {FeedNavProps} from "../../shared/components/navigation/param-lists/FeedParamList";
+import {theme} from "../../shared/theme";
 
-type UserProfileProps = {
-    userId: string
-}
+type UserProfileProps = {} & FeedNavProps<"UserScreen">
 
 export const UserProfile : React.FC<UserProfileProps> = (props) => {
+    const params = props.route.params;
+
     let recipeStyles = StyleSheet.create({
         verticalCard: {
             width: "48%",
@@ -35,22 +37,20 @@ export const UserProfile : React.FC<UserProfileProps> = (props) => {
     const [user, setUser] = useState<User>();
 
     useEffect(() => {
-        console.log("UserId: ", props.userId)
+        console.log("UserId: ", params.userId)
         setLoading(true);
 
         Promise.all(
             [
-                QueryService.users.getUser(props.userId)
+                QueryService.users.getUser(params.userId)
                     .then((user : User) => {
                         setUser(user);
-                        console.log("Efter current user", user);
                     })
                     .catch(reason => console.log("Error during load of user", reason)),
 
-                QueryService.cookbooks.getUserCookbook(props.userId)
+                QueryService.cookbooks.getUserCookbook(params.userId)
                     .then((cookbook : Cookbook) => {
                         setCookbook(cookbook);
-                        console.log("Efter current cookbook", cookbook);
                     })
                     .catch(reason => console.log("Error during load of cookbook", reason))
             ]
@@ -64,7 +64,7 @@ export const UserProfile : React.FC<UserProfileProps> = (props) => {
         <View style={{flex: 1}}>
             {isLoading ?
                 <Center>
-                    <Text>Loading...</Text>
+                    <ActivityIndicator size="large" color={theme.palette.secondaryColor} />
                 </Center>
             :
                 <View style={styles.container}>
@@ -74,14 +74,17 @@ export const UserProfile : React.FC<UserProfileProps> = (props) => {
                         style={styles.listStyling}
                         data={cookbook?.recipes}
                         renderItem={({item}) => (
-                            <RecipeCard
-                                cardStyle={recipeStyles.verticalCard}
-                                imageStyle={recipeStyles.image}
-                                title={item.name}
-                                duration={item.estimatedCookingTime}
-                                persons={item.servings}
-                                imageUrl={item.imageURL}
-                            />
+                            <TouchableOpacity
+                                onPress={() => props.navigation.navigate("RecipeFeedScreen")} /* Should point to RecipeView */>
+                                <RecipeCard
+                                    cardStyle={recipeStyles.verticalCard}
+                                    imageStyle={recipeStyles.image}
+                                    title={item.name}
+                                    duration={item.estimatedCookingTime}
+                                    persons={item.servings}
+                                    imageUrl={item.imageURL}
+                                />
+                            </TouchableOpacity>
                         )}
                         numColumns={2}
                     />

@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { SafeAreaView, StyleSheet, View, FlatList, Text } from "react-native";
+import {SafeAreaView, StyleSheet, View, FlatList, Text, TouchableOpacity} from "react-native";
 import RecipeCard from "./RecipeCard";
 import data from "./recipes.json";
 import CookBookCard from "./CookBookCard";
+import {FeedNavProps} from "../../shared/components/navigation/param-lists/FeedParamList";
 
-class RecipeFeed extends Component {
+type RecipeFeedProps = {} & FeedNavProps<"RecipeFeedScreen">
+
+class RecipeFeed extends Component<RecipeFeedProps> {
     styles = StyleSheet.create({
         horizontalCard: {
             width: 100,
@@ -90,13 +93,17 @@ class RecipeFeed extends Component {
                     <FlatList
                         data={data.cookbooks}
                         renderItem={({ item }) => (
-                            <CookBookCard
-                                cardStyle={this.styles.horizontalCard}
-                                imageStyle={this.styles.profileImage}
-                                title={item.title}
-                                author={item.author}
-                                imageUrl={item.imageUrl}
-                            />
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.navigate("UserScreen", {userId : item.owner.id} )}
+                                >
+                                <CookBookCard
+                                    cardStyle={this.styles.horizontalCard}
+                                    imageStyle={this.styles.profileImage}
+                                    title={item.title}
+                                    author={item.author}
+                                    imageUrl={item.imageUrl}
+                                />
+                            </TouchableOpacity>
                         )}
                         horizontal={true}
                     />
