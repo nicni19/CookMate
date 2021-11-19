@@ -147,7 +147,7 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
                                     cardStyle={styles.horizontalCard}
                                     imageStyle={styles.profileImage}
                                     title={item.name}
-                                    //author={item.owner}
+                                    author="DaBoi"
                                     //author={}
                                     //imageUrl={item}
                                 />
