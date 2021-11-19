@@ -24,7 +24,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 user,
                 signIn: async (id) => {
                     const { getUser } = QueryService.users;
-                    const user: User = getUser(id as string);
+                    const user: User = await getUser(id as string);
 
                     const userSession: UserSession = { id: user.id, firstName: user.firstName, lastName: user.lastName};
                     console.warn(userSession);
