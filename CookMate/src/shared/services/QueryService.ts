@@ -45,7 +45,7 @@ export default class QueryService {
                         ? await QueryService.cookbooks.getFollowedCookbooks(
                               data.following
                           )
-                        : null!
+                        : []
                 );
             };
 
