@@ -6,7 +6,7 @@ import { User } from "../../view-models/User";
 
 export const AuthContext = React.createContext<{
     user: UserSession;
-    signIn: (id: string | undefined) => void;
+    signIn: (id: string | undefined) => void;
     signOut: () => void;
 }>({
     user: null,
@@ -26,14 +26,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                     const { getUser } = QueryService.users;
                     const user: User = await getUser(id as string);
 
-                    const userSession: UserSession = { id: user.id, firstName: user.firstName, lastName: user.lastName};
-                    
+                    const userSession: UserSession = {
+                        id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName
+                    };
+
                     setUser(userSession);
                     try {
-                        await AsyncStorage.setItem(
-                            "user_session",
-                            JSON.stringify(userSession)
-                        );
+                        if (user) {
+                            await AsyncStorage.setItem(
+                                "user_session",
+                                JSON.stringify(userSession)
+                            );
+                        }
                     } catch (err) {
                         console.log(err);
                     }
