@@ -13,14 +13,15 @@ class RecipeView extends Component<RecipeViewProps,any> {
             <View style={styles.wrapper}>
                 <View style={{height:"50%"}}>
                     <Text style={styles.title}>{this.props.recipe.name}</Text>
-                    <Text>[TODO: Show user]</Text>
+                    <Text style={{paddingLeft:"2.5%",paddingBottom:5}}>[TODO: Show user]</Text>
                     <Image style={styles.picture} source={{uri: this.props.recipe.imageURL}}/>
-                    <Text>{this.props.recipe.description}</Text>
+                    <Text style={{paddingTop:5}}>{this.props.recipe.description}</Text>
                 </View>
                 <View style={{height:"50%"}}>
+                    <View style={{borderBottomColor:"lightgrey",borderBottomWidth:1}}/>
                     <View style={styles.instructions_ingredients}>
-                        <Text style={styles.instructions_ingredients_text}>Instructions</Text>
                         <Text style={styles.instructions_ingredients_text}>Ingredients</Text>
+                        <Text style={styles.instructions_ingredients_text}>Instructions</Text>
                     </View>
                     <IngredientInstructionCard recipe={this.props.recipe}></IngredientInstructionCard>
                 </View>
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 50,
+        paddingLeft:"2.5%",
     },
     picture: {
         width: "100%",
@@ -51,9 +53,9 @@ const styles = StyleSheet.create({
     instructions_ingredients:{
         paddingLeft: "15%",
         paddingRight: "15%",
+        paddingBottom:5,
         flexDirection:"row",
         justifyContent:"space-between",
-        backgroundColor: "lightgrey",
     },
     instructions_ingredients_text:{
         fontSize:18,
