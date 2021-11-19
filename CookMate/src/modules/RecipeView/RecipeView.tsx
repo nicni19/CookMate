@@ -15,7 +15,8 @@ class RecipeView extends Component<RecipeViewProps,any> {
                     <Text style={styles.title}>{this.props.recipe.name}</Text>
                     <Text style={{paddingLeft:"2.5%",paddingBottom:5}}>{this.props.recipe.cookbookId}</Text>
                     <Image style={styles.picture} source={{uri: this.props.recipe.imageURL}}/>
-                    <Text style={{paddingTop:5}}>{this.props.recipe.description}</Text>
+                    <View style={{borderBottomColor:"lightgrey",borderBottomWidth:1,paddingTop:"2px"}}/>
+                    <Text style={{padding:"8px"}}>{this.props.recipe.description}</Text>
                 </View>
                 <View style={{height:"50%"}}>
                     <View style={{borderBottomColor:"lightgrey",borderBottomWidth:1}}/>

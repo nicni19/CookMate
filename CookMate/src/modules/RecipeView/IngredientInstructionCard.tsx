@@ -7,7 +7,6 @@ type cardProps = {
     recipe: Recipe
 }
 
-
 class IngredientInstructionCard extends Component<cardProps,any>{
     render(){
         return(
@@ -25,8 +24,8 @@ class IngredientInstructionCard extends Component<cardProps,any>{
                 <FlatList 
                     data={this.props.recipe.instructions}
                     renderItem={({item}) => <View style={styles.insttuctionListStyle}>
-                                                <Text style={{alignContent:"center",marginLeft:10,width:60,borderRadius:100,paddingLeft:5,paddingRight:5,flexDirection:"row",display:"flex",paddingBottom:5,flex:0, backgroundColor:"white"}}>{item.sortingNumber}</Text>
-                                                <Text style={{alignContent:"center",marginLeft:10,width:"100%",paddingLeft:5,paddingRight:"10px",flexDirection:"row",display:"flex",paddingBottom:5,flex:1}}>{item.text}</Text>
+                                                <Text style={{alignContent:"center",height:22,marginLeft:10,width:60,borderRadius:100,paddingLeft:5,paddingRight:5,flexDirection:"row",display:"flex",paddingBottom:5,flex:0, backgroundColor:"white"}}>{item.sortingNumber}</Text>
+                                                <Text style={{alignContent:"center",marginLeft:10,width:"100%",paddingLeft:5,paddingRight:10,flexDirection:"row",display:"flex",paddingBottom:5,flex:1}}>{item.text}</Text>
                                             </View>}/>
             
             </View>
