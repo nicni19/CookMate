@@ -23,7 +23,7 @@ import { Center } from "../../shared/components/style/Center";
 const initialValues: RecipeIngredient = {
     id: -1,
     ingredient: "",
-    quantity: "",
+    quantity: 0,
     unit: ""
 };
 
@@ -87,7 +87,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
         if (inputType === "ingredient") {
             currentSelectedIngredient.ingredient = newValue;
         } else if (inputType === "quantity") {
-            currentSelectedIngredient.quantity = newValue;
+            currentSelectedIngredient.quantity = newValue as unknown as number;
         } else if (inputType === "unit") {
             currentSelectedIngredient.unit = newValue;
         }
@@ -196,7 +196,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                                             value={
                                                 recipeIngredients[
                                                     selectedRecipeIngredientIndex
-                                                ]?.quantity
+                                                ]?.quantity as unknown as string
                                             }
                                             placeholder={"Quantity"}
                                             clearButtonMode="always"
@@ -253,11 +253,10 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                             style={styles.textfield}
                             onChangeText={handleChange("quantity")}
                             onBlur={handleBlur("quantity")}
-                            value={values.quantity}
+                            value={values.quantity as unknown as string}
                             placeholder={"Quantity"}
                             clearButtonMode="always"
                         />
-
                         <TextInput
                             style={styles.textfield}
                             onChangeText={handleChange("unit")}

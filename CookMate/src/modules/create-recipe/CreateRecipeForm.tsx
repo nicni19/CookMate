@@ -16,6 +16,9 @@ import QueryService from "../../shared/services/QueryService";
 import { AuthContext } from "../../shared/components/auth/AuthProvider";
 import { Recipe } from "../../shared/view-models/Recipe";
 import { RecipeSimple } from "../../shared/view-models/RecipeSimple";
+import { Ingredient } from "../../shared/view-models/Ingredient";
+import { Unit } from "../../shared/view-models/Unit";
+import { Instruction } from "../../shared/view-models/Instruction";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImagePick: null,
@@ -23,7 +26,7 @@ const initialValues: FormikCreateRecipeFormValues = {
         recipeName: "",
         recipeDescription: "",
         recipeTime: 0,
-        recipePeople: ""
+        recipePeople: 0
     },
     createRecipeIngredient: {
         recipeIngredients: []
@@ -125,8 +128,10 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
 
     useEffect(() => {
         const { getUserCookbook } = QueryService.cookbooks;
-        const { id } = await getUserCookbook(user?.id as string);
-        setCookbookId(id);
+        async () => {
+            const { id } = await getUserCookbook(user?.id as string);
+            setCookbookId(id);
+        } 
     }, []);
 
     const formik = useFormik({
@@ -152,12 +157,24 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
             const ingredients = values.createRecipeIngredient.recipeIngredients;
             const instructions = values.createRecipeInstruction.recipeInstructions;
 
+            const newIngredientsType: Ingredient[] = [];
+            for(let i = 0; i < ingredients.length; i++) {
+                const unit: Unit = new Unit(ingredients[i].unit, ingredients[i].unit);
+                const ingredient: Ingredient = new Ingredient(ingredients[i].id.toString(), ingredients[i].ingredient, unit, ingredients[i].quantity);
+                newIngredientsType.push(ingredient);
+            }
+
+            const newInstructionsType: Instruction[] = [];
+            for(let i = 0; i < instructions.length; i++) {
+                const instruction: Instruction = new Instruction("0", instructions[i].sortingNumber, instructions[i].text);
+                newInstructionsType.push(instruction);
+            }
 
             const recipeSimple: RecipeSimple = new RecipeSimple("0", recipeName, recipeTime, recipePeople, imageURI as string);
-            const recipe: Recipe = new Recipe(recipeSimple, recipeDescription, instructions, ingredients);
+            const recipe: Recipe = new Recipe(recipeSimple, recipeDescription, newInstructionsType, newIngredientsType);
 
             const { addRecipe } = QueryService.recipes;
-            addRecipe(cookbookId, recipe);
+            addRecipe(cookbookId as string, recipe);
             console.warn(values);
         }
     });
