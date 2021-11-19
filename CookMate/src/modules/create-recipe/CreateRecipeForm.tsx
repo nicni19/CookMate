@@ -166,14 +166,10 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
 
             const newIngredientsType: Ingredient[] = [];
             for (let i = 0; i < ingredients.length; i++) {
-                const unit: Unit = new Unit(
-                    ingredients[i].unit,
-                    ingredients[i].unit
-                );
                 const ingredient: Ingredient = new Ingredient(
                     ingredients[i].id.toString(),
                     ingredients[i].ingredient,
-                    unit,
+                    ingredients[i].unit,
                     ingredients[i].quantity
                 );
                 newIngredientsType.push(ingredient);
@@ -204,8 +200,8 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
             );
 
             const { addRecipe } = QueryService.recipes;
-            console.log(addRecipe(cookbookId as string, recipe));
-            console.warn(values);
+            addRecipe(cookbookId as string, recipe);
+            //createRecipeNavProps.navigation.navigate("RecipeViewScreen");
         }
     });
 
