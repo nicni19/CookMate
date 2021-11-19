@@ -47,13 +47,6 @@ export const AppDrawer: React.FC<AppDrawerProps> = () => {
                     title: "Sign Out"
                 }}
             />
-            <Drawer.Screen
-                name="RecipeViewScreen"
-                component={RecipeViewScreen}
-                options={{
-                    title: "Recipe View"
-                }}
-            />
         </Drawer.Navigator>
     );
 };
