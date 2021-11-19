@@ -33,8 +33,7 @@ const initialValues: RecipeIngredient = {
 
 const validationSchema = Yup.object({
     ingredient: Yup.string().required(),
-    quantity: Yup.number().min(1).required(),
-    unit: Yup.string().required()
+    quantity: Yup.number().min(1).required()
 });
 
 const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
