@@ -161,15 +161,15 @@ export const RecipeFeed: React.FC<RecipeFeedProps> = (props) => {
                         </Text>
                         <FlatList
                             data={recipes}
-                            renderItem={({ item }) => (
+                            renderItem={({ item: recipe }) => (
                                 <RecipeCard
-                                    onPress={() => console.log("Pressed!")}
+                                    onPress={() => props.navigation.navigate("RecipeViewScreen", {recipeId: recipe.id})}
                                     cardStyle={styles.verticalCard}
                                     imageStyle={styles.image}
-                                    title={item.name}
-                                    duration={item.estimatedCookingTime}
-                                    persons={item.servings}
-                                    imageUrl={item.imageURL}
+                                    title={recipe.name}
+                                    duration={recipe.estimatedCookingTime}
+                                    persons={recipe.servings}
+                                    imageUrl={recipe.imageURL}
                                 />
                             )}
                             numColumns={2}

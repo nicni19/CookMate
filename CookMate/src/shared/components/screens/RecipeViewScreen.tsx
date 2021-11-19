@@ -7,6 +7,9 @@ import { Recipe } from "../../view-models/Recipe";
 import { RecipeSimple } from "../../view-models/RecipeSimple";
 import { Unit } from "../../view-models/Unit";
 import {FeedNavProps} from "../navigation/param-lists/FeedParamList";
+import {ActivityIndicator} from "react-native";
+import {theme} from "../../theme";
+import {Center} from "../style/Center";
 
 export type RecipeViewScreenParams = {
     recipeId : string
@@ -28,8 +31,10 @@ export const RecipeViewScreen : React.FC<RecipeViewScreenProps> = (props) => {
 
     },[]);
 
-    if(!isLoading) {
-        return <RecipeView recipe={xrecipe} {...props}/>
-    }
-    return null;
+    return isLoading ?
+        <Center>
+            <ActivityIndicator size="large" color={theme.palette.secondaryColor}/>
+        </Center>
+        :
+        <RecipeView recipe={xrecipe} {...props}/>;
 };
