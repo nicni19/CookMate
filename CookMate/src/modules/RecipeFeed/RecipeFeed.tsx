@@ -68,7 +68,7 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
             width: "43%",
             margin: 5,
             marginLeft: 0,
-            marginRight: "6.3%",
+            marginRight: 20,
             marginBottom: "5%",
             borderWidth: 0,
             borderRadius: 10,
@@ -106,11 +106,11 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
         },
         lineView: {
             borderBottomColor: "black",
-            width: 328,
+            width: "100%",
             borderBottomWidth: 1,
             marginTop: 10,
             marginBottom: 4,
-            marginLeft: "4%",
+            marginLeft: "0%",
             marginRight: "4%"
         },
         image: {
@@ -125,18 +125,23 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
             marginBottom: "8%",
             height: "47%",
             borderRadius: 50
+        },
+        mainView: {
+            width: "100%",
+            height: "100%",
+            flex: 1,
         }
     });
     console.log("Theuser2",theuser)
     console.log(recipes);
     return (
-        <View style={{ flex: 1 }}>
+        <View style={styles.mainView}>
             {isLoading ?
                 <Center>
                     <Text>Loading...</Text>
                 </Center>
             :
-                <View>
+                <View style={styles.mainView}>
                     <SafeAreaView style={styles.horizontalContainer}>
                         <Text style={styles.titleText}>Cookbooks</Text>
                         <Text>{theuser && theuser.firstName}</Text>
@@ -147,7 +152,7 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
                                     cardStyle={styles.horizontalCard}
                                     imageStyle={styles.profileImage}
                                     title={item.name}
-                                    author="DaBoi"
+                                    //author="DaBoi"
                                     //author={}
                                     //imageUrl={item}
                                 />
