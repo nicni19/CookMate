@@ -2,11 +2,12 @@ import React, {Component} from "react";
 import {User} from "../../shared/view-models/User";
 import {Button, Image, Pressable, StyleSheet, Text, View} from "react-native";
 import {Cookbook} from "../../shared/view-models/Cookbook";
+import {boolean} from "yup";
 
 
 type UserProfileHeaderProps = {
-    user: User,
-    cookbook: Cookbook
+    user: User | undefined,
+    cookbook: Cookbook | undefined
 }
 
 type UserProfileHeaderStates = {
@@ -18,6 +19,7 @@ export class UserProfileHeader extends Component<UserProfileHeaderProps, UserPro
     private isPressed : boolean = false;
 
     render() {
+        console.log("User in header: ", this.props.user);
         return(
             <View style={styles.cookbookViewHeaderContainer}>
                 <View style={styles.profilePictureContainer}>
@@ -31,7 +33,7 @@ export class UserProfileHeader extends Component<UserProfileHeaderProps, UserPro
                 <View style={styles.profileBannerContainer}>
                     <View style={styles.profileBanner}>
                         <View style={styles.profileBannerText}>
-                            <Text style={styles.profileCookbookName}>{this.props.cookbook.name}</Text>
+                            <Text style={styles.profileCookbookName}>{this.props.cookbook?.name}</Text>
                             <Text style={styles.profileCookbookFollowers}>{this.getFollowerCountText(this.props.cookbook)}</Text>
                         </View>
                     </View>
@@ -44,8 +46,14 @@ export class UserProfileHeader extends Component<UserProfileHeaderProps, UserPro
         );
     }
 
-    private getFollowerCountText(currentCookbook: Cookbook) {
-        var amount : number = currentCookbook.followers.length;
+    private getFollowerCountText(currentCookbook: Cookbook | undefined) {
+        let amount: number;
+
+        if (currentCookbook !== null && currentCookbook !== undefined) {
+            amount = currentCookbook.followers.length;
+        } else {
+            amount = 0;
+        }
         return amount + ((amount > 1) ? " followers" : " follower");
     }
 }
