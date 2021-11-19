@@ -198,19 +198,19 @@ export default class QueryService {
     };
 
     public static authentication : ILoginService = {
-        async requestLogin(username: string, password: string): Promise<boolean> {
+        async requestLogin(username: string, password: string): Promise<string | null> {
+
             const q = query(collection(db, "users"), where("username","==",username));
             const querySnapshot = await getDocs(q);
 
-            let loggedIn: boolean = false;
-
+            let userId: string = null!;
             querySnapshot.forEach((doc) => {
-                if(!loggedIn && doc.data().password == password) {
-                    loggedIn = !loggedIn
+                if(doc.data().password == password) {
+                    userId = (doc.data().password == password ? doc.id : null!)
                 }
             })
-            
-            return loggedIn;
+            return userId;
+
         }
     }
 }

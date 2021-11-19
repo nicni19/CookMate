@@ -68,5 +68,5 @@ export interface ILoginService {
      * @param username
      * @param password
      */
-    requestLogin(username : string, password : string) : Promise<boolean>;
+    requestLogin(username : string, password : string) : Promise<string | null>;
 }
