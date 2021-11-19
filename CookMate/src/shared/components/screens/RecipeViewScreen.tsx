@@ -28,7 +28,7 @@ export const RecipeViewScreen : React.FC<RecipeViewScreenProps> = (props) => {
         (async function() {
             await QueryService.recipes.getRecipe(props.route.params.recipeId).then((dbRecipe:Recipe)=>{
                 setRecipe(dbRecipe);
-                QueryService.cookbooks.getCookbook(dbRecipe.cookbookId).then((cookbook: Cookbook) => {
+                QueryService.cookbooks.getCookbook(dbRecipe.cookbookId as string).then((cookbook: Cookbook) => {
                     setOwner(cookbook.owner);
                 }).then(() => {
                     setIsLoading(false);
