@@ -1,10 +1,9 @@
 import React from "react";
-import { Text } from "react-native";
-import { Center } from "../style/Center";
 import RecipeFeed from "../../../modules/RecipeFeed/RecipeFeed";
+import {FeedNavProps} from "../navigation/param-lists/FeedParamList";
 
-interface RecipeFeedProps {}
+type RecipeFeedProps = {} & FeedNavProps<"RecipeFeedScreen">
 
-export const RecipeFeedScreen = () => {
-    return <RecipeFeed/>
+export const RecipeFeedScreen : React.FC<RecipeFeedProps> = (props) => {
+    return <RecipeFeed {...props} />
 };

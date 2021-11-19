@@ -1,12 +1,13 @@
 import { FormikProps } from "formik";
+import { Unit } from "../../shared/view-models/Unit";
 
 export interface FormikCreateRecipeFormValues {
     createRecipeImagePick: string | null;
     createRecipeInformation: {
         recipeName: string;
         recipeDescription: string;
-        recipeTime: string;
-        recipePeople: string;
+        recipeTime: number;
+        recipePeople: number;
     };
     createRecipeIngredient: {
         recipeIngredients: RecipeIngredient[];
@@ -23,8 +24,8 @@ export interface CreateRecipeFormProps {
 export interface RecipeIngredient {
     id: number;
     ingredient: string;
-    quantity: string;
-    unit: string;
+    quantity: number;
+    unit: Unit;
 }
 
 export interface RecipeInstruction {

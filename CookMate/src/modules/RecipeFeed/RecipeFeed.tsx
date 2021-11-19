@@ -1,8 +1,6 @@
 import React, { Component, useContext, useState, useEffect } from "react";
-//import React, { useState, useEffect, useContext } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList, Text } from "react-native";
 import RecipeCard from "./RecipeCard";
-import data from "./recipes.json";
 import CookBookCard from "./CookBookCard";
 import QueryService from "../../shared/services/QueryService";
 import { UserSession } from "../../shared/components/auth/AuthType";
@@ -10,6 +8,9 @@ import { AuthContext } from "../../shared/components/auth/AuthProvider";
 import {Center} from "../../shared/components/style/Center";
 import {User} from "../../shared/view-models/User";
 import {Recipe} from "../../shared/view-models/Recipe";
+import {FeedNavProps} from "../../shared/components/navigation/param-lists/FeedParamList";
+
+type RecipeFeedProps = {} & FeedNavProps<"RecipeFeedScreen">
 
 //const userCook = await QueryService.users.getUser(user?.id?);
 //const cookbooks = userCook.following;

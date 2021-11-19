@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CreateRecipeFormProps, RecipeIngredient } from "./CreateRecipeTypes";
 import {
     FlatList,
@@ -12,25 +12,28 @@ import {
     KeyboardAvoidingView,
     Platform,
     Modal,
-    TextInputChangeEventData
+    TextInputChangeEventData,
+    ActivityIndicator
 } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { styles } from "./CreateRecipeStyles/CreateRecipeStyles";
 import * as Yup from "yup";
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
 import { Center } from "../../shared/components/style/Center";
+import { Picker } from "@react-native-picker/picker";
+import { UnitTypes } from "../../shared/view-models/UnitEnum";
+import { Unit } from "../../shared/view-models/Unit";
 
 const initialValues: RecipeIngredient = {
     id: -1,
     ingredient: "",
-    quantity: "",
-    unit: ""
+    quantity: 0,
+    unit: new Unit("grams", "g.")
 };
 
 const validationSchema = Yup.object({
     ingredient: Yup.string().required(),
-    quantity: Yup.number().min(1).required(),
-    unit: Yup.string().required()
+    quantity: Yup.number().min(1).required()
 });
 
 const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
@@ -39,6 +42,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
     const [recipeIngredients, setRecipeIngredients] = useState<
         RecipeIngredient[]
     >(formik.values.createRecipeIngredient.recipeIngredients);
+    const [recipeUnits, setRecipeUnits] = useState<Unit[]>([]);
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -68,8 +72,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
 
     const deleteRecipeIngredient = () => {
         const updatedRecipeIngredients = recipeIngredients.filter(
-            (ingredient) =>
-                ingredient.id !== selectedIngredient?.id
+            (ingredient) => ingredient.id !== selectedIngredient?.id
         );
         updateRecipeIngredientsValues(updatedRecipeIngredients);
     };
@@ -87,12 +90,27 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
         if (inputType === "ingredient") {
             currentSelectedIngredient.ingredient = newValue;
         } else if (inputType === "quantity") {
-            currentSelectedIngredient.quantity = newValue;
-        } else if (inputType === "unit") {
-            currentSelectedIngredient.unit = newValue;
+            currentSelectedIngredient.quantity = newValue as unknown as number;
         }
         updateRecipeIngredientsValues(recipeIngredients);
     };
+
+    const handleRecipeIngredientUnitEdit = (event: Unit) => {
+        const currentSelectedIngredient =
+            recipeIngredients[selectedRecipeIngredientIndex];
+        currentSelectedIngredient.unit = event;
+        updateRecipeIngredientsValues(recipeIngredients);
+    };
+
+    useEffect(() => {
+        const units: Unit[] = [];
+        for (const unitName in UnitTypes) {
+            const unitSymbol = unitName as keyof typeof UnitTypes;
+            const unit: Unit = new Unit(unitName, unitSymbol);
+            units.push(unit);
+        }
+        setRecipeUnits(units);
+    }, [setRecipeUnits]);
 
     const renderRecipeIngredientItems = ({
         item
@@ -107,7 +125,11 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
         >
             <View style={styles.listItemView}>
                 <Text style={styles.listItem}>
-                    {item.quantity + " " + item.unit + " " + item.ingredient}
+                    {item.quantity +
+                        " " +
+                        item.unit.symbol +
+                        " " +
+                        item.ingredient}
                 </Text>
                 <FontAwesome5 name="grip-lines" color="grey" size={20} />
             </View>
@@ -115,6 +137,14 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
     );
 
     const headerHeight = useHeaderHeight();
+
+    if (recipeUnits.length == 0 || !recipeUnits) {
+        return (
+            <Center>
+                <ActivityIndicator size="large" />
+            </Center>
+        );
+    }
 
     return (
         <View
@@ -196,27 +226,30 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                                             value={
                                                 recipeIngredients[
                                                     selectedRecipeIngredientIndex
-                                                ]?.quantity
+                                                ]?.quantity as unknown as string
                                             }
                                             placeholder={"Quantity"}
                                             clearButtonMode="always"
                                         />
-                                        <TextInput
-                                            style={styles.modalViewTextfield}
-                                            onChange={(event) =>
-                                                handleRecipeIngredientEdit(
-                                                    event,
-                                                    "unit"
-                                                )
-                                            }
-                                            value={
-                                                recipeIngredients[
-                                                    selectedRecipeIngredientIndex
-                                                ]?.unit
-                                            }
-                                            placeholder={"Unit"}
-                                            clearButtonMode="always"
-                                        />
+                                        <Picker
+                                            style={styles.textfield}
+                                            selectedValue={values.unit}
+                                            onValueChange={(event) => {
+                                                handleRecipeIngredientUnitEdit(
+                                                    event
+                                                );
+                                            }}
+                                        >
+                                            {recipeUnits.map((unit, idx) => {
+                                                return (
+                                                    <Picker.Item
+                                                        key={idx}
+                                                        label={unit.name}
+                                                        value={unit.symbol}
+                                                    />
+                                                );
+                                            })}
+                                        </Picker>
                                         <AntDesign
                                             style={{ marginLeft: "5%" }}
                                             name="delete"
@@ -253,19 +286,26 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                             style={styles.textfield}
                             onChangeText={handleChange("quantity")}
                             onBlur={handleBlur("quantity")}
-                            value={values.quantity}
+                            value={values.quantity as unknown as string}
                             placeholder={"Quantity"}
                             clearButtonMode="always"
                         />
-
-                        <TextInput
+                        <Picker
                             style={styles.textfield}
-                            onChangeText={handleChange("unit")}
+                            selectedValue={values.unit.name}
+                            onValueChange={handleChange("unit")}
                             onBlur={handleBlur("unit")}
-                            value={values.unit}
-                            placeholder={"Unit"}
-                            clearButtonMode="always"
-                        />
+                        >
+                            {recipeUnits.map((unit, idx) => {
+                                return (
+                                    <Picker.Item
+                                        key={idx}
+                                        label={unit.name}
+                                        value={unit.symbol}
+                                    />
+                                );
+                            })}
+                        </Picker>
                         <TouchableOpacity
                             style={
                                 isValid && dirty
