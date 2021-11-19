@@ -174,7 +174,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
             const recipe: Recipe = new Recipe(recipeSimple, recipeDescription, newInstructionsType, newIngredientsType);
 
             const { addRecipe } = QueryService.recipes;
-            addRecipe(cookbookId as string, recipe);
+            console.log(addRecipe(cookbookId as string, recipe));
             console.warn(values);
         }
     });
