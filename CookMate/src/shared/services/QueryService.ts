@@ -199,7 +199,6 @@ export default class QueryService {
 
     public static authentication : ILoginService = {
         async requestLogin(username: string, password: string): Promise<string | null> {
-
             const q = query(collection(db, "users"), where("username","==",username));
             const querySnapshot = await getDocs(q);
 
