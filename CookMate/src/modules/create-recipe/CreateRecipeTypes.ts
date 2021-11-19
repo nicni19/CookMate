@@ -5,8 +5,8 @@ export interface FormikCreateRecipeFormValues {
     createRecipeInformation: {
         recipeName: string;
         recipeDescription: string;
-        recipeTime: string;
-        recipePeople: string;
+        recipeTime: number;
+        recipePeople: number;
     };
     createRecipeIngredient: {
         recipeIngredients: RecipeIngredient[];
@@ -23,7 +23,7 @@ export interface CreateRecipeFormProps {
 export interface RecipeIngredient {
     id: number;
     ingredient: string;
-    quantity: string;
+    quantity: number;
     unit: string;
 }
 
