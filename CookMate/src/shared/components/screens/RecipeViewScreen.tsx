@@ -18,12 +18,12 @@ type RecipeViewScreenProps = {} & FeedNavProps<"RecipeViewScreen">
 
 export const RecipeViewScreen : React.FC<RecipeViewScreenProps> = (props) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [xrecipe, setXrecipe]: any = useState();
+    const [recipe, setRecipe]: any = useState();
     
-    useEffect(()=>{
+    useEffect(() => {
         (async function() {
             QueryService.recipes.getRecipe(props.route.params.recipeId).then((dbRecipe:any)=>{
-                setXrecipe(dbRecipe);
+                setRecipe(dbRecipe);
             }).then(() => {
                 setIsLoading(false);
             });
@@ -36,5 +36,5 @@ export const RecipeViewScreen : React.FC<RecipeViewScreenProps> = (props) => {
             <ActivityIndicator size="large" color={theme.palette.secondaryColor}/>
         </Center>
         :
-        <RecipeView recipe={xrecipe} {...props}/>;
+        <RecipeView recipe={recipe} {...props}/>;
 };
