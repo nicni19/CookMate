@@ -208,8 +208,9 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
 
             const { addRecipe } = QueryService.recipes;
 
-            await addRecipe(cookbookId as string, recipe);
-            navigation.navigate("FeedStack");
+            await addRecipe(cookbookId as string, recipe).then(() => {
+                navigation.navigate("FeedStack");
+            });
         }
     });
 
