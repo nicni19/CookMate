@@ -5,7 +5,7 @@ import { StyleSheet} from 'react-native';
 import { Dimensions } from 'react-native';
 
 type cardProps = {
-    recipe: Recipe
+    recipe: Recipe | undefined
 }
 
 class IngredientInstructionCard extends Component<cardProps,any>{
@@ -19,7 +19,7 @@ class IngredientInstructionCard extends Component<cardProps,any>{
             <ScrollView style={{flex:1}} horizontal={true} snapToInterval={Dimensions.get('window').width-60} snapToAlignment={"center"} decelerationRate={0.8}>
                 <View style={[styles.listStyle,{paddingTop:10,paddingLeft:5,paddingBottom:5,flex:1}]}>
                     <FlatList 
-                        data={this.props.recipe.ingredients}
+                        data={this.props.recipe?.ingredients}
                         renderItem={({item}) => <View style={styles.ingredientListStyle}>
                                                     <Text style={styles.quantityUnitStyle}>{item.quantity}{item.unit.symbol}</Text>
                                                     <Text style={styles.itemNameStyle}>{item.name}</Text>
@@ -28,7 +28,7 @@ class IngredientInstructionCard extends Component<cardProps,any>{
 
                 <View style={styles.listStyle}>
                     <FlatList 
-                        data={this.props.recipe.instructions}
+                        data={this.props.recipe?.instructions}
                         renderItem={({item}) => <View style={styles.insttuctionListStyle}>
                                                     <Text style={styles.sortingNumberStyle}>{item.sortingNumber}</Text>
                                                     <Text style={styles.instructionTextStyle}>{item.text}</Text>

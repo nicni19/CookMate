@@ -21,21 +21,18 @@ type RecipeViewScreenProps = {} & FeedNavProps<"RecipeViewScreen">
 export const RecipeViewScreen : React.FC<RecipeViewScreenProps> = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
-    const [recipe, setRecipe]: any = useState();
-    const [owner, setOwner]: UserSimple | any = useState();
+    const [recipe, setRecipe] = useState<Recipe>();
+    const [owner, setOwner] = useState<UserSimple>();
     
     useEffect(() => {
         (async function() {
-            QueryService.recipes.getRecipe(props.route.params.recipeId).then((dbRecipe:any)=>{
+            await QueryService.recipes.getRecipe(props.route.params.recipeId).then((dbRecipe:Recipe)=>{
                 setRecipe(dbRecipe);
-            });
-        })();
-
-        (async function() {
-            QueryService.cookbooks.getCookbook(recipe.cookbookId).then((cookbook: Cookbook) => {
-                setOwner(cookbook.owner);
-            }).then(() => {
-                setIsLoading(false);
+                QueryService.cookbooks.getCookbook(dbRecipe.cookbookId).then((cookbook: Cookbook) => {
+                    setOwner(cookbook.owner);
+                }).then(() => {
+                    setIsLoading(false);
+                });
             });
         })();
     },[]);
