@@ -1,11 +1,34 @@
-import React, { Component } from "react";
+import React, { Component, useContext, useState, useEffect } from "react";
+//import React, { useState, useEffect, useContext } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList, Text } from "react-native";
 import RecipeCard from "./RecipeCard";
 import data from "./recipes.json";
 import CookBookCard from "./CookBookCard";
+import QueryService from "../../shared/services/QueryService";
+import { UserSession } from "../../shared/components/auth/AuthType";
+import { AuthContext } from "../../shared/components/auth/AuthProvider";
 
-class RecipeFeed extends Component {
-    styles = StyleSheet.create({
+//const userCook = await QueryService.users.getUser(user?.id?);
+//const cookbooks = userCook.following;
+
+interface RecipeFeed {}
+
+//class RecipeFeed extends Component {
+export const RecipeFeed: React.FC<RecipeFeed> = () => {
+
+    const { user } = useContext(AuthContext);
+    console.log("---",user);
+    const [theuser, setTheuser]: any = useState();
+
+    useEffect(() => {
+        (async function() {
+            await QueryService.users.getUser(user.id).then((item:any) => {
+                setTheuser((item))
+            });
+        })();
+    })
+
+    let styles = StyleSheet.create({
         horizontalCard: {
             width: 100,
             height: "95%",
@@ -82,48 +105,47 @@ class RecipeFeed extends Component {
             borderRadius: 50
         }
     });
-    render() {
-        return (
-            <View style={{ flex: 1 }}>
-                <SafeAreaView style={this.styles.horizontalContainer}>
-                    <Text style={this.styles.titleText}>Cookbooks</Text>
-                    <FlatList
-                        data={data.cookbooks}
-                        renderItem={({ item }) => (
-                            <CookBookCard
-                                cardStyle={this.styles.horizontalCard}
-                                imageStyle={this.styles.profileImage}
-                                title={item.title}
-                                author={item.author}
-                                imageUrl={item.imageUrl}
-                            />
-                        )}
-                        horizontal={true}
-                    />
-                </SafeAreaView>
-                <View style={this.styles.lineView}></View>
-                <SafeAreaView style={this.styles.verticalContainer}>
-                    <Text style={this.styles.text}>
-                        News from cookbooks you follow
-                    </Text>
-                    <FlatList
-                        data={data.recipes}
-                        renderItem={({ item }) => (
-                            <RecipeCard
-                                cardStyle={this.styles.verticalCard}
-                                imageStyle={this.styles.image}
-                                title={item.title}
-                                duration={item.duration}
-                                persons={item.persons}
-                                imageUrl={item.imageUrl}
-                            />
-                        )}
-                        numColumns={2}
-                    />
-                </SafeAreaView>
-            </View>
-        );
-    }
+    return (
+        <View style={{ flex: 1 }}>
+            <SafeAreaView style={styles.horizontalContainer}>
+                <Text style={styles.titleText}>Cookbooks</Text>
+                <Text>{theuser && theuser.firstname}</Text>
+                <FlatList
+                    data={[]}
+                    renderItem={({ item }) => (
+                        <CookBookCard
+                            cardStyle={styles.horizontalCard}
+                            imageStyle={styles.profileImage}
+                            title={item.name}
+                            author={item.owner}
+                            //imageUrl={item}
+                        />
+                    )}
+                    horizontal={true}
+                />
+            </SafeAreaView>
+            <View style={styles.lineView}></View>
+            <SafeAreaView style={styles.verticalContainer}>
+                <Text style={styles.text}>
+                    News from cookbooks you follow
+                </Text>
+                <FlatList
+                    data={data.recipes}
+                    renderItem={({ item }) => (
+                        <RecipeCard
+                            cardStyle={styles.verticalCard}
+                            imageStyle={styles.image}
+                            title={item.title}
+                            duration={item.duration}
+                            persons={item.persons}
+                            imageUrl={item.imageUrl}
+                        />
+                    )}
+                    numColumns={2}
+                />
+            </SafeAreaView>
+        </View>
+    );
 }
 
 export default RecipeFeed;
