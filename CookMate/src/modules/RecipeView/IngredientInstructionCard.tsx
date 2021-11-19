@@ -11,13 +11,13 @@ type cardProps = {
 class IngredientInstructionCard extends Component<cardProps,any>{
     render(){
         return(
-        <View>
+        <View style={{flex:1}}>
             <View style={styles.instructions_ingredients}>
                         <Text style={styles.instructions_ingredients_text}>Ingredients</Text>
                         <Text style={styles.instructions_ingredients_text}>Instructions</Text>
             </View>
-            <ScrollView style={{flex:0}} horizontal={true} snapToInterval={Dimensions.get('window').width-60} snapToAlignment={"center"} decelerationRate={0.8}>
-                <View style={[styles.listStyle,{paddingTop:10,paddingLeft:5,paddingBottom:5}]}>
+            <ScrollView style={{flex:1}} horizontal={true} snapToInterval={Dimensions.get('window').width-60} snapToAlignment={"center"} decelerationRate={0.8}>
+                <View style={[styles.listStyle,{paddingTop:10,paddingLeft:5,paddingBottom:5,flex:1}]}>
                     <FlatList 
                         data={this.props.recipe.ingredients}
                         renderItem={({item}) => <View style={styles.ingredientListStyle}>
@@ -64,11 +64,11 @@ const styles = StyleSheet.create({
         marginTop:5,
         marginBottom:5,
         backgroundColor:"#EFEFEF",
+        flex:1,
     },
     ingredientListStyle:{
         ...cardStyle.card,
         flexDirection:"row",
-        flexGrow:0,
         paddingBottom:10,
     },
     insttuctionListStyle:{
@@ -99,8 +99,7 @@ const styles = StyleSheet.create({
         paddingRight:5,
         flexDirection:"row",
         display:"flex",
-        paddingBottom:5,
-        flex:0, 
+        paddingBottom:5, 
         backgroundColor:"white",
     },
     instructionTextStyle:{
