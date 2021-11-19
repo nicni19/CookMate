@@ -17,9 +17,10 @@ import { AuthContext } from "../../shared/components/auth/AuthProvider";
 import { Recipe } from "../../shared/view-models/Recipe";
 import { RecipeSimple } from "../../shared/view-models/RecipeSimple";
 import { Ingredient } from "../../shared/view-models/Ingredient";
-import { Unit } from "../../shared/view-models/Unit";
 import { Instruction } from "../../shared/view-models/Instruction";
 import { Center } from "../../shared/components/style/Center";
+import { AppNavProps } from "../../shared/components/navigation/param-lists/AppParamList";
+import { useNavigation } from "@react-navigation/core";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImagePick: null,
@@ -47,6 +48,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
     const [step, setStep] = useState<number>(0);
     const [cookbookId, setCookbookId] = useState<string | null>(null);
     const { user } = useContext(AuthContext);
+    const navigation = useNavigation<AppNavProps<"RecipeViewScreen">>();
 
     const headerNavOptions = {
         previous: () => (
@@ -202,7 +204,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
 
             const { addRecipe } = QueryService.recipes;
             addRecipe(cookbookId as string, recipe);
-            //createRecipeNavProps.navigation.navigate("RecipeViewScreen");
+            navigation.navigate("RecipeViewScreen");
         }
     });
 
