@@ -187,6 +187,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
 
             const recipeSimple: RecipeSimple = new RecipeSimple(
                 "0",
+                cookbookId as string,
                 recipeName,
                 recipeTime,
                 recipePeople,
