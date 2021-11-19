@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
-import { View, GestureResponderEvent } from "react-native";
+import { View, GestureResponderEvent, ActivityIndicator } from "react-native";
 import * as Yup from "yup";
 import CreateRecipeInstruction from "./CreateRecipeInstruction";
 import CreateRecipeIngredient from "./CreateRecipeIngredient";
@@ -19,6 +19,7 @@ import { RecipeSimple } from "../../shared/view-models/RecipeSimple";
 import { Ingredient } from "../../shared/view-models/Ingredient";
 import { Unit } from "../../shared/view-models/Unit";
 import { Instruction } from "../../shared/view-models/Instruction";
+import { Center } from "../../shared/components/style/Center";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImagePick: null,
@@ -129,13 +130,12 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
     useEffect(() => {
         const { getUserCookbook } = QueryService.cookbooks;
         const getCookbookId = async () => {
-            const { id } = await getUserCookbook(user?.id as string);
-            console.log(id);
-            setCookbookId(id);
-        } 
+            await getUserCookbook(user?.id as string).then((cookbook) => {
+                setCookbookId(cookbook.id);
+            });
+        };
         getCookbookId();
-        console.log(cookbookId);
-    }, []);
+    }, [setCookbookId]);
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -147,7 +147,9 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
                 recipePeople: Yup.number().required()
             }),
             createRecipeIngredient: Yup.object({
-                recipeIngredients: Yup.array().min(1, "Ingredients list cannot be empty").required()
+                recipeIngredients: Yup.array()
+                    .min(1, "Ingredients list cannot be empty")
+                    .required()
             }),
             createRecipeInstruction: Yup.object({
                 recipeInstructions: Yup.array()
@@ -155,26 +157,51 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
         }),
         onSubmit: (values) => {
             formik.resetForm();
-            const { recipeName, recipeDescription, recipePeople, recipeTime } = values.createRecipeInformation;
+            const { recipeName, recipeDescription, recipePeople, recipeTime } =
+                values.createRecipeInformation;
             const imageURI = values.createRecipeImagePick;
             const ingredients = values.createRecipeIngredient.recipeIngredients;
-            const instructions = values.createRecipeInstruction.recipeInstructions;
+            const instructions =
+                values.createRecipeInstruction.recipeInstructions;
 
             const newIngredientsType: Ingredient[] = [];
-            for(let i = 0; i < ingredients.length; i++) {
-                const unit: Unit = new Unit(ingredients[i].unit, ingredients[i].unit);
-                const ingredient: Ingredient = new Ingredient(ingredients[i].id.toString(), ingredients[i].ingredient, unit, ingredients[i].quantity);
+            for (let i = 0; i < ingredients.length; i++) {
+                const unit: Unit = new Unit(
+                    ingredients[i].unit,
+                    ingredients[i].unit
+                );
+                const ingredient: Ingredient = new Ingredient(
+                    ingredients[i].id.toString(),
+                    ingredients[i].ingredient,
+                    unit,
+                    ingredients[i].quantity
+                );
                 newIngredientsType.push(ingredient);
             }
 
             const newInstructionsType: Instruction[] = [];
-            for(let i = 0; i < instructions.length; i++) {
-                const instruction: Instruction = new Instruction("0", instructions[i].sortingNumber, instructions[i].text);
+            for (let i = 0; i < instructions.length; i++) {
+                const instruction: Instruction = new Instruction(
+                    "0",
+                    instructions[i].sortingNumber,
+                    instructions[i].text
+                );
                 newInstructionsType.push(instruction);
             }
 
-            const recipeSimple: RecipeSimple = new RecipeSimple("0", recipeName, recipeTime, recipePeople, imageURI as string);
-            const recipe: Recipe = new Recipe(recipeSimple, recipeDescription, newInstructionsType, newIngredientsType);
+            const recipeSimple: RecipeSimple = new RecipeSimple(
+                "0",
+                recipeName,
+                recipeTime,
+                recipePeople,
+                imageURI as string
+            );
+            const recipe: Recipe = new Recipe(
+                recipeSimple,
+                recipeDescription,
+                newInstructionsType,
+                newIngredientsType
+            );
 
             const { addRecipe } = QueryService.recipes;
             console.log(addRecipe(cookbookId as string, recipe));
@@ -195,6 +222,14 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
         <CreateRecipeIngredient formik={formik} />,
         <CreateRecipeInstruction formik={formik} />
     ];
+
+    if (!cookbookId) {
+        return (
+            <Center>
+                <ActivityIndicator size="large" />
+            </Center>
+        );
+    }
 
     return <View style={styles.root}>{createRecipeForms[step]}</View>;
 };
