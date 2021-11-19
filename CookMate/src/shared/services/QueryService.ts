@@ -14,19 +14,14 @@ import { Instruction } from "../view-models/Instruction";
 import { Ingredient } from "../view-models/Ingredient";
 
 import {
-    getFirestore,
     collection,
     query,
     where,
     getDocs,
     documentId,
-    setDoc,
-    doc,
     addDoc,
-    getDoc
 } from "firebase/firestore";
-import { db, provider, auth } from "../utils/firebaseConfig";
-import { Unit } from "../view-models/Unit";
+import { db } from "../utils/firebaseConfig";
 
 export default class QueryService {
     public static users: IUserQueryService = {
