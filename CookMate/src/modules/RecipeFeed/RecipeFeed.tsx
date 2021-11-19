@@ -12,16 +12,10 @@ import {FeedNavProps} from "../../shared/components/navigation/param-lists/FeedP
 
 type RecipeFeedProps = {} & FeedNavProps<"RecipeFeedScreen">
 
-//const userCook = await QueryService.users.getUser(user?.id?);
-//const cookbooks = userCook.following;
-
-interface RecipeFeed {}
-
-//class RecipeFeed extends Component {
-export const RecipeFeed: React.FC<RecipeFeed> = () => {
+export const RecipeFeed: React.FC<RecipeFeedProps> = (props) => {
 
     const { user } = useContext(AuthContext);
-    const [theuser, setTheuser] = useState<User>();
+    const [theUser, setTheUser] = useState<User>();
     const [isLoading, setLoading] = useState(true);
     const [recipes, setRecipes] = useState<Recipe[]>([]);
 
@@ -30,8 +24,11 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
 
     useEffect(() => {
         (async function() {
+            if (user == null) {
+                return;
+            }
             await QueryService.users.getUser(user.id).then((item: User) => {
-                setTheuser(item);
+                setTheUser(item);
                 tempUser = item;
             }).then(() => {
                 let tempRecipes: Recipe[] = [];
@@ -140,16 +137,18 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
                 <View style={styles.mainView}>
                     <SafeAreaView style={styles.horizontalContainer}>
                         <Text style={styles.titleText}>Cookbooks</Text>
-                        <Text>{theuser && theuser.firstName}</Text>
+                        <Text>{theUser && theUser.firstName}</Text>
                         <FlatList
-                            data={theuser && theuser.following}
-                            renderItem={({ item }) => (
+                            data={theUser && theUser.following}
+                            renderItem={({ item: cookbook }) => (
                                 <CookBookCard
+                                    onPress={() => {
+                                        console.log("Cookbook card: ", cookbook);
+                                        props.navigation.navigate("UserScreen", {userId: cookbook.owner.id});
+                                    }}
                                     cardStyle={styles.horizontalCard}
                                     imageStyle={styles.profileImage}
-                                    title={item.name}
-                                    //author={}
-                                    //imageUrl={item}
+                                    title={cookbook.name}
                                 />
                             )}
                             horizontal={true}
@@ -164,6 +163,7 @@ export const RecipeFeed: React.FC<RecipeFeed> = () => {
                             data={recipes}
                             renderItem={({ item }) => (
                                 <RecipeCard
+                                    onPress={() => console.log("Pressed!")}
                                     cardStyle={styles.verticalCard}
                                     imageStyle={styles.image}
                                     title={item.name}

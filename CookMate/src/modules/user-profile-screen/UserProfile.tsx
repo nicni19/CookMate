@@ -1,4 +1,4 @@
-import React, {Component, SetStateAction, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {User} from "../../shared/view-models/User";
 import {ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Cookbook} from "../../shared/view-models/Cookbook";
@@ -74,17 +74,15 @@ export const UserProfile : React.FC<UserProfileProps> = (props) => {
                         style={styles.listStyling}
                         data={cookbook?.recipes}
                         renderItem={({item}) => (
-                            <TouchableOpacity
-                                onPress={() => props.navigation.navigate("RecipeFeedScreen")} /* Should point to RecipeView */>
-                                <RecipeCard
-                                    cardStyle={recipeStyles.verticalCard}
-                                    imageStyle={recipeStyles.image}
-                                    title={item.name}
-                                    duration={item.estimatedCookingTime}
-                                    persons={item.servings}
-                                    imageUrl={item.imageURL}
-                                />
-                            </TouchableOpacity>
+                            <RecipeCard
+                                onPress={() => props.navigation.navigate("RecipeFeedScreen")}
+                                cardStyle={recipeStyles.verticalCard}
+                                imageStyle={recipeStyles.image}
+                                title={item.name}
+                                duration={item.estimatedCookingTime}
+                                persons={item.servings}
+                                imageUrl={item.imageURL}
+                            />
                         )}
                         numColumns={2}
                     />

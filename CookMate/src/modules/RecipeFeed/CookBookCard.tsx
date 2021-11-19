@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity, StyleProp, ViewStyle, ImageStyle} from 'react-native';
 
 interface ICookBookCard {
-    cardStyle: StyleSheet
-    imageStyle: StyleSheet
-    imageUrl: string
+    cardStyle: StyleProp<ViewStyle>
+    imageStyle: StyleProp<ImageStyle>
     title: string
-    author: string
+    onPress: Function
 }
 
-class CookBookCard extends React.Component<any,ICookBookCard> {
+class CookBookCard extends React.Component<ICookBookCard> {
     constructor(props : any) {
         super(props);
     }
@@ -21,11 +20,9 @@ class CookBookCard extends React.Component<any,ICookBookCard> {
     })
     render() {
         return (
-            <View style={this.props.cardStyle}>
-                <Image style={this.props.imageStyle} source={{uri: this.props.imageUrl}}/>
+            <TouchableOpacity onPress={() => this.props.onPress()} style={this.props.cardStyle}>
                 <Text style={this.styles.text}>{this.props.title}</Text>
-                <Text style={this.styles.text}>by: {this.props.author}</Text>
-            </View>
+            </TouchableOpacity>
         )
     }
 }

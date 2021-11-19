@@ -34,13 +34,14 @@ export default class QueryService {
             const w = db.collection("users");
             const wDoc = await w.doc(userId + "").get();
 
-            const getUser = async (id: any, data: any) => {
+            const getUser = async (id: string, wDoc: any) => {
+                const data = wDoc.data();
                 if (!data) return null!;
                 return new User(
                     id,
                     await data.firstname,
                     await data.lastname,
-                    (await data.following.length) > 0
+                    (data.following.length) > 0
                         ? await QueryService.cookbooks.getFollowedCookbooks(
                               data.following
                           )
@@ -48,7 +49,7 @@ export default class QueryService {
                 );
             };
 
-            return await getUser(userId, await wDoc.data());
+            return await getUser(userId, wDoc);
         },
         getUserSimple: async function (userId: string): Promise<UserSimple> {
             const q = query(
@@ -154,27 +155,32 @@ export default class QueryService {
 
             return cookbook;
         },
-        getFollowedCookbooks: async function (
-            userIds: string[]
-        ): Promise<CookbookSimple[]> {
+        getFollowedCookbooks: async function (userIds: string[]): Promise<CookbookSimple[]> {
             const q = query(
                 collection(db, "cookbooks"),
                 where(documentId(), "in", userIds)
             );
             const querySnapshot = await getDocs(q);
 
-            let toReturn: CookbookSimple[] = [];
+            let tempCookbookArray: { id: string; name: any; ownerId: any; }[] = [];
             querySnapshot.forEach((doc) => {
-                toReturn.push(
-                    new CookbookSimple(
-                        doc.id,
-                        doc.data().name,
-                        doc.data().owner
-                    )
+                tempCookbookArray.push(
+                    {
+                        id: doc.id,
+                        name: doc.data().name,
+                        ownerId: doc.data().owner
+                    }
                 );
             });
 
-            return toReturn;
+            let cookbooks : Array<CookbookSimple> = [];
+
+            for (let cookbook of tempCookbookArray) {
+                const cookbookSimple = new CookbookSimple(cookbook.id, cookbook.name, await QueryService.users.getUserSimple(cookbook.ownerId));
+                cookbooks.push(cookbookSimple);
+            }
+
+            return cookbooks;
         }
     };
 
