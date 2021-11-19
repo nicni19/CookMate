@@ -17,9 +17,12 @@ import { AuthContext } from "../../shared/components/auth/AuthProvider";
 import { Recipe } from "../../shared/view-models/Recipe";
 import { RecipeSimple } from "../../shared/view-models/RecipeSimple";
 import { Ingredient } from "../../shared/view-models/Ingredient";
-import { Unit } from "../../shared/view-models/Unit";
 import { Instruction } from "../../shared/view-models/Instruction";
 import { Center } from "../../shared/components/style/Center";
+import { AppNavProps } from "../../shared/components/navigation/param-lists/AppParamList";
+import { useNavigation } from "@react-navigation/core";
+import { Unit } from "../../shared/view-models/Unit";
+import { UnitTypes } from "../../shared/view-models/UnitEnum";
 
 const initialValues: FormikCreateRecipeFormValues = {
     createRecipeImagePick: null,
@@ -47,6 +50,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
     const [step, setStep] = useState<number>(0);
     const [cookbookId, setCookbookId] = useState<string | null>(null);
     const { user } = useContext(AuthContext);
+    const navigation = useNavigation<AppNavProps<"FeedStack">>();
 
     const headerNavOptions = {
         previous: () => (
@@ -155,7 +159,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
                 recipeInstructions: Yup.array()
             })
         }),
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             formik.resetForm();
             const { recipeName, recipeDescription, recipePeople, recipeTime } =
                 values.createRecipeInformation;
@@ -165,6 +169,8 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
                 values.createRecipeInstruction.recipeInstructions;
 
             const newIngredientsType: Ingredient[] = [];
+
+            console.log(ingredients);
             for (let i = 0; i < ingredients.length; i++) {
                 const ingredient: Ingredient = new Ingredient(
                     ingredients[i].id.toString(),
@@ -191,7 +197,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
                 recipeName,
                 recipeTime,
                 recipePeople,
-                imageURI as string
+                "https://www.fof.dk/-/media/images/egne/vest/mad/glutenfri-madvarer.jpg"
             );
             const recipe: Recipe = new Recipe(
                 recipeSimple,
@@ -201,8 +207,9 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
             );
 
             const { addRecipe } = QueryService.recipes;
-            addRecipe(cookbookId as string, recipe);
-            //createRecipeNavProps.navigation.navigate("RecipeViewScreen");
+
+            await addRecipe(cookbookId as string, recipe);
+            navigation.navigate("FeedStack");
         }
     });
 
