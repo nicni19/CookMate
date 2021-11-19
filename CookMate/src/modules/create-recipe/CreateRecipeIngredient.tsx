@@ -28,7 +28,7 @@ const initialValues: RecipeIngredient = {
     id: -1,
     ingredient: "",
     quantity: 0,
-    unit: new Unit("grams", "g.")
+    unit: "grams"
 };
 
 const validationSchema = Yup.object({
@@ -95,7 +95,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
         updateRecipeIngredientsValues(recipeIngredients);
     };
 
-    const handleRecipeIngredientUnitEdit = (event: Unit) => {
+    const handleRecipeIngredientUnitEdit = (event: string) => {
         const currentSelectedIngredient =
             recipeIngredients[selectedRecipeIngredientIndex];
         currentSelectedIngredient.unit = event;
@@ -105,7 +105,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
     useEffect(() => {
         const units: Unit[] = [];
         for (const unitName in UnitTypes) {
-            const unitSymbol = unitName as keyof typeof UnitTypes;
+            const unitSymbol = UnitTypes[unitName as keyof typeof UnitTypes];
             const unit: Unit = new Unit(unitName, unitSymbol);
             units.push(unit);
         }
@@ -127,7 +127,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                 <Text style={styles.listItem}>
                     {item.quantity +
                         " " +
-                        item.unit.symbol +
+                        UnitTypes[item.unit as keyof typeof UnitTypes] +
                         " " +
                         item.ingredient}
                 </Text>
@@ -244,8 +244,8 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                                                 return (
                                                     <Picker.Item
                                                         key={idx}
-                                                        label={unit.name}
-                                                        value={unit.symbol}
+                                                        label={unit.symbol}
+                                                        value={unit.name}
                                                     />
                                                 );
                                             })}
@@ -292,7 +292,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                         />
                         <Picker
                             style={styles.textfield}
-                            selectedValue={values.unit.name}
+                            selectedValue={values.unit}
                             onValueChange={handleChange("unit")}
                             onBlur={handleBlur("unit")}
                         >
@@ -300,8 +300,8 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                                 return (
                                     <Picker.Item
                                         key={idx}
-                                        label={unit.name}
-                                        value={unit.symbol}
+                                        label={unit.symbol}
+                                        value={unit.name}
                                     />
                                 );
                             })}

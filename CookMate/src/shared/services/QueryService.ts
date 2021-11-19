@@ -204,7 +204,7 @@ export default class QueryService {
                         return new Ingredient(
                             doc.id,
                             item.name,
-                            new Unit(item.unit, item.unit),
+                            item.unit,
                             item.quantity
                         );
                     });
@@ -266,7 +266,7 @@ export default class QueryService {
                     return {
                         name: ingredient.name,
                         quantity: ingredient.quantity,
-                        unit: ingredient.unit.name
+                        unit: ingredient.unit
                     };
                 }),
                 instructions: recipe.instructions.map((instruction: any) => {

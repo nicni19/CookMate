@@ -59,7 +59,7 @@ export interface IRecipeQueryService {
      * @param cookbookId
      * @param recipe
      */
-    addRecipe(cookbookId : string, recipe : Recipe) : void;
+    addRecipe(cookbookId : string, recipe : Recipe) : Promise<boolean>;
 }
 
 export interface ILoginService {
