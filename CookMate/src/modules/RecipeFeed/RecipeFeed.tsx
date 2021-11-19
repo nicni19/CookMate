@@ -1,14 +1,55 @@
-import React, { Component } from "react";
-import {SafeAreaView, StyleSheet, View, FlatList, Text, TouchableOpacity} from "react-native";
+import React, { Component, useContext, useState, useEffect } from "react";
+import { SafeAreaView, StyleSheet, View, FlatList, Text } from "react-native";
 import RecipeCard from "./RecipeCard";
-import data from "./recipes.json";
 import CookBookCard from "./CookBookCard";
+import QueryService from "../../shared/services/QueryService";
+import { UserSession } from "../../shared/components/auth/AuthType";
+import { AuthContext } from "../../shared/components/auth/AuthProvider";
+import {Center} from "../../shared/components/style/Center";
+import {User} from "../../shared/view-models/User";
+import {Recipe} from "../../shared/view-models/Recipe";
 import {FeedNavProps} from "../../shared/components/navigation/param-lists/FeedParamList";
 
 type RecipeFeedProps = {} & FeedNavProps<"RecipeFeedScreen">
 
-class RecipeFeed extends Component<RecipeFeedProps> {
-    styles = StyleSheet.create({
+//const userCook = await QueryService.users.getUser(user?.id?);
+//const cookbooks = userCook.following;
+
+interface RecipeFeed {}
+
+//class RecipeFeed extends Component {
+export const RecipeFeed: React.FC<RecipeFeed> = () => {
+
+    const { user } = useContext(AuthContext);
+    const [theuser, setTheuser] = useState<User>();
+    const [isLoading, setLoading] = useState(true);
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
+
+    let cookbooks: any = [];
+    let tempUser: User;
+
+    useEffect(() => {
+        (async function() {
+            await QueryService.users.getUser(user.id).then((item: User) => {
+                setTheuser(item);
+                tempUser = item;
+            }).then(() => {
+                let tempRecipes: Recipe[] = [];
+                tempUser.following.forEach(async (cookbook: any) => {
+                    await QueryService.recipes.getRecipes(cookbook.id).then((recipe: any) => {
+                        for (let i = 0; i < recipe.length; i++) {
+                            tempRecipes.push(recipe[i]);
+                        }
+                    })
+                    setRecipes(tempRecipes);
+                })
+            });
+        })().finally(() => {setLoading(false)});
+    },[user])
+
+
+
+    let styles = StyleSheet.create({
         horizontalCard: {
             width: 100,
             height: "95%",
@@ -26,7 +67,7 @@ class RecipeFeed extends Component<RecipeFeedProps> {
             width: "43%",
             margin: 5,
             marginLeft: 0,
-            marginRight: "6.3%",
+            marginRight: 20,
             marginBottom: "5%",
             borderWidth: 0,
             borderRadius: 10,
@@ -51,7 +92,6 @@ class RecipeFeed extends Component<RecipeFeedProps> {
             marginRight: "0%",
             borderWidth: 0,
             flex: 12
-            //alignSelf: "center",
         },
         text: {
             fontFamily: "Roboto",
@@ -64,11 +104,11 @@ class RecipeFeed extends Component<RecipeFeedProps> {
         },
         lineView: {
             borderBottomColor: "black",
-            width: 328,
+            width: "100%",
             borderBottomWidth: 1,
             marginTop: 10,
             marginBottom: 4,
-            marginLeft: "4%",
+            marginLeft: "0%",
             marginRight: "4%"
         },
         image: {
@@ -83,54 +123,62 @@ class RecipeFeed extends Component<RecipeFeedProps> {
             marginBottom: "8%",
             height: "47%",
             borderRadius: 50
+        },
+        mainView: {
+            width: "100%",
+            height: "100%",
+            flex: 1,
         }
     });
-    render() {
-        return (
-            <View style={{ flex: 1 }}>
-                <SafeAreaView style={this.styles.horizontalContainer}>
-                    <Text style={this.styles.titleText}>Cookbooks</Text>
-                    <FlatList
-                        data={data.cookbooks}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate("UserScreen", {userId : item.owner.id} )}
-                                >
+    return (
+        <View style={styles.mainView}>
+            {isLoading ?
+                <Center>
+                    <Text>Loading...</Text>
+                </Center>
+            :
+                <View style={styles.mainView}>
+                    <SafeAreaView style={styles.horizontalContainer}>
+                        <Text style={styles.titleText}>Cookbooks</Text>
+                        <Text>{theuser && theuser.firstName}</Text>
+                        <FlatList
+                            data={theuser && theuser.following}
+                            renderItem={({ item }) => (
                                 <CookBookCard
-                                    cardStyle={this.styles.horizontalCard}
-                                    imageStyle={this.styles.profileImage}
-                                    title={item.title}
-                                    author={item.author}
-                                    imageUrl={item.imageUrl}
+                                    cardStyle={styles.horizontalCard}
+                                    imageStyle={styles.profileImage}
+                                    title={item.name}
+                                    //author={}
+                                    //imageUrl={item}
                                 />
-                            </TouchableOpacity>
-                        )}
-                        horizontal={true}
-                    />
-                </SafeAreaView>
-                <View style={this.styles.lineView}></View>
-                <SafeAreaView style={this.styles.verticalContainer}>
-                    <Text style={this.styles.text}>
-                        News from cookbooks you follow
-                    </Text>
-                    <FlatList
-                        data={data.recipes}
-                        renderItem={({ item }) => (
-                            <RecipeCard
-                                cardStyle={this.styles.verticalCard}
-                                imageStyle={this.styles.image}
-                                title={item.title}
-                                duration={item.duration}
-                                persons={item.persons}
-                                imageUrl={item.imageUrl}
-                            />
-                        )}
-                        numColumns={2}
-                    />
-                </SafeAreaView>
-            </View>
-        );
-    }
+                            )}
+                            horizontal={true}
+                        />
+                    </SafeAreaView>
+                    <View style={styles.lineView}></View>
+                    <SafeAreaView style={styles.verticalContainer}>
+                        <Text style={styles.text}>
+                            News from cookbooks you follow
+                        </Text>
+                        <FlatList
+                            data={recipes}
+                            renderItem={({ item }) => (
+                                <RecipeCard
+                                    cardStyle={styles.verticalCard}
+                                    imageStyle={styles.image}
+                                    title={item.name}
+                                    duration={item.estimatedCookingTime}
+                                    persons={item.servings}
+                                    imageUrl={item.imageURL}
+                                />
+                            )}
+                            numColumns={2}
+                        />
+                    </SafeAreaView>
+                </View>
+            }
+        </View>
+    );
 }
 
 export default RecipeFeed;
