@@ -138,23 +138,21 @@ export default class QueryService {
                 userId
             );
 
-            let toReturn: Cookbook = null!;
-            querySnapshot.forEach(async (doc) => {
-                let followers: UserSimple[] =
-                    await QueryService.users.getFollowersOfCookbook(doc.id);
-                let recipes: RecipeSimple[] =
-                    await QueryService.recipes.getRecipes(doc.id);
-
-                toReturn = new Cookbook(
+            let cookbook: Cookbook = null!;
+            querySnapshot.forEach((doc) => {
+                cookbook = new Cookbook(
                     doc.id,
                     doc.data().name,
                     owner,
-                    followers,
-                    recipes
+                    [],
+                    []
                 );
             });
 
-            return toReturn;
+            cookbook.followers = await QueryService.users.getFollowersOfCookbook(cookbook.id);
+            cookbook.recipes = await QueryService.recipes.getRecipes(cookbook.id);
+
+            return cookbook;
         },
         getFollowedCookbooks: async function (
             userIds: string[]

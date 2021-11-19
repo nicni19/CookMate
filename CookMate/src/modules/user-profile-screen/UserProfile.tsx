@@ -1,25 +1,18 @@
-import React, {Component} from "react";
+import React, {Component, SetStateAction, useEffect, useState} from "react";
 import {User} from "../../shared/view-models/User";
 import {FlatList, Image, StyleSheet, Text, View} from "react-native";
 import {Cookbook} from "../../shared/view-models/Cookbook";
-import {CookbookSimple} from "../../shared/view-models/CookbookSimple";
-import {UserSimple} from "../../shared/view-models/UserSimple";
-import {RecipeSimple} from "../../shared/view-models/RecipeSimple";
 import {UserProfileHeader} from "./UserProfileHeader";
-import data from "../RecipeFeed/recipes.json";
 import RecipeCard from "../RecipeFeed/RecipeCard";
+import QueryService from "../../shared/services/QueryService";
+import {Center} from "../../shared/components/style/Center";
 
 type UserProfileProps = {
     userId: string
 }
 
-const userJeppe = new UserSimple("5", "Jeppe", "Stenstrup");
-const andreasSimpleRecipe1 = new RecipeSimple("100", "Pasta e Ceci", 0.45, 4, "https://live.staticflickr.com/65535/49678442758_cb4cf78850_h.jpg");
-const andreasSimpleRecipe2 = new RecipeSimple("100", "Pasta e og andet", 0.45, 4, "https://live.staticflickr.com/65535/49678442758_cb4cf78850_h.jpg");
-let testUser = new User("1", "Andreas", "Edal Pedersen", [new CookbookSimple("2", "Jeppes kogebog", userJeppe)]);
-
-export class UserProfile extends Component<UserProfileProps> {
-    styles = StyleSheet.create({
+export const UserProfile : React.FC<UserProfileProps> = (props) => {
+    let recipeStyles = StyleSheet.create({
         verticalCard: {
             width: "48%",
             borderWidth: 0,
@@ -37,32 +30,65 @@ export class UserProfile extends Component<UserProfileProps> {
         }
     });
 
-    render() {
-        // let currentUser = QueryService.users.getUser(this.props.userId);
-        let currentUser = testUser;
-        let currentCookbook = new Cookbook("3", "Andreas's Kogebog", currentUser, [userJeppe, userJeppe], [andreasSimpleRecipe1,andreasSimpleRecipe2]);
-        return (
-            <View style={styles.container}>
-                <UserProfileHeader user={currentUser} cookbook={currentCookbook}/>
-                <Text style={styles.recipeHeader}>Recipes</Text>
-                <FlatList
-                    style={styles.listStyling}
-                    data={currentCookbook.recipes}
-                    renderItem={({ item }) => (
-                        <RecipeCard
-                            cardStyle={this.styles.verticalCard}
-                            imageStyle={this.styles.image}
-                            title={item.name}
-                            duration={item.estimatedCookingTime}
-                            persons={item.servings}
-                            imageUrl={item.imageURL}
-                        />
-                    )}
-                    numColumns={2}
-                />
-            </View>
-        )
-    }
+    const [isLoading, setLoading] = useState(true);
+    const [cookbook, setCookbook] = useState<Cookbook>();
+    const [user, setUser] = useState<User>();
+
+    useEffect(() => {
+        console.log("UserId: ", props.userId)
+        setLoading(true);
+
+        Promise.all(
+            [
+                QueryService.users.getUser(props.userId)
+                    .then((user : User) => {
+                        setUser(user);
+                        console.log("Efter current user", user);
+                    })
+                    .catch(reason => console.log("Error during load of user", reason)),
+
+                QueryService.cookbooks.getUserCookbook(props.userId)
+                    .then((cookbook : Cookbook) => {
+                        setCookbook(cookbook);
+                        console.log("Efter current cookbook", cookbook);
+                    })
+                    .catch(reason => console.log("Error during load of cookbook", reason))
+            ]
+        ).finally(() => setLoading(false));
+
+    }, []);
+
+
+
+    return (
+        <View style={{flex: 1}}>
+            {isLoading ?
+                <Center>
+                    <Text>Loading...</Text>
+                </Center>
+            :
+                <View style={styles.container}>
+                    <UserProfileHeader user={user} cookbook={cookbook}/>
+                    <Text style={styles.recipeHeader}>Recipes</Text>
+                    <FlatList
+                        style={styles.listStyling}
+                        data={cookbook?.recipes}
+                        renderItem={({item}) => (
+                            <RecipeCard
+                                cardStyle={recipeStyles.verticalCard}
+                                imageStyle={recipeStyles.image}
+                                title={item.name}
+                                duration={item.estimatedCookingTime}
+                                persons={item.servings}
+                                imageUrl={item.imageURL}
+                            />
+                        )}
+                        numColumns={2}
+                    />
+                </View>
+            }
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
