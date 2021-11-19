@@ -6,14 +6,20 @@ import { Instruction } from "../../view-models/Instruction";
 import { Recipe } from "../../view-models/Recipe";
 import { RecipeSimple } from "../../view-models/RecipeSimple";
 import { Unit } from "../../view-models/Unit";
+import {FeedNavProps} from "../navigation/param-lists/FeedParamList";
 
-export const RecipeViewScreen = () => {
+export type RecipeViewScreenParams = {
+    recipeId : string
+}
+type RecipeViewScreenProps = {} & FeedNavProps<"RecipeViewScreen">
+
+export const RecipeViewScreen : React.FC<RecipeViewScreenProps> = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [xrecipe, setXrecipe]: any = useState();
     
     useEffect(()=>{
         (async function() {
-            QueryService.recipes.getRecipe("wxmsziFsImfCHyjQJgkG").then((dbRecipe:any)=>{
+            QueryService.recipes.getRecipe(props.route.params.recipeId).then((dbRecipe:any)=>{
                 setXrecipe(dbRecipe);
             }).then(() => {
                 setIsLoading(false);
@@ -23,7 +29,7 @@ export const RecipeViewScreen = () => {
     },[]);
 
     if(!isLoading) {
-        return <RecipeView recipe={xrecipe}/>
+        return <RecipeView recipe={xrecipe} {...props}/>
     }
     return null;
 };

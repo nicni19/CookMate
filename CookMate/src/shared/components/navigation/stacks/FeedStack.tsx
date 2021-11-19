@@ -5,6 +5,7 @@ import {RecipeFeedScreen} from "../../screens/RecipeFeedScreen";
 import {UserScreen} from "../../screens/UserScreen";
 import {RouteProp} from "@react-navigation/native";
 import {AuthParamList} from "../param-lists/AuthParamList";
+import {RecipeViewScreen} from "../../screens/RecipeViewScreen";
 
 interface FeedStackProps {}
 
@@ -20,7 +21,7 @@ export const FeedStack: React.FC<FeedStackProps> = () => {
         >
             <Stack.Screen name="RecipeFeedScreen" component={RecipeFeedScreen} />
             <Stack.Screen name="UserScreen" component={UserScreen} />
-            {/*<Stack.Screen name="RecipeViewScreen" component={RecipeViewScreen} />*/}
+            <Stack.Screen name="RecipeViewScreen" component={RecipeViewScreen} />
 
         </Stack.Navigator>
     );
