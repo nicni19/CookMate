@@ -3,4 +3,6 @@ export type AppParamList = {
     CreateRecipeStack: undefined;
     SignOutScreen: undefined;
     FeedStack: undefined;
+    RecipeFeedScreen: undefined;
+    RecipeViewScreen: undefined;
 };

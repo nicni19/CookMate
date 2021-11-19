@@ -211,6 +211,7 @@ export default class QueryService {
                 toReturn = new Recipe(
                     new RecipeSimple(
                         doc.id,
+                        doc.data().cookbookId,
                         doc.data().name,
                         doc.data().estimatedCooktime,
                         doc.data().servings,
@@ -239,6 +240,7 @@ export default class QueryService {
                 toReturn.push(
                     new RecipeSimple(
                         doc.id,
+                        doc.data().cookbookId,
                         doc.data().name,
                         doc.data().estimatedCooktime,
                         doc.data().servings,

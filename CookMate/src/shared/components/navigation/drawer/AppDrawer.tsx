@@ -7,6 +7,7 @@ import { theme } from "../../../theme";
 import { SignOutScreen } from "../../screens/SignOutScreen";
 import {RecipeFeedScreen} from "../../screens/RecipeFeedScreen";
 import {FeedStack} from "../stacks/FeedStack";
+import { RecipeViewScreen } from "../../screens/RecipeViewScreen";
 
 interface AppDrawerProps {}
 
@@ -53,6 +54,13 @@ export const AppDrawer: React.FC<AppDrawerProps> = () => {
                 component={SignOutScreen}
                 options={{
                     title: "Sign Out"
+                }}
+            />
+            <Drawer.Screen
+                name="RecipeViewScreen"
+                component={RecipeViewScreen}
+                options={{
+                    title: "Recipe View"
                 }}
             />
         </Drawer.Navigator>
