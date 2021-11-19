@@ -1,4 +1,4 @@
-import { FormikProvider, useFormik } from "formik";
+import { useFormik } from "formik";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { View, GestureResponderEvent } from "react-native";
 import * as Yup from "yup";
@@ -128,10 +128,13 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
 
     useEffect(() => {
         const { getUserCookbook } = QueryService.cookbooks;
-        async () => {
+        const getCookbookId = async () => {
             const { id } = await getUserCookbook(user?.id as string);
+            console.log(id);
             setCookbookId(id);
         } 
+        getCookbookId();
+        console.log(cookbookId);
     }, []);
 
     const formik = useFormik({

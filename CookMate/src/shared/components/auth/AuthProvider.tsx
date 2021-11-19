@@ -27,7 +27,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                     const user: User = await getUser(id as string);
 
                     const userSession: UserSession = { id: user.id, firstName: user.firstName, lastName: user.lastName};
-                    console.warn(userSession);
+                    
                     setUser(userSession);
                     try {
                         await AsyncStorage.setItem(
