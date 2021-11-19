@@ -5,7 +5,7 @@ import { CreateRecipeStack } from "../stacks/CreateRecipeStack";
 import { theme } from "../../../theme";
 import { SignOutScreen } from "../../screens/SignOutScreen";
 import {FeedStack} from "../stacks/FeedStack";
-import { RecipeViewScreen } from "../../screens/RecipeViewScreen";
+import { MyScreen } from "../../screens/MyScreen";
 
 interface AppDrawerProps {}
 
@@ -31,6 +31,13 @@ export const AppDrawer: React.FC<AppDrawerProps> = () => {
                 component={FeedStack}
                 options={{
                     title: "Feed"
+                }}
+            />
+            <Drawer.Screen 
+                name="MyScreen"
+                component={MyScreen}
+                options={{
+                    title: "My Profile"
                 }}
             />
             <Drawer.Screen

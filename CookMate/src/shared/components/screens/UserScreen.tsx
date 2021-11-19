@@ -1,13 +1,12 @@
-import {UserProfile} from "../../../modules/user-profile-screen/UserProfile";
+import { UserProfile } from "../../../modules/user-profile-screen/UserProfile";
 import React from "react";
-import {AuthNavProps} from "../navigation/param-lists/AuthParamList";
-import {FeedNavProps} from "../navigation/param-lists/FeedParamList";
+import { FeedNavProps } from "../navigation/param-lists/FeedParamList";
 
 export type UserScreenParams = {
-    userId : string
-}
-type UserScreenProps = {} & FeedNavProps<"UserScreen">
+    userId: string;
+};
+type UserScreenProps = {} & FeedNavProps<"UserScreen">;
 
-export const UserScreen : React.FC<UserScreenProps> = (props) => {
-  return <UserProfile {...props}/>
-}
+export const UserScreen: React.FC<UserScreenProps> = (props) => {
+    return <UserProfile {...props} />;
+};
