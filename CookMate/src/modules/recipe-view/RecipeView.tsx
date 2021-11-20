@@ -22,8 +22,9 @@ class RecipeView extends Component<RecipeViewProps, any> {
                             fontSize: 20
                         }}
                     >
-                        {this.props.owner?.firstName}{" "}
-                        {this.props.owner?.lastName}
+                        {this.props.owner?.firstName +
+                            " " +
+                            this.props.owner?.lastName}
                     </Text>
                     <Image
                         style={styles.picture}
