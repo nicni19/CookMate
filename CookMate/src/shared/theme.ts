@@ -5,6 +5,7 @@ export interface Theme {
         backgroundColor: string;
         primaryTextColor: string;
         secondaryTextColor: string;
+        recipeCardColor: string;
     };
 }
 
@@ -14,6 +15,7 @@ export const theme: Theme = {
         secondaryColor: "#288EE4",
         backgroundColor: "#EEEEEE",
         primaryTextColor: "#000000",
-        secondaryTextColor: "#BABBBE"
+        secondaryTextColor: "#BABBBE",
+        recipeCardColor: "#609884"
     }
 };

@@ -22,7 +22,7 @@ export const UserProfile : React.FC<UserProfileProps> = (props) => {
             marginRight: "4%",
             marginBottom: "4%",
             padding: 0,
-            backgroundColor: "#6eda9f",
+            backgroundColor: theme.palette.recipeCardColor,
             paddingBottom: 5
         },
         image: {

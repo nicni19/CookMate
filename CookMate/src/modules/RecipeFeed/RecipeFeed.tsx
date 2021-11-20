@@ -9,6 +9,7 @@ import {Center} from "../../shared/components/style/Center";
 import {User} from "../../shared/view-models/User";
 import {Recipe} from "../../shared/view-models/Recipe";
 import {FeedNavProps} from "../../shared/components/navigation/param-lists/FeedParamList";
+import {theme} from "../../shared/theme";
 
 type RecipeFeedProps = {} & FeedNavProps<"RecipeFeedScreen">
 
@@ -69,7 +70,7 @@ export const RecipeFeed: React.FC<RecipeFeedProps> = (props) => {
             borderWidth: 0,
             borderRadius: 10,
             padding: 0,
-            backgroundColor: "#167542",
+            backgroundColor: theme.palette.recipeCardColor,
             alignItems: "flex-start"
         },
         horizontalContainer: {

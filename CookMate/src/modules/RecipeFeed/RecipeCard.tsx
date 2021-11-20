@@ -26,7 +26,7 @@ class RecipeCard extends React.Component<ICard> {
             <TouchableOpacity style={this.props.cardStyle} onPress={() => this.props.onPress()}>
                 <Image style={this.props.imageStyle} source={{uri: this.props.imageUrl}}/>
                 <Text style={this.styles.text}>{this.props.title}</Text>
-                <Text style={this.styles.text}>{this.props.duration} h</Text>
+                <Text style={this.styles.text}>{this.props.duration} m</Text>
                 <Text style={this.styles.text}>{this.props.persons} Person(s)</Text>
             </TouchableOpacity>
         )
