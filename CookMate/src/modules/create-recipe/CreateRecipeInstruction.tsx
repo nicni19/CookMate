@@ -175,7 +175,10 @@ const CreateRecipeInstruction: React.FC<CreateRecipeFormProps> = ({
                                             clearButtonMode="always"
                                         />
                                         <AntDesign
-                                            style={{ marginLeft: "5%" }}
+                                            style={{
+                                                marginLeft: "5%",
+                                                alignSelf: "center"
+                                            }}
                                             name="delete"
                                             color="red"
                                             size={22}

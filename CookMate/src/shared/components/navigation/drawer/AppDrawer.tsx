@@ -37,7 +37,7 @@ export const AppDrawer: React.FC<AppDrawerProps> = () => {
                 name="MyScreen"
                 component={MyScreen}
                 options={{
-                    title: "My Profile"
+                    title: "Profile"
                 }}
             />
             <Drawer.Screen

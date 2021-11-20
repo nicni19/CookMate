@@ -58,7 +58,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
                         value
                     )
                 }
-                value={formik.values.createRecipeInformation.recipeTime as unknown as string}
+                value={formik.values.createRecipeInformation.recipeTime.toString()}
                 placeholder={"Estimated cooking time"}
                 clearButtonMode="always"
             />
@@ -73,7 +73,7 @@ const CreateRecipeInformation: React.FC<CreateRecipeFormProps> = ({
                         value
                     )
                 }
-                value={formik.values.createRecipeInformation.recipePeople as unknown as string}
+                value={formik.values.createRecipeInformation.recipePeople.toString()}
                 placeholder={"For how many people"}
                 clearButtonMode="always"
             />

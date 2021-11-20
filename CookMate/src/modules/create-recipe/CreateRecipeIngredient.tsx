@@ -77,7 +77,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
         updateRecipeIngredientsValues(updatedRecipeIngredients);
     };
 
-    const selectedRecipeIngredientIndex = selectedIngredient?.id as number;
+    const selectedRecipeIngredientIndex = Number(selectedIngredient?.id) - 1;
 
     const handleRecipeIngredientEdit = (
         e: NativeSyntheticEvent<TextInputChangeEventData>,
@@ -87,10 +87,13 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
             recipeIngredients[selectedRecipeIngredientIndex];
         const newValue = e.nativeEvent.text;
 
+        console.log(selectedIngredient);
+        console.log(recipeIngredients);
+        console.log(selectedRecipeIngredientIndex);
         if (inputType === "ingredient") {
             currentSelectedIngredient.ingredient = newValue;
         } else if (inputType === "quantity") {
-            currentSelectedIngredient.quantity = newValue as unknown as number;
+            currentSelectedIngredient.quantity = Number(newValue);
         }
         updateRecipeIngredientsValues(recipeIngredients);
     };
@@ -223,22 +226,21 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                                                     "quantity"
                                                 )
                                             }
-                                            value={
-                                                recipeIngredients[
-                                                    selectedRecipeIngredientIndex
-                                                ]?.quantity as unknown as string
-                                            }
+                                            value={recipeIngredients[
+                                                selectedRecipeIngredientIndex
+                                            ]?.quantity.toString()}
                                             placeholder={"Quantity"}
                                             clearButtonMode="always"
                                         />
                                         <Picker
                                             style={styles.textfield}
-                                            selectedValue={values.unit}
+                                            selectedValue={recipeIngredients[selectedRecipeIngredientIndex]?.unit}
                                             onValueChange={(event) => {
                                                 handleRecipeIngredientUnitEdit(
                                                     event
                                                 );
                                             }}
+                                            itemStyle={{ maxHeight: "25%" }}
                                         >
                                             {recipeUnits.map((unit, idx) => {
                                                 return (
@@ -251,7 +253,10 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                                             })}
                                         </Picker>
                                         <AntDesign
-                                            style={{ marginLeft: "5%" }}
+                                            style={{
+                                                marginLeft: "5%",
+                                                alignSelf: "center"
+                                            }}
                                             name="delete"
                                             color="red"
                                             size={22}
@@ -286,7 +291,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                             style={styles.textfield}
                             onChangeText={handleChange("quantity")}
                             onBlur={handleBlur("quantity")}
-                            value={values.quantity as unknown as string}
+                            value={values.quantity.toString()}
                             placeholder={"Quantity"}
                             clearButtonMode="always"
                         />
@@ -295,6 +300,7 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
                             selectedValue={values.unit}
                             onValueChange={handleChange("unit")}
                             onBlur={handleBlur("unit")}
+                            itemStyle={{ maxHeight: "25%" }}
                         >
                             {recipeUnits.map((unit, idx) => {
                                 return (

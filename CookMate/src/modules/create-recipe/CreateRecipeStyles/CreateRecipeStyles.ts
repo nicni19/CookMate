@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
         backgroundColor: "#DDDDDD",
         textAlign: "left",
         borderWidth: 1,
-        borderColor: "#d6d4d4",
+        borderColor: "#d6d4d4"
     },
     button: {
         padding: "5%",
@@ -56,8 +56,8 @@ export const styles = StyleSheet.create({
         height: "100%"
     },
     list: {
-        width: "90%", 
-        maxHeight: "60%", 
+        width: "90%",
+        maxHeight: "60%",
         margin: "5%"
     },
     listItem: {
@@ -89,42 +89,41 @@ export const styles = StyleSheet.create({
     },
     modalView: {
         margin: 20,
-        backgroundColor: 'white',
+        flexDirection: "row",
+        flexWrap: "wrap",
+        backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
-        alignItems: 'center',
+        alignItems: "center",
         justifyContent: "center",
-        shadowColor: '#000',
+        shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-        width: "90%",
-        height: "20%"
-      },
-      modalViewCloseBtn: {
-          color: "red",
-          fontWeight: "500",
-          paddingTop: "5%",
-          marginTop: "5%"
-      },
-      modalViewTextfieldIcon: {
+        width: "90%"
+    },
+    modalViewCloseBtn: {
+        color: "red",
+        fontWeight: "500",
+        paddingTop: "5%",
+        marginTop: "5%"
+    },
+    modalViewTextfieldIcon: {
         flexDirection: "row",
         flexWrap: "wrap",
-        alignItems: "center",
-        width: "100%",
-      },
-      modalViewTextfield: {
+        width: "100%"
+    },
+    modalViewTextfield: {
         flex: 1,
         padding: "5%",
         backgroundColor: "#DDDDDD",
         textAlign: "left",
         borderWidth: 1,
         borderColor: "#d6d4d4",
-        width: "90%",
-        height: "100%"
+        width: "90%"
     }
 });
