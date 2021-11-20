@@ -50,7 +50,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
     const [step, setStep] = useState<number>(0);
     const [cookbookId, setCookbookId] = useState<string | null>(null);
     const { user } = useContext(AuthContext);
-    const navigation = useNavigation<AppNavProps<"FeedStack">>();
+    const navigation = useNavigation<AppNavProps<"MyScreen">>();
 
     const headerNavOptions = {
         previous: () => (
@@ -209,7 +209,7 @@ const CreateRecipeForm: React.FC<CreateRecipeFormProps> = ({
             const { addRecipe } = QueryService.recipes;
 
             await addRecipe(cookbookId as string, recipe).then(() => {
-                navigation.navigate("FeedStack");
+                navigation.navigate("MyScreen");
             });
         }
     });

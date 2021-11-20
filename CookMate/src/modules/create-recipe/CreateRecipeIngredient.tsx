@@ -87,9 +87,6 @@ const CreateRecipeIngredient: React.FC<CreateRecipeFormProps> = ({
             recipeIngredients[selectedRecipeIngredientIndex];
         const newValue = e.nativeEvent.text;
 
-        console.log(selectedIngredient);
-        console.log(recipeIngredients);
-        console.log(selectedRecipeIngredientIndex);
         if (inputType === "ingredient") {
             currentSelectedIngredient.ingredient = newValue;
         } else if (inputType === "quantity") {
