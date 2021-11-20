@@ -1,8 +1,305 @@
-import {ICookbookQueryService, IRecipeQueryService, IUserQueryService} from "./QueryServiceInterfaces";
+import {
+    ICookbookQueryService,
+    ILoginService,
+    IRecipeQueryService,
+    IUserQueryService
+} from "./QueryServiceInterfaces";
+import { User } from "../view-models/User";
+import { UserSimple } from "../view-models/UserSimple";
+import { Cookbook } from "../view-models/Cookbook";
+import { Recipe } from "../view-models/Recipe";
+import { RecipeSimple } from "../view-models/RecipeSimple";
+import { CookbookSimple } from "../view-models/CookbookSimple";
+import { Instruction } from "../view-models/Instruction";
+import { Ingredient } from "../view-models/Ingredient";
+
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    documentId,
+    addDoc,
+} from "firebase/firestore";
+import { db } from "../utils/firebaseConfig";
 
 export default class QueryService {
+    public static users: IUserQueryService = {
+        getUser: async function (userId: string): Promise<User> {
+            const w = db.collection("users");
+            const wDoc = await w.doc(userId + "").get();
 
-    public static users : IUserQueryService;
-    public static cookbooks : ICookbookQueryService;
-    public static recipes : IRecipeQueryService;
+            const getUser = async (id: string, wDoc: any) => {
+                const data = wDoc.data();
+                if (!data) return null!;
+                return new User(
+                    id,
+                    await data.firstname,
+                    await data.lastname,
+                    (data.following.length) > 0
+                        ? await QueryService.cookbooks.getFollowedCookbooks(
+                              data.following
+                          )
+                        : []
+                );
+            };
+
+            return await getUser(userId, wDoc);
+        },
+        getUserSimple: async function (userId: string): Promise<UserSimple> {
+            const q = query(
+                collection(db, "users"),
+                where(documentId(), "==", userId)
+            );
+            const querySnapshot = await getDocs(q);
+
+            let toReturn: UserSimple = null!;
+
+            querySnapshot.forEach((doc) => {
+                toReturn = new UserSimple(
+                    doc.id,
+                    doc.data().firstname,
+                    doc.data().lastname
+                );
+            });
+
+            return toReturn;
+        },
+        getFollowersOfCookbook: async function (
+            cookbookId: string
+        ): Promise<UserSimple[]> {
+            const q = query(
+                collection(db, "users"),
+                where("following", "array-contains", cookbookId)
+            );
+            const querySnapshot = await getDocs(q);
+
+            let toReturn: Array<UserSimple> = [];
+
+            querySnapshot.forEach((doc) => {
+                toReturn.push(
+                    new UserSimple(
+                        doc.id,
+                        doc.data().firstname,
+                        doc.data().lastname
+                    )
+                );
+            });
+
+            return toReturn;
+        }
+    };
+
+    public static cookbooks: ICookbookQueryService = {
+        getCookbook: async function (cookbookId: string): Promise<Cookbook> {
+            const q = query(
+                collection(db, "cookbooks"),
+                where(documentId(), "==", cookbookId)
+            );
+            const querySnapshot = await getDocs(q);
+
+            let toReturn: Cookbook = new Cookbook(
+                null!,
+                null!,
+                null!,
+                null!,
+                null!
+            );
+            let userId: string = null!;
+            let cookbookFollowers: UserSimple[] =
+                await QueryService.users.getFollowersOfCookbook(cookbookId);
+
+            querySnapshot.forEach((doc) => {
+                userId = doc.data().owner;
+                toReturn = new Cookbook(
+                    doc.id,
+                    doc.data().name,
+                    null!,
+                    cookbookFollowers,
+                    null!
+                );
+            });
+
+            toReturn.owner = await QueryService.users.getUserSimple(userId);
+
+            return toReturn;
+        },
+        getUserCookbook: async function (userId: string): Promise<Cookbook> {
+            const q = query(
+                collection(db, "cookbooks"),
+                where("owner", "==", userId)
+            );
+            const querySnapshot = await getDocs(q);
+            const owner: UserSimple = await QueryService.users.getUserSimple(
+                userId
+            );
+
+            let cookbook: Cookbook = null!;
+            querySnapshot.forEach((doc) => {
+                cookbook = new Cookbook(
+                    doc.id,
+                    doc.data().name,
+                    owner,
+                    [],
+                    []
+                );
+            });
+
+            cookbook.followers = await QueryService.users.getFollowersOfCookbook(cookbook.id);
+            cookbook.recipes = await QueryService.recipes.getRecipes(cookbook.id);
+
+            return cookbook;
+        },
+        getFollowedCookbooks: async function (userIds: string[]): Promise<CookbookSimple[]> {
+            const q = query(
+                collection(db, "cookbooks"),
+                where(documentId(), "in", userIds)
+            );
+            const querySnapshot = await getDocs(q);
+
+            let tempCookbookArray: { id: string; name: any; ownerId: any; }[] = [];
+            querySnapshot.forEach((doc) => {
+                tempCookbookArray.push(
+                    {
+                        id: doc.id,
+                        name: doc.data().name,
+                        ownerId: doc.data().owner
+                    }
+                );
+            });
+
+            let cookbooks : Array<CookbookSimple> = [];
+
+            for (let cookbook of tempCookbookArray) {
+                const cookbookSimple = new CookbookSimple(cookbook.id, cookbook.name, await QueryService.users.getUserSimple(cookbook.ownerId));
+                cookbooks.push(cookbookSimple);
+            }
+
+            return cookbooks;
+        }
+    };
+
+    public static recipes: IRecipeQueryService = {
+        getRecipe: async function (recipeId: string): Promise<Recipe> {
+            const q = query(
+                collection(db, "recipes"),
+                where(documentId(), "==", recipeId)
+            );
+            const querySnapshot = await getDocs(q);
+
+            let toReturn: Recipe = null!;
+
+            querySnapshot.forEach((doc) => {
+                let instructions: Array<Instruction> = doc
+                    .data()
+                    .instructions.map((item: any) => {
+                        return new Instruction(
+                            doc.id,
+                            item.sortOrder,
+                            item.name
+                        );
+                    });
+                let ingredients: Array<Ingredient> = doc
+                    .data()
+                    .Ingredients.map((item: any) => {
+                        return new Ingredient(
+                            doc.id,
+                            item.name,
+                            item.unit,
+                            item.quantity
+                        );
+                    });
+                toReturn = new Recipe(
+                    new RecipeSimple(
+                        doc.id,
+                        doc.data().cookbookId,
+                        doc.data().name,
+                        doc.data().estimatedCooktime,
+                        doc.data().servings,
+                        doc.data().image
+                    ),
+                    doc.data().description,
+                    instructions,
+                    ingredients
+                );
+            });
+
+            return toReturn;
+        },
+        getRecipes: async function (
+            cookbookId: string
+        ): Promise<RecipeSimple[]> {
+            const q = query(
+                collection(db, "recipes"),
+                where("cookbookId", "==", cookbookId)
+            );
+            const querySnapshot = await getDocs(q);
+
+            let toReturn: Array<RecipeSimple> = [];
+
+            querySnapshot.forEach((doc) => {
+                toReturn.push(
+                    new RecipeSimple(
+                        doc.id,
+                        doc.data().cookbookId,
+                        doc.data().name,
+                        doc.data().estimatedCooktime,
+                        doc.data().servings,
+                        doc.data().image
+                    )
+                );
+            });
+
+            return toReturn;
+        },
+        addRecipe: async function (
+            cookbookId: string,
+            recipe: Recipe
+        ): Promise<boolean> {
+            const docRef = await addDoc(collection(db, "recipes"), {
+                cookbookId: cookbookId,
+                name: recipe.name,
+                description: recipe.description,
+                estimatedCooktime: recipe.estimatedCookingTime,
+                servings: recipe.servings,
+                image: recipe.imageURL,
+                Ingredients: recipe.ingredients.map((ingredient: any) => {
+                    return {
+                        name: ingredient.name,
+                        quantity: ingredient.quantity,
+                        unit: ingredient.unit
+                    };
+                }),
+                instructions: recipe.instructions.map((instruction: any) => {
+                    return {
+                        name: instruction.text,
+                        sortOrder: instruction.sortingNumber
+                    };
+                })
+            });
+
+            return !!docRef.id;
+        }
+    };
+
+    public static authentication: ILoginService = {
+        async requestLogin(
+            username: string,
+            password: string
+        ): Promise<string | null> {
+            const q = query(
+                collection(db, "users"),
+                where("username", "==", username)
+            );
+            const querySnapshot = await getDocs(q);
+
+            let userId: string = null!;
+            querySnapshot.forEach((doc) => {
+                if (doc.data().password == password) {
+                    userId = doc.data().password == password ? doc.id : null!;
+                }
+            });
+            return userId;
+        }
+    };
 }
