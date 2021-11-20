@@ -15,6 +15,7 @@ import { Center } from "../../shared/components/style/Center";
 import { FeedNavProps } from "../../shared/components/navigation/param-lists/FeedParamList";
 import { theme } from "../../shared/theme";
 import { AuthContext } from "../../shared/components/auth/AuthProvider";
+import { useIsFocused } from "@react-navigation/core";
 
 type MyProfileProps = {} & FeedNavProps<"UserScreen">;
 
@@ -43,6 +44,7 @@ export const MyProfile: React.FC<MyProfileProps> = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [cookbook, setCookbook] = useState<Cookbook>();
     const [userFetch, setUserFetch] = useState<User>();
+    const isFocused = useIsFocused();
 
     useEffect(() => {
         setLoading(true);
@@ -66,7 +68,7 @@ export const MyProfile: React.FC<MyProfileProps> = (props) => {
                     console.log("Error during load of cookbook", reason)
                 )
         ]).finally(() => setLoading(false));
-    }, []);
+    }, [isFocused]);
 
     return (
         <View style={{ flex: 1 }}>
