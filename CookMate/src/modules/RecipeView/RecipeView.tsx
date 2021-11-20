@@ -17,12 +17,10 @@ class RecipeView extends Component<RecipeViewProps,any> {
                     <Text style={styles.title}>{this.props.recipe?.name}</Text>
                     <Text style={{paddingLeft:"2.5%",paddingBottom:5,fontSize:20}}>{this.props.owner?.firstName} {this.props.owner?.lastName}</Text>
                     <Image style={styles.picture} source={{uri: this.props.recipe?.imageURL}}/>
-                    <View style={{borderBottomColor:"lightgrey",borderBottomWidth:1,paddingTop:2}}/>
-                    <Text style={{padding:8}}>{this.props.recipe?.description}</Text>
+                    <Text style={{padding:15, marginBottom: 20, fontSize: 16, fontFamily: "Roboto"}}>{this.props.recipe?.description}</Text>
                 </View>
                 <View style={{height:500}}>
-                    <View style={{borderBottomColor:"lightgrey",borderBottomWidth:1}}/>
-                    <IngredientInstructionCard recipe={this.props.recipe}></IngredientInstructionCard>
+                    <IngredientInstructionCard recipe={this.props.recipe}/>
                 </View>
             </ScrollView>
         )
@@ -41,6 +39,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 250,
         backgroundColor: "purple",
+        marginBottom: 20
     },
     instructions_ingredients:{
         paddingLeft: "15%",

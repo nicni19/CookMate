@@ -20,17 +20,17 @@ class IngredientInstructionCard extends Component<cardProps,any>{
                 <View style={[styles.listStyle,{paddingTop:10,paddingLeft:5,paddingBottom:5,flex:1}]}>
                     <FlatList 
                         data={this.props.recipe?.ingredients}
-                        renderItem={({item}) => <View style={styles.ingredientListStyle}>
-                                                    <Text style={styles.quantityUnitStyle}>{item.quantity}{item.unit.symbol}</Text>
-                                                    <Text style={styles.itemNameStyle}>{item.name}</Text>
+                        renderItem={({item: ingredient}) => <View style={styles.ingredientListStyle}>
+                                                    <Text style={styles.quantityUnitStyle}>{ingredient.quantity + " " + ingredient.unit}</Text>
+                                                    <Text style={styles.itemNameStyle}>{ingredient.name}</Text>
                                                 </View>}/>
                 </View>
 
                 <View style={styles.listStyle}>
-                    <FlatList 
+                    <FlatList
                         data={this.props.recipe?.instructions}
-                        renderItem={({item}) => <View style={styles.insttuctionListStyle}>
-                                                    <Text style={styles.sortingNumberStyle}>{item.sortingNumber}</Text>
+                        renderItem={({item}) => <View style={styles.instructionListStyle}>
+                                                    <Text style={styles.sortingNumberStyle}>{item.sortingNumber + "."}</Text>
                                                     <Text style={styles.instructionTextStyle}>{item.text}</Text>
                                                 </View>}/>
                 
@@ -71,21 +71,19 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         paddingBottom:10,
     },
-    insttuctionListStyle:{
+    instructionListStyle:{
         ...cardStyle.card,
         flexDirection: "row",
         paddingBottom:10,
     },
     quantityUnitStyle:{
-        backgroundColor:"lightgrey",
+        backgroundColor:"white",
         borderRadius:40,
         flex:0,
         paddingRight:10,
         paddingLeft:10,
     },
     itemNameStyle:{
-        backgroundColor:"lightgrey",
-        borderRadius:40,
         flex:1,
         paddingLeft:10,
     },
@@ -93,7 +91,7 @@ const styles = StyleSheet.create({
         alignContent:"center",
         height:22,
         marginLeft:10,
-        width:20,
+        width:"auto",
         borderRadius:100,
         paddingLeft:5,
         paddingRight:5,
