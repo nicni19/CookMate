@@ -3,7 +3,7 @@ import {User} from "../../shared/view-models/User";
 import {ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Cookbook} from "../../shared/view-models/Cookbook";
 import {UserProfileHeader} from "./UserProfileHeader";
-import RecipeCard from "../RecipeFeed/RecipeCard";
+import RecipeCard from "../recipe-feed/RecipeCard";
 import QueryService from "../../shared/services/QueryService";
 import {Center} from "../../shared/components/style/Center";
 import {FeedAllNavProps, FeedNavProps} from "../../shared/components/navigation/param-lists/FeedParamList";

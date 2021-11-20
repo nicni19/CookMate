@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Cookbook } from "../../shared/view-models/Cookbook";
 import { MyProfileHeader } from "./MyProfileHeader";
-import RecipeCard from "../RecipeFeed/RecipeCard";
+import RecipeCard from "../recipe-feed/RecipeCard";
 import QueryService from "../../shared/services/QueryService";
 import { Center } from "../../shared/components/style/Center";
 import {

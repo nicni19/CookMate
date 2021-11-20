@@ -1,5 +1,5 @@
 import React from "react";
-import RecipeFeed from "../../../modules/RecipeFeed/RecipeFeed";
+import RecipeFeed from "../../../modules/recipe-feed/RecipeFeed";
 import {FeedNavProps} from "../navigation/param-lists/FeedParamList";
 
 type RecipeFeedProps = {} & FeedNavProps<"RecipeFeedScreen">

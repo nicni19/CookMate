@@ -1,4 +1,4 @@
-import { UserProfile } from "../../../modules/user-profile-screen/UserProfile";
+import { UserProfile } from "../../../modules/user-profile/UserProfile";
 import React from "react";
 import { FeedNavProps } from "../navigation/param-lists/FeedParamList";
 

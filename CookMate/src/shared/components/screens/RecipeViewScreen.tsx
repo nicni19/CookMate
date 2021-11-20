@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from "react";
-import RecipeView from "../../../modules/RecipeView/RecipeView";
+import RecipeView from "../../../modules/recipe-view/RecipeView";
 import QueryService from "../../services/QueryService";
 import {FeedNavProps} from "../navigation/param-lists/FeedParamList";
 import {ActivityIndicator} from "react-native";
