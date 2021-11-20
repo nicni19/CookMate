@@ -77,6 +77,7 @@ export const UserProfile : React.FC<UserProfileProps> = (props) => {
                         data={cookbook?.recipes}
                         renderItem={({item}) => (
                             <RecipeCard
+                                key={item.id}
                                 onPress={() => navigation.navigate("RecipeViewScreen", {
                                     recipeId: item.id
                                 })}

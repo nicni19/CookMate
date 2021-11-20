@@ -91,6 +91,7 @@ export const MyProfile: React.FC<MyProfileProps> = (props) => {
                         data={cookbook?.recipes}
                         renderItem={({ item }) => (
                             <RecipeCard
+                                key={item.id}
                                 onPress={() =>
                                     navigation.navigate("RecipeViewScreen", {
                                         recipeId: item.id

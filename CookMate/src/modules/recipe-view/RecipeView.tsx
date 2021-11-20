@@ -13,7 +13,7 @@ class RecipeView extends Component<RecipeViewProps, any> {
     render() {
         return (
             <ScrollView style={{ backgroundColor: "white", height: "100%" }}>
-                <View style={{}}>
+                <View>
                     <Text style={styles.title}>{this.props.recipe?.name}</Text>
                     <Text
                         style={{
@@ -47,9 +47,7 @@ class RecipeView extends Component<RecipeViewProps, any> {
                             borderBottomWidth: 1
                         }}
                     />
-                    <IngredientInstructionCard
-                        recipe={this.props.recipe}
-                    ></IngredientInstructionCard>
+                    <IngredientInstructionCard recipe={this.props.recipe} />
                 </View>
             </ScrollView>
         );

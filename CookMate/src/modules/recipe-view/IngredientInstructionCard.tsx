@@ -41,7 +41,15 @@ class IngredientInstructionCard extends Component<cardProps, any> {
                         <FlatList
                             data={this.props.recipe?.ingredients}
                             renderItem={({ item }) => (
-                                <View style={styles.ingredientListStyle}>
+                                <View
+                                    key={
+                                        item.name +
+                                        item.id +
+                                        item.quantity +
+                                        item.unit
+                                    }
+                                    style={styles.ingredientListStyle}
+                                >
                                     <Text style={styles.quantityUnitStyle}>
                                         {item.quantity}
                                         {item.unit}
@@ -58,7 +66,12 @@ class IngredientInstructionCard extends Component<cardProps, any> {
                         <FlatList
                             data={this.props.recipe?.instructions}
                             renderItem={({ item }) => (
-                                <View style={styles.insttuctionListStyle}>
+                                <View
+                                    key={
+                                        item.text + item.id + item.sortingNumber
+                                    }
+                                    style={styles.insttuctionListStyle}
+                                >
                                     <Text style={styles.sortingNumberStyle}>
                                         {item.sortingNumber}
                                     </Text>
