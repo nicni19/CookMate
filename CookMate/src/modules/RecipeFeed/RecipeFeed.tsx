@@ -5,15 +5,14 @@ import CookBookCard from "./CookBookCard";
 import QueryService from "../../shared/services/QueryService";
 import { UserSession } from "../../shared/components/auth/AuthType";
 import { AuthContext } from "../../shared/components/auth/AuthProvider";
-import {Center} from "../../shared/components/style/Center";
-import {User} from "../../shared/view-models/User";
-import {Recipe} from "../../shared/view-models/Recipe";
-import {FeedNavProps} from "../../shared/components/navigation/param-lists/FeedParamList";
+import { Center } from "../../shared/components/style/Center";
+import { User } from "../../shared/view-models/User";
+import { Recipe } from "../../shared/view-models/Recipe";
+import { FeedNavProps } from "../../shared/components/navigation/param-lists/FeedParamList";
 
-type RecipeFeedProps = {} & FeedNavProps<"RecipeFeedScreen">
+type RecipeFeedProps = {} & FeedNavProps<"RecipeFeedScreen">;
 
 export const RecipeFeed: React.FC<RecipeFeedProps> = (props) => {
-
     const { user } = useContext(AuthContext);
     const [theUser, setTheUser] = useState<User>();
     const [isLoading, setLoading] = useState(true);
@@ -23,28 +22,33 @@ export const RecipeFeed: React.FC<RecipeFeedProps> = (props) => {
     let tempUser: User;
 
     useEffect(() => {
-        (async function() {
+        (async function () {
             if (user == null) {
                 return;
             }
-            await QueryService.users.getUser(user.id).then((item: User) => {
-                setTheUser(item);
-                tempUser = item;
-            }).then(() => {
-                let tempRecipes: Recipe[] = [];
-                tempUser.following.forEach(async (cookbook: any) => {
-                    await QueryService.recipes.getRecipes(cookbook.id).then((recipe: any) => {
-                        for (let i = 0; i < recipe.length; i++) {
-                            tempRecipes.push(recipe[i]);
-                        }
-                    })
-                    setRecipes(tempRecipes);
+            await QueryService.users
+                .getUser(user.id)
+                .then((item: User) => {
+                    setTheUser(item);
+                    tempUser = item;
                 })
-            });
-        })().finally(() => {setLoading(false)});
-    },[user])
-
-
+                .then(() => {
+                    let tempRecipes: Recipe[] = [];
+                    tempUser.following.forEach(async (cookbook: any) => {
+                        await QueryService.recipes
+                            .getRecipes(cookbook.id)
+                            .then((recipe: any) => {
+                                for (let i = 0; i < recipe.length; i++) {
+                                    tempRecipes.push(recipe[i]);
+                                }
+                            });
+                        setRecipes(tempRecipes);
+                    });
+                });
+        })().finally(() => {
+            setLoading(false);
+        });
+    }, [user]);
 
     let styles = StyleSheet.create({
         horizontalCard: {
@@ -92,7 +96,7 @@ export const RecipeFeed: React.FC<RecipeFeedProps> = (props) => {
         },
         text: {
             fontFamily: "Roboto",
-            marginBottom: "2%",
+            marginBottom: "2%"
         },
         titleText: {
             fontFamily: "Roboto",
@@ -124,16 +128,16 @@ export const RecipeFeed: React.FC<RecipeFeedProps> = (props) => {
         mainView: {
             width: "100%",
             height: "100%",
-            flex: 1,
+            flex: 1
         }
     });
     return (
         <View style={styles.mainView}>
-            {isLoading ?
+            {isLoading ? (
                 <Center>
                     <Text>Loading...</Text>
                 </Center>
-            :
+            ) : (
                 <View style={styles.mainView}>
                     <SafeAreaView style={styles.horizontalContainer}>
                         <Text style={styles.titleText}>Cookbooks</Text>
@@ -143,8 +147,14 @@ export const RecipeFeed: React.FC<RecipeFeedProps> = (props) => {
                             renderItem={({ item: cookbook }) => (
                                 <CookBookCard
                                     onPress={() => {
-                                        console.log("Cookbook card: ", cookbook);
-                                        props.navigation.navigate("UserScreen", {userId: cookbook.owner.id});
+                                        console.log(
+                                            "Cookbook card: ",
+                                            cookbook
+                                        );
+                                        props.navigation.navigate(
+                                            "UserScreen",
+                                            { userId: cookbook.owner.id }
+                                        );
                                     }}
                                     cardStyle={styles.horizontalCard}
                                     imageStyle={styles.profileImage}
@@ -163,7 +173,12 @@ export const RecipeFeed: React.FC<RecipeFeedProps> = (props) => {
                             data={recipes}
                             renderItem={({ item: recipe }) => (
                                 <RecipeCard
-                                    onPress={() => props.navigation.navigate("RecipeViewScreen", {recipeId: recipe.id})}
+                                    onPress={() =>
+                                        props.navigation.navigate(
+                                            "RecipeViewScreen",
+                                            { recipeId: recipe.id }
+                                        )
+                                    }
                                     cardStyle={styles.verticalCard}
                                     imageStyle={styles.image}
                                     title={recipe.name}
@@ -176,9 +191,9 @@ export const RecipeFeed: React.FC<RecipeFeedProps> = (props) => {
                         />
                     </SafeAreaView>
                 </View>
-            }
+            )}
         </View>
     );
-}
+};
 
 export default RecipeFeed;

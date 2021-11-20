@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    FlatList,
-    ScrollView
-} from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import { Recipe } from "../../shared/view-models/Recipe";
 import { UserSimple } from "../../shared/view-models/UserSimple";
 import IngredientInstructionCard from "./IngredientInstructionCard";

@@ -6,13 +6,15 @@ import {UserProfileHeader} from "./UserProfileHeader";
 import RecipeCard from "../RecipeFeed/RecipeCard";
 import QueryService from "../../shared/services/QueryService";
 import {Center} from "../../shared/components/style/Center";
-import {FeedNavProps} from "../../shared/components/navigation/param-lists/FeedParamList";
+import {FeedAllNavProps, FeedNavProps} from "../../shared/components/navigation/param-lists/FeedParamList";
 import {theme} from "../../shared/theme";
+import { useNavigation } from "@react-navigation/native";
 
 type UserProfileProps = {} & FeedNavProps<"UserScreen">
 
 export const UserProfile : React.FC<UserProfileProps> = (props) => {
     const params = props.route.params;
+    const navigation = useNavigation<FeedAllNavProps<"RecipeViewScreen">>();
 
     let recipeStyles = StyleSheet.create({
         verticalCard: {
@@ -75,7 +77,9 @@ export const UserProfile : React.FC<UserProfileProps> = (props) => {
                         data={cookbook?.recipes}
                         renderItem={({item}) => (
                             <RecipeCard
-                                onPress={() => props.navigation.navigate("RecipeFeedScreen")}
+                                onPress={() => navigation.navigate("RecipeViewScreen", {
+                                    recipeId: item.id
+                                })}
                                 cardStyle={recipeStyles.verticalCard}
                                 imageStyle={recipeStyles.image}
                                 title={item.name}

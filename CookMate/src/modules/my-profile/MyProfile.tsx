@@ -12,16 +12,19 @@ import { MyProfileHeader } from "./MyProfileHeader";
 import RecipeCard from "../RecipeFeed/RecipeCard";
 import QueryService from "../../shared/services/QueryService";
 import { Center } from "../../shared/components/style/Center";
-import { FeedNavProps } from "../../shared/components/navigation/param-lists/FeedParamList";
+import {
+    FeedAllNavProps,
+    FeedNavProps
+} from "../../shared/components/navigation/param-lists/FeedParamList";
 import { theme } from "../../shared/theme";
 import { AuthContext } from "../../shared/components/auth/AuthProvider";
-import { useIsFocused } from "@react-navigation/core";
+import { useIsFocused, useNavigation } from "@react-navigation/core";
 
 type MyProfileProps = {} & FeedNavProps<"UserScreen">;
 
 export const MyProfile: React.FC<MyProfileProps> = (props) => {
-    const params = props.route.params;
     const { user } = useContext(AuthContext);
+    const navigation = useNavigation<FeedAllNavProps<"RecipeViewScreen">>();
 
     let recipeStyles = StyleSheet.create({
         verticalCard: {
@@ -89,9 +92,9 @@ export const MyProfile: React.FC<MyProfileProps> = (props) => {
                         renderItem={({ item }) => (
                             <RecipeCard
                                 onPress={() =>
-                                    props.navigation.navigate(
-                                        "RecipeFeedScreen"
-                                    )
+                                    navigation.navigate("RecipeViewScreen", {
+                                        recipeId: item.id
+                                    })
                                 }
                                 cardStyle={recipeStyles.verticalCard}
                                 imageStyle={recipeStyles.image}
