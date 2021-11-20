@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import {
-    View,
     Text,
     Image,
     StyleSheet,
@@ -33,7 +32,7 @@ class RecipeCard extends React.Component<ICard> {
     render() {
         return (
             <TouchableOpacity
-                style={this.props.cardStyle}
+                style={[this.props.cardStyle, { marginBottom: "5%"}]}
                 onPress={() => this.props.onPress()}
             >
                 <Image
